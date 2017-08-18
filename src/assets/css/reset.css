@@ -1,0 +1,107 @@
+*{
+	box-sizing:border-box;
+}
+html{
+  width: 100%;
+}
+body{
+  width: 100%;
+	font-family: Microsoft YaHei,STHeiti,Helvetica,Arial,sans-serif;
+  overflow-x: hidden
+}
+img{vertical-align: top;border: 0;}
+ul, li, ol{
+    list-style-type: none;
+}
+a, blockquote, body, button, code, dd, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, html,iframe, img, input, label, li, object, ol, p, q, small, span, strong, table, tbody, td, th, tr, ul {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+h1, h2, h3, h4, h5, h6{
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+button, input, select, textarea { font-size: 100%; line-height:normal; }
+button, input, select, label{vertical-align:middle;}
+table{ border-collapse: collapse; border-spacing: 0; }
+input[type="button"],input[type="submit"],input[type="reset"]{cursor:pointer;}
+a{color: #333; outline: none; text-decoration: none;}
+a:focus{outline: none;}
+.clearfix:after {visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+.clearfix {zoom:1; }
+
+
+/*动画效果*/
+.fadeIn-enter-active {
+    animation: fadeInRight .3s ease;
+}
+
+.fadeIn-leave-active {
+    animation: fadeOutRight .3s ease;
+}
+
+.child-view {
+    transition: all .3s ease;
+}
+
+.slide-left-enter,
+.slide-right-leave-active {
+    transform: translate3d(100%, 0, 0);
+}
+
+.slide-left-leave-active,
+.slide-right-enter {
+    transform: translate3d(-100%, 0, 0);
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeOutRight {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes zoomIn {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale3d(.3,.3,.3);
+        transform: scale3d(.3,.3,.3);
+        }
+    50% {
+        opacity: 1;
+    }
+}
+
+.next_btn{
+  background: url(../img/next.png) no-repeat center center !important;
+  background-size: 32px !important;
+}
+.play_btn.play{
+    background: url(../icon/echo_mobile_sprites@3_8.png) no-repeat !important;
+    background-size: 320px!important;
+    background-position: 6px -332px !important
+}
+.play_btn.pause{
+    background: url(../icon/echo_mobile_sprites@3_8.png) no-repeat !important;
+    background-size: 320px!important;
+    background-position: -100px -332px !important
+}
+.menu_btn{
+  background: url(../img/music_menu.png) no-repeat center center !important;
+  background-size: 32px !important;
+}
