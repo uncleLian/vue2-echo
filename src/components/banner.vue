@@ -1,8 +1,10 @@
 <template>
     <div id='banner'>
         <swiper class='swiper' :options="swiperOption" ref="mySwiper">
-            <swiper-slide v-for='item in json' :key='item'>
-                <img :src="item">
+            <swiper-slide v-for='(item,index) in json' :key='index'>
+                <router-link :to="`/detail/${item.sound.id}`">
+                    <img :src="item.sound.pic_640">
+                </router-link>
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
@@ -48,7 +50,7 @@ banner_height = 4.26rem
         .swiper-slide{
             img{
                 width: 100%;
-                min-height: banner_height;
+                height: auto
             }
         }
         .swiper-pagination{

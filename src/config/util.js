@@ -10,19 +10,5 @@ export default {
         } else {
             return t
         }
-    },
-    handleLocaltion: (type, vue) => {
-        if (type === 'get') {
-            vue.$nextTick(() => {
-                if (vue.localtion > 0) {
-                    $('body').scrollTop(vue.localtion)
-                } else {
-                    $('body').scrollTop(0)
-                }
-            })
-        } else if (type === 'set') {
-            let scrollTop = $('body').scrollTop()
-            vue.localtion = scrollTop
-        }
     }
 }

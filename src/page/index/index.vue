@@ -1,27 +1,24 @@
 <template>
     <div id='index'>
-        <div class="header_bg">
-            <img src="~@/assets/img/header_bg_.jpg">
-        </div>
+        <div class="header_bg"><img src="~@/assets/img/header_bg_.jpg"></div>
         <my-banner :json='bannerJson'></my-banner>
         <div class="recommend">
             <h3 class="recommen_title">echo每日推荐</h3>
-            <p class="recommend_tip">{{recommendTime}}</p>
+            <p class="recommend_tip">刚刚推荐</p>
             <my-list :json='recommentJson'></my-list>
         </div>
+        <mu-infinite-scroll :scroller="scroller" :loading="bottom_loading" @load="get_recommend"/>
         <my-loading :visible='loading'/>
     </div>
 </template>
 <script>
 import { mapActions } from 'vuex'
-import Util from '@/config/util.js'
 export default {
     name: 'index',
     data() {
         return {
             bannerJson: [],
             recommentJson: [],
-            recommendTime: '刚刚推荐',
             scroller: '',
             loading: false,
             bottom_loading: false
@@ -54,25 +51,41 @@ export default {
                     this.bottom_loading = false
                 }
             })
+        },
+        handleLocaltion(type) {
+            if (type === 'get') {
+                this.$nextTick(() => {
+                    if (this.localtion > 0) {
+                        $('#index').scrollTop(this.localtion)
+                    }
+                })
+            } else if (type === 'set') {
+                let scrollTop = $('#index').scrollTop()
+                this.localtion = scrollTop
+            }
         }
     },
-    mounted() {
+    created() {
         this.init()
-        // this.scroller = $('body')[0]
+        this.$nextTick(() => {
+            this.scroller = this.$el
+        })
     },
     activated() {
-        Util.handleLocaltion('get', this)
+        this.handleLocaltion('get')
     },
     deactivated() {
-        Util.handleLocaltion('set', this)
+        this.handleLocaltion('set')
     }
 }
 </script>
 <style scoped lang='stylus'>
 #index{
-    width: 100%;
     position: relative;
+    width: 100%;
+    height: 100%;
     background: #fff;
+    overflow-x: hidden;
     .header_bg {
         img{
             width: 100%;

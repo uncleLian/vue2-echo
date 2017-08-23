@@ -8,13 +8,23 @@ Vue.config.productionTip = false
 
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
-import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'muse-ui/dist/theme-teal.css'
 Vue.use(MuseUI)
+
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(VueAwesomeSwiper)
+
+import VueProgressBar from 'vue-progressbar'
+Vue.use(VueProgressBar, {
+    color: 'rgb(143, 255, 199)',
+    failedColor: 'red',
+    height: '2px'
+})
 
 // mock
 import './mock/mock.js'
 
+// 组件
 import banner from '@/components/banner'
 import list from '@/components/list'
 import loading from '@/components/loading'

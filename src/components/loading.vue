@@ -27,7 +27,7 @@ export default {
     }
     .icon{
         position: absolute;
-        top: 40%;
+        top: 45%;
         left: 50%;
         margin-top: -20px;
         margin-left: -20px;

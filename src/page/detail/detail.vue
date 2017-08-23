@@ -9,13 +9,14 @@
             <a class='user_fans'>粉丝 <em>{{json.sound.user.followed_count}}</em></a>
         </div>
         <div class="sound_cover">
+            <div class="danmu_box" @click.stop="set_play(!play)"></div>
             <img :src="json.sound.pic_500">
-            <div class="progress_bar">
+            <div class="progress_bar" @click.stop='seek'>
                 <span :style="`width:${progress}`"></span>
                 <em>{{currentTime | sec2his}}/{{duration | sec2his}}</em>
             </div>
             <div class="controls">
-                <div class="controls_btn" :class="play?'pause':'play'" @click.stop='audio_play_toggle'></div>
+                <div class="controls_btn" :class="play?'pause':'play'" @click.stop="set_play(!play)"></div>
                 <div class="info">
                     <p class="sound_name">{{json.sound.name}}</p>
                     <p>
@@ -25,7 +26,7 @@
                         频道
                     </p>
                 </div>
-                <div class="danmu" :class="danmu? 'on': 'off'"></div>
+                <div class="danmu_btn" :class="danmu? 'on': 'off'"></div>
             </div>
         </div>
         <div class="sound_info">
@@ -41,11 +42,12 @@
             </div>
         </div>
         <div class="sound_more">
-            <h4>相关推荐</h4>
+            <h3>相关推荐</h3>
             <div class="recommend">
                 <my-list :json='recommentJson'></my-list>
             </div>
         </div>
+        <my-loading :visible='loading'/>
     </div>
 </template>
 <script>
@@ -57,12 +59,14 @@ export default {
         return {
             json: null,
             danmu: false,
-            recommentJson: []
+            recommentJson: [],
+            loading: false
         }
     },
     computed: {
         ...mapGetters([
             'current_sound_data',
+            'audio',
             'play',
             'currentTime',
             'duration',
@@ -73,35 +77,33 @@ export default {
         sec2his: Util.sec2his
     },
     watch: {
-        currentTime(val) {
-            this.currentTime_change = val
-        },
-        currentTime_change(val) {
-            this.set_currentTime(val)
+        $route(to, from) {
+            this.init()
         }
     },
     methods: {
         ...mapMutations([
             'set_current_sound_data',
-            'set_play',
-            'set_currentTime'
+            'set_play'
         ]),
         ...mapActions([
             'get_sound_data',
             'get_recommend_data'
         ]),
-        json_init() {
+        async init() {
+            this.get_sound()
+            this.get_recommend()
+        },
+        get_sound() {
+            this.loading = true
             this.get_sound_data(this.$route.params.id)
             .then(res => {
                 if (res) {
                     this.set_current_sound_data(res)
                     this.json = res
+                    this.loading = false
                 }
             })
-            this.get_recommend()
-        },
-        audio_play_toggle() {
-            this.set_play(!this.play)
         },
         get_recommend() {
             this.get_recommend_data()
@@ -111,14 +113,14 @@ export default {
                 }
             })
         },
-        seek: function(e) {
+        seek(e) {
             e = e || window.event
             var percent = (e.pageX / window.innerWidth).toFixed(2)
-            _player.currentTime = _player.duration * percent
+            this.audio.currentTime = this.audio.duration * percent
         }
     },
     created() {
-        this.json_init()
+        this.init()
     }
 }
 </script>
@@ -131,7 +133,7 @@ controls_height = 1.5rem
     position: relative;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    background: #fff;
+    background: #f6f6f6;
     a {
         text-decoration: none;
         em{
@@ -192,6 +194,13 @@ controls_height = 1.5rem
             width: img_height;
             height: img_height;
             object-fit: cover;
+        }
+        .danmu_box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8.1rem;
         }
         .progress_bar{
             position: absolute;
@@ -257,7 +266,7 @@ controls_height = 1.5rem
                     font-size: 0.373rem;
                 }
             }
-            .danmu{
+            .danmu_btn{
                 width: 1.45rem;
                 height: 0.67rem;
                 margin: 0 0.3rem;
@@ -268,6 +277,8 @@ controls_height = 1.5rem
     }
     .sound_info{
         width: 100%;
+        background: #fff;
+        margin-bottom: 0.25rem;
         .info_bar{
             width: 100%;
             height: 1.4rem;
@@ -337,8 +348,8 @@ controls_height = 1.5rem
     }
     .sound_more{
         width: 100%;
-        padding: 0.4rem 0;
-        h4{
+        background: #fff;
+        h3{
             height: 1.28rem;
             line-height: 1.28rem;
             color: #6ed56c;
@@ -348,7 +359,7 @@ controls_height = 1.5rem
        .recommend{
             width: 100%;
             position: relative;
-            padding: 0.4rem 0;
+            padding-top: 0.4rem;
         } 
     }
 }
@@ -360,10 +371,10 @@ controls_height = 1.5rem
 .controls_btn.play{
     background: url(~@/assets/img/pause.png) no-repeat;
 }
-.danmu.on{
+.danmu_btn.on{
     background: url(~@/assets/img/danmu_on.png) no-repeat;
 }
-.danmu.off{
+.danmu_btn.off{
     background: url(~@/assets/img/danmu_off.png) no-repeat;
 }
 .play_num:before{

@@ -3,9 +3,11 @@
 }
 html{
   width: 100%;
+  height: 100%;
 }
 body{
   width: 100%;
+  height: 100%;
 	font-family: Microsoft YaHei,STHeiti,Helvetica,Arial,sans-serif;
   overflow-x: hidden
 }
@@ -85,23 +87,4 @@ a:focus{outline: none;}
     50% {
         opacity: 1;
     }
-}
-
-.next_btn{
-  background: url(../img/next.png) no-repeat center center !important;
-  background-size: 32px !important;
-}
-.play_btn.play{
-    background: url(../icon/echo_mobile_sprites@3_8.png) no-repeat !important;
-    background-size: 320px!important;
-    background-position: 6px -332px !important
-}
-.play_btn.pause{
-    background: url(../icon/echo_mobile_sprites@3_8.png) no-repeat !important;
-    background-size: 320px!important;
-    background-position: -100px -332px !important
-}
-.menu_btn{
-  background: url(../img/music_menu.png) no-repeat center center !important;
-  background-size: 32px !important;
 }
