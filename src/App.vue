@@ -67,7 +67,7 @@ export default {
     }
 }
 </script>
-<style scoped lang='stylus'>
+<style lang='stylus'>
 #app {
     position: relative;
     width: 100%;

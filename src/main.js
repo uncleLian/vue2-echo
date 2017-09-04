@@ -9,12 +9,11 @@ Vue.config.productionTip = false
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
 import 'muse-ui/dist/theme-teal.css'
-Vue.use(MuseUI)
-
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-Vue.use(VueAwesomeSwiper)
-
+import 'swiper/dist/css/swiper.css'
 import VueProgressBar from 'vue-progressbar'
+Vue.use(MuseUI)
+Vue.use(VueAwesomeSwiper)
 Vue.use(VueProgressBar, {
     color: 'rgb(143, 255, 199)',
     failedColor: 'red',
@@ -31,29 +30,6 @@ import loading from '@/components/loading'
 Vue.component('my-banner', banner)
 Vue.component('my-list', list)
 Vue.component('my-loading', loading)
-
-// import { swiper, goTop } from '@/components/directive.js'
-import { goTop } from '@/components/directive.js'
-// 右滑返回上一页 & 滑动input失去焦点
-// Vue.directive('swiper', {
-//     inserted: function(el, binding, vnode) {
-//         if (binding.value) {
-//             swiper(el, binding.arg, binding.value, vnode.context)
-//         } else {
-//             return
-//         }
-//     }
-// })
-// 点击回到页面顶部
-Vue.directive('goTop', {
-    inserted: function(el, binding, vnode) {
-        if (binding.value) {
-            goTop(el, binding.arg, vnode.context)
-        } else {
-            return
-        }
-    }
-})
 
 /* eslint-disable no-new */
 new Vue({

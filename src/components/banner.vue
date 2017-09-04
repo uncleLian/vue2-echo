@@ -25,19 +25,10 @@ export default {
                 autoplayDisableOnInteraction: false
             }
         }
-    },
-    computed: {
-
-    },
-    methods: {
-
-    },
-    mounted() {
-
     }
 }
 </script>
-<style lang='stylus'>
+<style scoped lang='stylus'>
 banner_height = 4.26rem
 #banner{
     width: 100%;
