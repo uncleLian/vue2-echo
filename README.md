@@ -22,10 +22,10 @@
 
 ## 项目截图
 
-![index页面](http://wx3.sinaimg.cn/large/006eY7jMgy1fjfsvbhmckj30ag0ikwmt.jpg)
+![index页面](https://github.com/uncleLian/music/raw/master/screenshots/index.png)
 
 
-![detail页面](http://wx1.sinaimg.cn/large/006eY7jMgy1fjfsvdm5m4j30af0ikqai.jpg)
+![detail页面](https://github.com/uncleLian/music/raw/master/screenshots/detail.png)
 
 ## 演示 
 [在线演示](http://echo.liansixin.win)（请使用手机模式预览）
@@ -33,7 +33,7 @@
 ### 移动端演示
 扫二维码在手机上查看
 
-![二维码](http://wx2.sinaimg.cn/large/006eY7jMgy1fjfqih2hbuj307s07sdfl.jpg)
+![二维码](https://github.com/uncleLian/music/raw/master/screenshots/QRcode.png)
 
 
 除了以上一些功能以外，还有很多vue的知识想要和大家分享，以后会陆续写出来，大家感兴趣的也可以来我的GitHub一起来写这个项目（觉得不错的给个star Hah）
