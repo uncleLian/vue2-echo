@@ -1,40 +1,43 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { fetch } from '@/config/fetch.js'
-import { getCache, setCache, get_local_cache, set_local_cache } from '@/config/cache.js'
+import { getCache, setCache } from '@/config/cache.js'
 
 Vue.use(Vuex)
 
 const state = {
-    current_sound_data: null,
-    audio: null,
-    play: false,
-    currentTime: 0,
-    duration: 0,
-    progress: 0,
+    audio: {
+        data: null,
+        ele: null,
+        state: {
+            play: false,
+            duration: 0,
+            currentTime: 0
+        }
+    },
     playMode: 'listRepeat',
     playList: [],
     listJson: {}
 }
 
 const getters = {
-    current_sound_data: state => {
-        return state.current_sound_data
+    audio_data: state => {
+        return state.audio.data
     },
-    audio: state => {
-        return state.audio
+    audio_ele: state => {
+        return state.audio.ele
     },
-    play: state => {
-        return state.play
+    audio_play: state => {
+        return state.audio.state.play
     },
-    currentTime: state => {
-        return state.currentTime
+    audio_currentTime: state => {
+        return state.audio.state.currentTime
     },
-    duration: state => {
-        return state.duration
+    audio_duration: state => {
+        return state.audio.state.duration
     },
-    progress: state => {
-        return (state.currentTime / state.duration * 100).toFixed(2) + '%'
+    audio_progress: state => {
+        return (state.audio.state.currentTime / state.audio.state.duration * 100).toFixed(2) + '%'
     },
     playMode: state => {
         return state.playMode
@@ -48,32 +51,49 @@ const getters = {
 }
 
 const mutations = {
-    set_current_sound_data(state, val) {
-        state.current_sound_data = val
+    set_audio_data(state, val) {
+        state.audio.data = val
     },
-    set_audio(state, val) {
-        state.audio = val
+    set_audio_ele(state, val) {
+        state.audio.ele = val
     },
-    set_play(state, val) {
-        state.play = val
+    set_audio_play(state, val) {
+        state.audio.state.play = val
     },
-    set_duration(state, val) {
-        state.duration = val
+    set_audio_duration(state, val) {
+        state.audio.state.duration = val
     },
-    set_currentTime(state, val) {
-        state.currentTime = val
+    set_audio_currentTime(state, val) {
+        state.audio.state.currentTime = val
     },
-    set_playMode(state, val) {
+    set_audio_playMode(state, val) {
         state.playMode = val
-        set_local_cache('playMode', val)
+        setCache('playMode', val)
     },
     set_playList(state, val) {
-        state.playList = val
-        set_local_cache('playList', val)
+        // 不直接等于是解决删除数组时的引用问题
+        state.playList = []
+        state.playList.push(...val)
+        setCache('playList', val)
     },
     set_listJson(state, val) {
         state.listJson = val
         setCache('listJson', val)
+    },
+    // 获取应用缓存
+    set_app_cache(state, val) {
+        let listJson = JSON.parse(getCache('listJson'))
+        let playList = JSON.parse(getCache('playList'))
+        let playMode = getCache('playMode')
+        if (listJson) {
+            state.listJson = listJson
+        }
+        if (playList) {
+            state.playList = playList
+        }
+        if (playMode) {
+            state.playMode = playMode
+        }
     }
 }
 
@@ -109,11 +129,10 @@ const actions = {
     async get_sound_data({ state, commit }, id) {
         // 获得sound数据
         let res = await state.listJson[id]
-
         // 判断播放列表是否存在sound数据，有则跳过，无则添加
         let is_has = false
         for (var i = 0; i < state.playList.length; i++) {
-            if (state.playList[i].sound.id === id) {
+            if (state.playList[i] && state.playList[i].sound.id === id) {
                 is_has = true
                 break
             }
@@ -123,22 +142,6 @@ const actions = {
             commit('set_playList', playList)
         }
         return res
-    },
-
-    // 获取应用缓存
-    get_app_cache({ state, commit }) {
-        let listJson = JSON.parse(getCache('listJson'))
-        let playList = JSON.parse(get_local_cache('playList'))
-        let playMode = get_local_cache('playMode')
-        if (listJson) {
-            commit('set_listJson', listJson)
-        }
-        if (playList) {
-            commit('set_playList', playList)
-        }
-        if (playMode) {
-            commit('set_playMode', playMode)
-        }
     }
 }
 

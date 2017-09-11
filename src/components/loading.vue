@@ -1,5 +1,5 @@
 <template>
-    <div id='loading' v-if='visible' :class="type === 1? '' : 'absolute'">
+    <div id='loading' v-if='visible' :class="{'absolute': type === 'absolute'} ">
         <mu-circular-progress :size="40" class='icon'/>
     </div>
 </template>
@@ -8,7 +8,7 @@ export default {
     props: {
         visible: Boolean,
         type: {
-            default: 1
+            default: 'fixed'
         }
     }
 }
@@ -21,16 +21,16 @@ export default {
     width: 100%;
     height: 100%;
     background: #fff;
-    z-index: 333;
+    z-index: 20170909;
     &.absolute{
         position: absolute;
     }
     .icon{
         position: absolute;
-        top: 45%;
-        left: 50%;
-        margin-top: -20px;
-        margin-left: -20px;
+        top:45%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        text-align: center;
     }
 }
 </style>

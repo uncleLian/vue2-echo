@@ -1,53 +1,73 @@
 <template>
-    <div id='detail' v-if='json'>
-        <div class="top_user">
+    <div id='detail' v-if='audio_data'>
+        <!-- 用户 -->
+        <div class="sound_user">
             <a class="user_img">
-                <img :src="json.sound.user.avatar_50">
+                <img :src="audio_data.sound.user.avatar_50">
                 <img class='v-icon' src="https://ws-qn-echo-image-cdn.app-echo.com/Foz1CX1MdKHnTiDV26btgAmDJ3Y-?imageMogr2/auto-orient/quality/100%7CimageMogr2/thumbnail/!100x100r/gravity/Center/crop/100x100/dx/0/dy/0">
             </a>
-            <a class="user_name">{{json.sound.user.name}}</a>
-            <a class='user_fans'>粉丝 <em>{{json.sound.user.followed_count}}</em></a>
+            <a class="user_name">{{audio_data.sound.user.name}}</a>
+            <a class='user_fans'>粉丝 <em>{{audio_data.sound.user.followed_count}}</em></a>
         </div>
+
+        <!-- 封面 -->
         <div class="sound_cover">
-            <div class="danmu_box" @click.stop="set_play(!play)"></div>
-            <img :src="json.sound.pic_500">
+            <!-- 弹幕 -->
+            <div class="danmu_box" @click.stop="set_audio_play(!audio_play)"></div>
+            <img :src="audio_data.sound.pic_500">
+            <!-- 进度条 -->
             <div class="progress_bar" @click.stop='seek'>
-                <span :style="`width:${progress}`"></span>
-                <em>{{currentTime | sec2his}}/{{duration | sec2his}}</em>
+                <span :style="`width:${audio_progress}`"></span>
+                <em>{{audio_currentTime | sec2his}}/{{audio_duration | sec2his}}</em>
             </div>
+            <!-- 控制 -->
             <div class="controls">
-                <div class="controls_btn" :class="play?'pause':'play'" @click.stop="set_play(!play)"></div>
+                <!-- 播放按钮 -->
+                <div class="play_btn" :class="audio_play?'pause':'play'" @click.stop="set_audio_play(!audio_play)"></div>
                 <div class="info">
-                    <p class="sound_name">{{json.sound.name}}</p>
+                    <p class="sound_name">{{audio_data.sound.name}}</p>
                     <p>
-                        <a class="sound_author"><em>{{json.sound.user.name}}</em></a>
-                         发布在 
-                        <a class='sound_channel'><em>{{json.sound.channel.name}}</em></a>
+                        <a class="sound_author"><em>{{audio_data.sound.user.name}}</em></a>
+                        发布在 
+                        <a class='sound_channel'><em>{{audio_data.sound.channel.name}}</em></a>
                         频道
                     </p>
                 </div>
+                <!-- 弹幕按钮 -->
                 <div class="danmu_btn" :class="danmu? 'on': 'off'"></div>
             </div>
         </div>
+
+        <!-- 信息 -->
         <div class="sound_info">
+            <!-- 基本信息 -->
             <div class="info_bar">
                 <div class="play_num">100000+ 播放</div>
-                <div class="like_num">{{json.sound.like_count}} 喜欢</div>
+                <div class="like_num">{{audio_data.sound.like_count}} 喜欢</div>
+                <!-- 手机铃声按钮 -->
                 <div class="to_bell_btn">设为手机铃声</div>
             </div>
-            <div class="info_lyric" v-if='json.sound.song_info'>
-                <p v-if='json.sound.song_info.album_name'>{{json.sound.song_info.album_name.type}} : {{json.sound.song_info.album_name.name}}</p>
-                <p v-if='json.sound.song_info.author'>{{json.sound.song_info.author.type}} : {{json.sound.song_info.author.name}}</p>
-                <p v-if='json.sound.song_info.name'>{{json.sound.song_info.name.type}} : {{json.sound.song_info.name.name}}</p>
+            <!-- 歌词 -->
+            <div class="info_lyric">
+                <template v-if='audio_data.sound.song_info'>
+                    <p v-if='audio_data.sound.song_info.album_name'>{{audio_data.sound.song_info.album_name.type}} : {{audio_data.sound.song_info.album_name.name}}</p>
+                    <p v-if='audio_data.sound.song_info.author'>{{audio_data.sound.song_info.author.type}} : {{audio_data.sound.song_info.author.name}}</p>
+                    <p v-if='audio_data.sound.song_info.name'>{{audio_data.sound.song_info.name.type}} : {{audio_data.sound.song_info.name.name}}</p>
+                </template>
+                <div v-if="audio_data.sound.lyrics" v-html="audio_data.sound.lyrics"></div>
             </div>
         </div>
+
+        <!-- 更多推荐 -->
         <div class="sound_more">
             <h3>相关推荐</h3>
             <div class="recommend">
                 <my-list :json='recommentJson'></my-list>
             </div>
         </div>
-        <my-loading :visible='loading'/>
+
+        <my-loading :visible='loading'></my-loading>
+        <my-error :visible='error' :reload="get_sound" ></my-error>
     </div>
 </template>
 <script>
@@ -57,20 +77,20 @@ export default {
     name: 'detail',
     data() {
         return {
-            json: null,
             danmu: false,
             recommentJson: [],
-            loading: false
+            loading: false,
+            error: false
         }
     },
     computed: {
         ...mapGetters([
-            'current_sound_data',
-            'audio',
-            'play',
-            'currentTime',
-            'duration',
-            'progress'
+            'audio_data',
+            'audio_ele',
+            'audio_play',
+            'audio_currentTime',
+            'audio_duration',
+            'audio_progress'
         ])
     },
     filters: {
@@ -78,31 +98,42 @@ export default {
     },
     watch: {
         $route(to, from) {
-            this.init()
+            if (this.$route.path.includes('detail')) {
+                $('#detail').scrollTop(0)
+                this.init()
+            }
         }
     },
     methods: {
         ...mapMutations([
-            'set_current_sound_data',
-            'set_play'
+            'set_audio_data',
+            'set_audio_ele',
+            'set_audio_play'
         ]),
         ...mapActions([
             'get_sound_data',
             'get_recommend_data'
         ]),
-        async init() {
-            this.get_sound()
+        init() {
+            if (!this.audio_data || this.$route.params.id !== this.audio_data.sound.id) {
+                this.get_sound()
+            }
             this.get_recommend()
         },
         get_sound() {
+            this.error = false
             this.loading = true
             this.get_sound_data(this.$route.params.id)
             .then(res => {
                 if (res) {
-                    this.set_current_sound_data(res)
-                    this.json = res
-                    this.loading = false
+                    this.set_audio_data(res)
                 }
+                this.loading = false
+            })
+            .catch(err => {
+                console.log(err)
+                this.error = true
+                this.loading = false
             })
         },
         get_recommend() {
@@ -116,7 +147,7 @@ export default {
         seek(e) {
             e = e || window.event
             var percent = (e.pageX / window.innerWidth).toFixed(2)
-            this.audio.currentTime = this.audio.duration * percent
+            this.audio_ele.currentTime = this.audio_ele.duration * percent
         }
     },
     created() {
@@ -141,7 +172,7 @@ controls_height = 1.5rem
             font-size: 0.32rem;
         }
     }
-    .top_user{
+    .sound_user{
         position: relative;
         width: 100%;
         height: 1.4rem;
@@ -241,7 +272,7 @@ controls_height = 1.5rem
             background: rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
-            .controls_btn{
+            .play_btn{
                 width: 1rem;
                 height: 1rem;
                 margin: 0.25rem;
@@ -365,10 +396,10 @@ controls_height = 1.5rem
 }
 </style>
 <style scoped>
-.controls_btn.pause{
+.play_btn.pause{
     background: url(~@/assets/img/play.png) no-repeat;
 }
-.controls_btn.play{
+.play_btn.play{
     background: url(~@/assets/img/pause.png) no-repeat;
 }
 .danmu_btn.on{

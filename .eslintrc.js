@@ -26,6 +26,7 @@ module.exports = {
     'no-undef': 0,
     'indent': 0, 
     'camelcase': 0,
-    'space-before-function-paren':0
+    'space-before-function-paren':0,
+    'quotes': 0
   }
 }

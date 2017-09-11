@@ -1,18 +1,25 @@
 <template>
     <div id='index'>
+        <!-- header -->
         <div class="header_bg"><img src="~@/assets/img/header_bg_.jpg"></div>
+
+        <!-- banner -->
         <my-banner :json='bannerJson'></my-banner>
+
+        <!-- recommend -->
         <div class="recommend">
             <h3 class="recommen_title">echo每日推荐</h3>
-            <p class="recommend_tip">刚刚推荐</p>
+            <mu-raised-button label="一键播放" class="recommend_tip" backgroundColor='#6ed56c' @click.stop="playAll"/>
             <my-list :json='recommentJson'></my-list>
         </div>
-        <mu-infinite-scroll :scroller="scroller" :loading="bottom_loading" @load="get_recommend"/>
-        <my-loading :visible='loading'/>
+        
+        <!-- 加载更多 -->
+        <!-- <mu-infinite-scroll :scroller="scroller" :loading="bottom_loading" @load="get_recommend"/> -->
+
     </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
     name: 'index',
     data() {
@@ -24,7 +31,17 @@ export default {
             bottom_loading: false
         }
     },
+    computed: {
+        ...mapGetters([
+            'audio_data',
+            'audio_ele'
+        ])
+    },
     methods: {
+        ...mapMutations([
+            'set_audio_data',
+            'set_playList'
+        ]),
         ...mapActions([
             'get_banner_data',
             'get_recommend_data'
@@ -51,6 +68,15 @@ export default {
                     this.bottom_loading = false
                 }
             })
+        },
+        playAll() {
+            this.set_playList(this.recommentJson)
+            if (this.audio_data && this.recommentJson[0].sound.id === this.audio_data.sound.id) {
+                this.audio_ele.load()
+                this.audio_ele.play()
+            } else {
+                this.set_audio_data(this.recommentJson[0])
+            }
         },
         handleLocaltion(type) {
             if (type === 'get') {
@@ -86,6 +112,7 @@ export default {
     height: 100%;
     background: #fff;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
     .header_bg {
         img{
             width: 100%;
@@ -108,22 +135,21 @@ export default {
         .recommend_tip{
             position: absolute;
             left: 0;
-            top: 55px;
-            z-index: 2;
-            width: 117px;
-            height: 26px;
-            text-indent: 10px;
-            line-height: 26px;
-            color: #ffffff;
-            font-size: 12px;
+            top: 60px;
+            z-index: 22;
+            height: 28px;
+            line-height: 28px;
+            font-size: 14px;
+            color: #fff;
+            font-style: normal;
+            background-color: #6ed56c;
+            background-image: url(../../assets/img/play-all.png);
+            background-repeat: no-repeat;
+            background-position: 10px 4px;
+            border-radius: 14px;
+            padding-left: 10px;
+            text-indent: 10px;        
         }
     }
-}
-</style>
-<style>
-.recommend_tip{
-    background: url(~@/assets/icon/echo_mobile_sprites@3_8.png)no-repeat;
-    background-size: 400px;
-    background-position: -131px -334px;
 }
 </style>

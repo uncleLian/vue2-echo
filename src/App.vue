@@ -1,54 +1,36 @@
 <template>
-    <div id="app" :class="{'music_bar-on': visible}">
+    <div id="app" :class="{'music_bar-on': audio_data}">
         <!-- 内容层 -->
         <transition name='fade'>
-            <keep-alive exclude='detail'>
-                <router-view class='child-view'></router-view>
+            <keep-alive>
+                <router-view/></router-view>
             </keep-alive>
         </transition>
-        <!-- 导航层 -->
-        <music-bar v-show='visible'></music-bar>
-        <vue-progress-bar/>
+        <!-- 音乐控制条 -->
+        <music-bar></music-bar>
+        <!-- 页面加载进度条 -->
+        <vue-progress-bar></vue-progress-bar>
     </div>
 </template>
 <script>
 import '@/assets/css/reset.css'
 import fastClick from 'fastclick'
-import musicBar from '@/components/music_bar'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 export default {
-    components: { musicBar },
-    data() {
-        return {
-            visible: false
-        }
-    },
     computed: {
         ...mapGetters([
-            'current_sound_data'
+            'audio_data'
         ])
     },
-    watch: {
-        $route(to, from) {
-            // if (to.path.includes('detail')) {
-            //     this.visible = false
-            // } else if (this.current_sound_data) {
-            //     this.visible = true
-            // }
-            if (this.current_sound_data) {
-                this.visible = true
-            }
-        }
-    },
     methods: {
-        ...mapActions([
-            'get_app_cache'
+        ...mapMutations([
+            'set_app_cache'
         ]),
         init() {
             $(function () {
                 fastClick.attach(document.body)
             })
-            this.get_app_cache()
+            this.set_app_cache()
         }
     },
     created() {

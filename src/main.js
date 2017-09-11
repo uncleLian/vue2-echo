@@ -24,12 +24,16 @@ Vue.use(VueProgressBar, {
 import './mock/mock.js'
 
 // 组件
+import musicBar from '@/components/musicBar'
 import banner from '@/components/banner'
 import list from '@/components/list'
 import loading from '@/components/loading'
+import error from '@/components/error'
+Vue.component('music-bar', musicBar)
 Vue.component('my-banner', banner)
 Vue.component('my-list', list)
 Vue.component('my-loading', loading)
+Vue.component('my-error', error)
 
 /* eslint-disable no-new */
 new Vue({
