@@ -1,29 +1,55 @@
-# music
+#  echo web app（single page）
+听着音乐写代码，真心不错~
 
-> A Vue.js project
+> Vue-cli、Vue2.x、Vuex、Vue-router、axios、muse-ui
 
-完成的功能有：
-	1、全站内播放（单页面优点）
-	2、播放 & 暂停
-	3、进度条 & 调节播放进度
-	4、播放列表 & 切换声音 & 下一个声音
-	5、播放模式：默认、随机播放、单曲循环、列表循环
-	
+> ES6、Stylus、ESlink
 
-## Build Setup
+## 功能
+
+- [x] 全站内播放（单页面优点）
+- [x] 播放 & 暂停
+- [x] 播放模式： 默认、随机播放、单曲循环、列表循环
+- [x] 播放进度条 & 调节播放进度
+- [x] 播放列表 & 切换当前播放 & 下一个声音
+- [x] 一键播放
+- [x] 删除播放列表
+- [x] 弹幕 （太耗移动web性能和个人时间，暂不实现）
+- [x] 手机铃声（只有app获取用户手机权限才能实现，web暂不可能实现）
+
+## 项目截图
+
+<img src="http://wx3.sinaimg.cn/large/006eY7jMgy1fjfsvbhmckj30ag0ikwmt.jpg" width="40%"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="http://wx1.sinaimg.cn/large/006eY7jMgy1fjfsvdm5m4j30af0ikqai.jpg" width="40%"/>
+
+## 演示 
+[在线演示](http://echo.liansixin.win)（请使用手机模式预览）
+
+### 移动端演示
+扫二维码在手机上查看
+
+<img src="http://wx2.sinaimg.cn/large/006eY7jMgy1fjfqih2hbuj307s07sdfl.jpg" width="25%">
+
+
+除了以上一些功能以外，还有很多vue的知识想要和大家分享，以后会陆续写出来，大家感兴趣的也可以来我的GitHub一起来写这个项目（觉得不错的给个star Hah）
+
+## 安装步骤
 
 ``` bash
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:8088
 npm run dev
 
 # build for production with minification
 npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## 交流
+
+欢迎热爱学习、忠于分享的朋友一起来交流
+
+- QQ：771674109
+- WX：L771674109
