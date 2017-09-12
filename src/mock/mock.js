@@ -26,7 +26,7 @@ Mock.mock('http://localhost:8088/recommend', {
                 'user': {
                     'id': '1402312',
                     'name': '十七',
-                    'avatar': 'https://al-qn-echo-image-cdn.app-echo.com/8521ea8a02532a4bc933661f49679e41.png?imageMogr2/auto-orient/quality/100%7CimageMogr2/thumbnail/!250x250r/gravity/Center/crop/250x250/dx/0/dy/0&imageMogr2/auto-orient/quality/100%7CimageMogr2/thumbnail/!250x250r/gravity/Center/crop/250x250/dx/0/dy/0',
+                    'avatar_50': 'https://al-qn-echo-image-cdn.app-echo.com/8521ea8a02532a4bc933661f49679e41.png?imageMogr2/auto-orient/quality/100%7CimageMogr2/thumbnail/!250x250r/gravity/Center/crop/250x250/dx/0/dy/0&imageMogr2/auto-orient/quality/100%7CimageMogr2/thumbnail/!250x250r/gravity/Center/crop/250x250/dx/0/dy/0',
                     'photo': 'https://qn-qn-echo-image-cdn.app-echo.com/8521ea8a02532a4bc933661f49679e41.png',
                     'followed_count': '154629'
                 },

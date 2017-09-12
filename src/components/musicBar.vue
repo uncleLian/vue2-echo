@@ -126,6 +126,7 @@ export default {
             'set_audio_playMode',
             'set_playList'
         ]),
+        // audio元素初始化
         audio_init() {
             let _audio = this.$el.querySelector('#audio') // 获取audio元素
             this.set_audio_ele(_audio) // 设置audio元素
@@ -152,6 +153,7 @@ export default {
                 this.playMode_init() // 加载播放模式
             }
         },
+        // 播放模式的方法
         playMode_init() {
             // 随机播放
             if (this.playMode === 'random') {
@@ -170,10 +172,12 @@ export default {
                 this.playNextSound()
             }
         },
+        // 播放模式改变
         playModeChange(val) {
             this.set_audio_playMode(val)
             this.playMode_visible = false
         },
+        // 下一首方法
         playNextSound() {
             let currentIndex = this.playList.findIndex(n => n.sound.id === this.audio_data.sound.id)
             if (currentIndex > -1) {
@@ -189,6 +193,7 @@ export default {
                 console.warn('正常逻辑不会到这里啊')
             }
         },
+        // 删除播放列表的item
         deleteItem(item) {
             let index = this.playList.findIndex(n => n.sound.id === item.sound.id)
             this.playList.splice(index, 1)
@@ -348,7 +353,7 @@ export default {
 .playModeSheet{
     z-index: 20170822 !important;
     .list{
-        .list_item{
+        .list-item{
             .mu-item-title{
                 font-size: 14px;
             }

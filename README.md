@@ -8,6 +8,21 @@
 
 > ES6、Stylus、ESlink
 
+## 演示 
+[在线演示](http://echo.liansixin.win)（请使用手机模式预览）
+
+### 移动端演示
+扫二维码在手机上查看
+
+![二维码](https://github.com/uncleLian/music/raw/master/Screenshots/QRcode.png)
+
+## 项目截图
+
+![index页面](https://github.com/uncleLian/music/raw/master/Screenshots/index.png)
+
+
+![detail页面](https://github.com/uncleLian/music/raw/master/Screenshots/detail.png)
+
 ## 功能
 
 - [x] 全站内播放（单页面优点）
@@ -19,22 +34,6 @@
 - [x] 删除播放列表
 - [ ] 弹幕 （太耗移动web性能和个人时间，暂不实现）
 - [ ] 手机铃声（只有app获取用户手机权限才能实现，web暂不可能实现）
-
-## 项目截图
-
-![index页面](https://github.com/uncleLian/music/raw/master/Screenshots/index.png)
-
-
-![detail页面](https://github.com/uncleLian/music/raw/master/Screenshots/detail.png)
-
-## 演示 
-[在线演示](http://echo.liansixin.win)（请使用手机模式预览）
-
-### 移动端演示
-扫二维码在手机上查看
-
-![二维码](https://github.com/uncleLian/music/raw/master/Screenshots/QRcode.png)
-
 
 除了以上一些功能以外，还有很多vue的知识想要和大家分享，以后会陆续写出来，大家感兴趣的也可以来我的GitHub一起来写这个项目（觉得不错的给个star Hah）
 
