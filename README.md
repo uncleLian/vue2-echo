@@ -1,12 +1,12 @@
 #  echo回声 web app（single page）
 
-> A Vue.js project
-
 听着音乐写代码，真心不错~
 
-> Vue-cli、Vue2.x、Vuex、Vue-router、axios、muse-ui、mockjs
+> A Vue.js project
 
-> ES6、Stylus、ESlink
+> Vue-cli、Vue2.x、Vuex、Vue-router、axios、muse-ui、Mockjs
+
+> ES6、Stylus、ESlink、Material Icons
 
 ## 演示 
 [在线演示](http://echo.liansixin.win)（请使用手机模式预览）
@@ -50,7 +50,7 @@ npm run dev
 npm run build
 ```
 
-> 目前项目部署在自己笔记本的nginx服务器上，有时候连不上网，演示可能会访问不到
+
 
 ## 交流
 

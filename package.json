@@ -15,6 +15,7 @@
     "babel-polyfill": "^6.23.0",
     "fastclick": "^1.0.6",
     "jquery": "^3.2.1",
+    "material-design-icons": "^3.0.1",
     "mockjs": "^1.0.1-beta3",
     "muse-ui": "^2.1.0",
     "qs": "^6.5.1",

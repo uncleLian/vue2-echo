@@ -222,7 +222,7 @@ controls_height = 1.5rem
         height: img_height;
         position: relative;
         img{
-            width: img_height;
+            width: 100%;
             height: img_height;
             object-fit: cover;
         }
