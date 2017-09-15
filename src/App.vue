@@ -14,7 +14,6 @@
 </template>
 <script>
 import '@/assets/css/reset.css'
-import 'material-design-icons/iconfont/material-icons.css'
 import fastClick from 'fastclick'
 import { mapGetters, mapMutations } from 'vuex'
 export default {
