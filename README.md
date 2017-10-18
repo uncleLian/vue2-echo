@@ -52,7 +52,7 @@
 
 ### 移动端扫描下方二维码
 
-<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/QRcode.png" width="250" height="250"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/echo_QRcode.png" width="250" height="250"/>
 
 ## 功能
 
