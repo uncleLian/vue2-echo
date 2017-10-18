@@ -37,7 +37,7 @@
 
 - 第二阶段：今日头条（移动端 & native app） —— 开源地址：正在完善，敬请期待！ —— [项目效果请戳这里](http://m.toutiaojk.com)
 - 第三阶段：头条号（pc端） —— 开源地址：还在开发，敬请期待！
-- 你的"start" 是我最大的动力！🌹
+- 你的 "Start" 是我最大的动力！🌹
 
 ## 注意
 ```
@@ -67,14 +67,11 @@
 
 ## 项目截图
 
-<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/index.png" width="365" height="619" alt="index" />
-<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/index.gif" width="365" height="619"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/index.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/index.gif" width="365" height="619"/>
 
-<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/detail.png" width="365" height="619"/>
-<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/detail.gif" width="365" height="619"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/detail.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/detail.gif" width="365" height="619"/>
 
-<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/fn.png" width="365" height="619"/>
-<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/fn.gif" width="365" height="619"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/fn.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/fn.gif" width="365" height="619"/>
 
 ## 目录结构
 

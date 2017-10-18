@@ -1,8 +1,8 @@
 {
-  "name": "music",
+  "name": "vue2-echo",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "Lian",
+  "author": "uncleLian",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
