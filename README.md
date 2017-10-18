@@ -67,11 +67,11 @@
 
 ## 项目截图
 
-<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/index.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/index.gif" width="365" height="619"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/echo_index.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/echo_index.gif" width="365" height="619"/>
 
-<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/detail.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/detail.gif" width="365" height="619"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/echo_detail.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/echo_detail.gif" width="365" height="619"/>
 
-<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/fn.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/fn.gif" width="365" height="619"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/echo_fn.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/echo_fn.gif" width="365" height="619"/>
 
 ## 目录结构
 
