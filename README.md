@@ -35,10 +35,11 @@
 
 ## 最终目标
 
-- 第二阶段：今日头条（移动端 & native app） —— 敬请期待
-- 第三阶段：头条号（pc端） —— 敬请期待
+- 第二阶段：今日头条（移动端 & native app） —— 开源地址：正在完善，敬请期待！ —— [项目效果请戳这里](http://m.toutiaojk.com)
+- 第三阶段：头条号（pc端） —— 开源地址：还在开发，敬请期待！
+- 你的"start" 是我最大的动力！🌹
 
-### 注意
+## 注意
 ```
 1、因为vue-router 使用 hitstory 模式，所以线上项目刷新是会出现404的，这里是需要后端配置一下的。在开发环境不会出现这种问题，建议下载项目查看最佳效果。具体解释在router里免。
 2、因为是纯前端项目，数据是使用mock模拟的，数据结构跟官方保持一致，只是没有了一些其他功能的数据，类似评论等。
@@ -51,7 +52,7 @@
 
 ### 移动端扫描下方二维码
 
-<img src="https://github.com/uncleLian/music/raw/master/Screenshots/QRcode.png" width="250" height="250"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/QRcode.png" width="250" height="250"/>
 
 ## 功能
 
@@ -66,11 +67,14 @@
 
 ## 项目截图
 
-<img src="(https://github.com/uncleLian/music/raw/master/Screenshots/index.png" width="365" height="619"/><img src="(https://github.com/uncleLian/music/raw/master/Screenshots/index.gif" width="365" height="619"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/index.png" width="365" height="619" alt="index" />
+<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/index.gif" width="365" height="619"/>
 
-<img src="(https://github.com/uncleLian/music/raw/master/Screenshots/detail.png" width="365" height="619"/><img src="(https://github.com/uncleLian/music/raw/master/Screenshots/detail.gif" width="365" height="619"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/detail.png" width="365" height="619"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/detail.gif" width="365" height="619"/>
 
-<img src="(https://github.com/uncleLian/music/raw/master/Screenshots/fn.png" width="365" height="619"/><img src="(https://github.com/uncleLian/music/raw/master/Screenshots/fn.gif" width="365" height="619"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/fn.png" width="365" height="619"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/fn.gif" width="365" height="619"/>
 
 ## 目录结构
 
