@@ -4,7 +4,8 @@
 html,body{
     width: 100%;
     min-height: 100%;
-    touch-action: none;
+    touch-action: manipulation; /* IE11+ 禁止双击缩放，关于移动端300ms延迟：https://github.com/ftlabs/fastclick */  
+    -ms-touch-action: manipulation /* IE10+ 禁止双击缩放 */
 }
 body{
     font-family: Microsoft YaHei,STHeiti,Helvetica,Arial,sans-serif;
