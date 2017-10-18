@@ -1,16 +1,14 @@
 *{
 	box-sizing:border-box;
 }
-html{
-  width: 100%;
-  height: 100%;
-  touch-action: manipulation;
+html,body{
+    width: 100%;
+    min-height: 100%;
+    touch-action: none;
 }
 body{
-  width: 100%;
-  height: 100%;
-	font-family: Microsoft YaHei,STHeiti,Helvetica,Arial,sans-serif;
-  overflow-x: hidden
+    font-family: Microsoft YaHei,STHeiti,Helvetica,Arial,sans-serif;
+    overflow-y: initial !important; /* music-ui的自带样式会导致body出现滚动条，然后导致scrollBehavior无法获取window的滚动位置 */
 }
 img{vertical-align: top;border: 0;}
 ul, li, ol{
@@ -33,59 +31,3 @@ a{color: #333; outline: none; text-decoration: none;}
 a:focus{outline: none;}
 .clearfix:after {visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
 .clearfix {zoom:1; }
-
-
-/*动画效果*/
-.fadeIn-enter-active {
-    animation: fadeInRight .3s ease;
-}
-
-.fadeIn-leave-active {
-    animation: fadeOutRight .3s ease;
-}
-
-.child-view {
-    transition: all .3s ease;
-}
-
-.slide-left-enter,
-.slide-right-leave-active {
-    transform: translate3d(100%, 0, 0);
-}
-
-.slide-left-leave-active,
-.slide-right-enter {
-    transform: translate3d(-100%, 0, 0);
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translate3d(100%, 0, 0);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes fadeOutRight {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-    transform: translate3d(100%, 0, 0);
-  }
-}
-
-@keyframes zoomIn {
-    0% {
-        opacity: 0;
-        -webkit-transform: scale3d(.3,.3,.3);
-        transform: scale3d(.3,.3,.3);
-        }
-    50% {
-        opacity: 1;
-    }
-}

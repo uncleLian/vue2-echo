@@ -1,20 +1,20 @@
 <template>
-    <div id="app" :class="{'music_bar-on': audio_data}">
+    <div id="app" :class="{'musicBar-on': audio_data}">
         <!-- 内容层 -->
-        <transition name='fade'>
+        <!-- <transition name="fade"> -->
             <keep-alive>
                 <router-view/></router-view>
             </keep-alive>
-        </transition>
+        <!-- </transition> -->
         <!-- 音乐控制条 -->
         <music-bar></music-bar>
+
         <!-- 页面加载进度条 -->
         <vue-progress-bar></vue-progress-bar>
     </div>
 </template>
 <script>
 import '@/assets/css/reset.css'
-import fastClick from 'fastclick'
 import { mapGetters, mapMutations } from 'vuex'
 export default {
     computed: {
@@ -24,16 +24,12 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'set_app_cache'
-        ]),
-        init() {
-            $(function () {
-                fastClick.attach(document.body)
-            })
-            this.set_app_cache()
-        }
+            'set_app_cache' // 获取app缓存，刷新依然有数据
+        ])
     },
     created() {
+        this.set_app_cache()
+        // 加载进度条 开始
         this.$Progress.start()
         this.$router.beforeEach((to, from, next) => {
           this.$Progress.start()
@@ -44,7 +40,7 @@ export default {
         })
     },
     mounted() {
-        this.init()
+        // 加载进度条 结束
         this.$Progress.finish()
     }
 }
@@ -52,19 +48,14 @@ export default {
 <style lang='stylus'>
 #app {
     position: relative;
-    width: 100%;
-    height: 100%;
+    min-height: inherit;
     background: #eee;
-    overflow: hidden;
-    &.music_bar-on{
+    &.musicBar-on{
         padding-bottom: 1.3rem;
     }
 }
 .fade-enter,.fade-leave-active{
     opacity: 0;
-}
-.fade-enter-active,.fade-leave{
-    opacity: 1;
 }
 .fade-enter-active,.fade-leave-active{
     transition: all 0.2s ease

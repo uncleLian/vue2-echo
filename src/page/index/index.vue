@@ -1,7 +1,7 @@
 <template>
     <div id='index'>
         <!-- header -->
-        <div class="header_bg"><img src="~@/assets/img/header_bg_.jpg"></div>
+        <div class="headerTheme"><img src="~@/assets/img/header_theme.jpg"></div>
 
         <!-- banner -->
         <my-banner :json='bannerJson'></my-banner>
@@ -9,47 +9,37 @@
         <!-- recommend -->
         <div class="recommend">
             <h3 class="recommen_title">echo每日推荐</h3>
+            <!-- 一键播放 -->
             <mu-raised-button label="一键播放" class="recommend_tip" backgroundColor='#6ed56c' @click.stop="playAll"/>
+            <!-- 列表 -->
             <my-list :json='recommentJson'></my-list>
         </div>
-        
-        <!-- 加载更多 -->
-        <!-- <mu-infinite-scroll :scroller="scroller" :loading="bottom_loading" @load="get_recommend"/> -->
-
     </div>
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
-    name: 'index',
     data() {
         return {
             bannerJson: [],
-            recommentJson: [],
-            scroller: '',
-            loading: false,
-            bottom_loading: false
+            recommentJson: []
         }
     },
     computed: {
         ...mapGetters([
-            'audio_data',
-            'audio_ele'
+            'audio_data', // audio数据
+            'audio_ele' // audio元素
         ])
     },
     methods: {
         ...mapMutations([
-            'set_audio_data',
-            'set_playList'
+            'set_audio_data',   // 设置audio数据
+            'set_playList'  // 设置播放列表数据
         ]),
         ...mapActions([
             'get_banner_data',
             'get_recommend_data'
         ]),
-        async init () {
-            this.get_banner()
-            this.get_recommend()
-        },
         get_banner() {
             this.get_banner_data()
             .then(res => {
@@ -57,20 +47,24 @@ export default {
                     this.bannerJson = res.data
                 }
             })
+            .catch(err => {
+                console.log('get_banner', err)
+            })
         },
         get_recommend() {
-            this.bottom_loading = true
             this.get_recommend_data()
             .then(res => {
                 if (res.data) {
                     this.recommentJson.push(...res.data)
-                    this.page++
-                    this.bottom_loading = false
                 }
+            })
+            .catch(err => {
+                console.log('get_recommend', err)
             })
         },
         playAll() {
             this.set_playList(this.recommentJson)
+            // 当前音乐是否等于即将要播放的音乐？重新加载播放 ： 播放即将的音乐
             if (this.audio_data && this.recommentJson[0].sound.id === this.audio_data.sound.id) {
                 this.audio_ele.load()
                 this.audio_ele.play()
@@ -78,42 +72,23 @@ export default {
                 this.set_audio_data(this.recommentJson[0])
             }
         },
-        handleLocaltion(type) {
-            if (type === 'get') {
-                this.$nextTick(() => {
-                    if (this.localtion > 0) {
-                        $('#index').scrollTop(this.localtion)
-                    }
-                })
-            } else if (type === 'set') {
-                let scrollTop = $('#index').scrollTop()
-                this.localtion = scrollTop
-            }
+        init() {
+            this.get_banner()
+            this.get_recommend()
         }
     },
-    created() {
+    mounted() {
         this.init()
-        this.$nextTick(() => {
-            this.scroller = this.$el
-        })
-    },
-    activated() {
-        this.handleLocaltion('get')
-    },
-    deactivated() {
-        this.handleLocaltion('set')
     }
 }
 </script>
-<style scoped lang='stylus'>
+<style lang='stylus'>
 #index{
     position: relative;
     width: 100%;
-    height: 100%;
     background: #fff;
-    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    .header_bg {
+    .headerTheme {
         img{
             width: 100%;
         }

@@ -1,3 +1,4 @@
+// 自定义的全局方法
 export default {
     sec2his: t => {
         if (~~t || t < 1) {

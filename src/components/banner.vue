@@ -28,7 +28,7 @@ export default {
     }
 }
 </script>
-<style scoped lang='stylus'>
+<style lang='stylus'>
 banner_height = 4.26rem
 #banner{
     width: 100%;

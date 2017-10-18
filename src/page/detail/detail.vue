@@ -34,7 +34,7 @@
                     </p>
                 </div>
                 <!-- 弹幕按钮 -->
-                <div class="danmu_btn" :class="danmu? 'on': 'off'"></div>
+                <div class="danmu_btn" :class="danmu? 'on': 'off'" @click.stop="danmu = !danmu"></div>
             </div>
         </div>
 
@@ -77,53 +77,46 @@ export default {
     name: 'detail',
     data() {
         return {
-            danmu: false,
             recommentJson: [],
+            danmu: false,
             loading: false,
             error: false
         }
     },
     computed: {
         ...mapGetters([
-            'audio_data',
-            'audio_ele',
-            'audio_play',
-            'audio_currentTime',
-            'audio_duration',
-            'audio_progress'
+            'audio_ele', // auido元素
+            'audio_data', // 当前播放的音乐数据
+            'audio_play', // audio播放状态
+            'audio_duration', // audio 时长
+            'audio_currentTime', // audio当前秒数s的播放进度
+            'audio_progress' // audio当前百分比%的播放进度
         ])
     },
     filters: {
-        sec2his: Util.sec2his
+        sec2his: Util.sec2his   // 让currentTime 秒数转换成 03:30 这样的格式的方法
     },
     watch: {
         $route(to, from) {
             if (this.$route.path.includes('detail')) {
-                $('#detail').scrollTop(0)
                 this.init()
             }
         }
     },
     methods: {
         ...mapMutations([
-            'set_audio_data',
-            'set_audio_ele',
-            'set_audio_play'
+            'set_audio_data',   // 设置audio数据
+            'set_audio_ele',    // 设置audio元素
+            'set_audio_play'    // 设置audio播放状态
         ]),
         ...mapActions([
-            'get_sound_data',
-            'get_recommend_data'
+            'get_music_data',   // 获取音乐数据
+            'get_recommend_data'    // 获取推荐数据
         ]),
-        init() {
-            if (!this.audio_data || this.$route.params.id !== this.audio_data.sound.id) {
-                this.get_sound()
-            }
-            this.get_recommend()
-        },
         get_sound() {
             this.error = false
             this.loading = true
-            this.get_sound_data(this.$route.params.id)
+            this.get_music_data(this.$route.params.id)
             .then(res => {
                 if (res) {
                     this.set_audio_data(res)
@@ -144,13 +137,18 @@ export default {
                 }
             })
         },
+        // 点击调节进度条
         seek(e) {
             e = e || window.event
-            var percent = (e.pageX / window.innerWidth).toFixed(2)
+            var percent = (e.pageX / window.innerWidth).toFixed(2)  // 取小数点后2位数
             this.audio_ele.currentTime = this.audio_ele.duration * percent
+        },
+        init() {
+            this.get_sound()
+            this.get_recommend()
         }
     },
-    created() {
+    mounted() {
         this.init()
     }
 }
@@ -160,9 +158,7 @@ img_height = 10rem
 controls_height = 1.5rem
 #detail{
     width: 100%;
-    height: 100%;
     position: relative;
-    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     background: #f6f6f6;
     a {

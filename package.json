@@ -13,8 +13,6 @@
   "dependencies": {
     "axios": "^0.16.2",
     "babel-polyfill": "^6.23.0",
-    "fastclick": "^1.0.6",
-    "jquery": "^3.2.1",
     "material-design-icons": "^3.0.1",
     "mockjs": "^1.0.1-beta3",
     "muse-ui": "^2.1.0",
@@ -23,7 +21,6 @@
     "vue-awesome-swiper": "2.6.2",
     "vue-progressbar": "^0.7.2",
     "vue-router": "^2.6.0",
-    "vue-style-loader": "^3.0.1",
     "vuex": "^2.3.1"
   },
   "devDependencies": {
@@ -63,7 +60,7 @@
     "stylus-loader": "^3.0.1",
     "url-loader": "^0.5.8",
     "vue-loader": "^12.1.0",
-    "vue-style-loader": "^3.0.1",
+    "vue-style-loader": "^3.0.3",
     "vue-template-compiler": "^2.3.3",
     "webpack": "^2.6.1",
     "webpack-bundle-analyzer": "^2.2.1",

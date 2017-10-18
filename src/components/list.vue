@@ -1,7 +1,7 @@
 <template>
     <ul class='list'>
         <li class="list-item" v-for='(item,index) in json' :key="index">
-            <router-link :to="`/detail/${item.sound.id}`">
+            <router-link :to="url(item)">
                 <div class="pic_wrap">
                     <img :src="item.sound.pic_500">
                     <span class="fire" v-if='item.sound.is_hot' :class='hotClass(item.sound.is_hot)'></span>
@@ -21,14 +21,15 @@ export default {
         json: Array
     },
     methods: {
+        url(item) {
+            return `/detail/${item.sound.id}`
+        },
         hotClass(hot) {
-            let className = ''
             switch (hot) {
-                case 1: className = 'fire-red'; break
-                case 3: className = 'fire-yellow'; break
-                case 4: className = 'fire-blue'; break
+                case 1: return 'fire-red'
+                case 3: return 'fire-yellow'
+                case 4: return 'fire-blue'
             }
-            return className
         }
     }
 }
