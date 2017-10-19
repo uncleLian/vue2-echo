@@ -1,4 +1,4 @@
-#  vue-echo
+#  vue2-echo
 
 ![image](https://img.shields.io/badge/vue-2.3.3-blue.svg)
 ![image](https://img.shields.io/badge/music--ui-2.1.0-blue.svg)
@@ -21,7 +21,7 @@
 
 > axios、muse-ui、Mockjs、flexible.js、Material Icons
 
-> ES6/7、Stylus、ESlink、webpack、
+> ES6/7、Stylus、ESlint、webpack、
 
 ## 说明
 > 如果对您有帮助，您可以点右上角 "Star" 支持一下 谢谢！^_^
