@@ -2,7 +2,7 @@
   "name": "vue2-echo",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "uncleLian",
+  "author": "uncleLian <771674109@qq.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
