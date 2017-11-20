@@ -1,7 +1,9 @@
 #  vue2-echo
 
-![image](https://img.shields.io/badge/vue-2.3.3-blue.svg)
-![image](https://img.shields.io/badge/music--ui-2.1.0-blue.svg)
+![image](https://img.shields.io/badge/vue-2.5.2-blue.svg)
+![image](https://img.shields.io/badge/vue--routet-3.0.1-blue.svg)
+![image](https://img.shields.io/badge/vuex-3.0.1-blue.svg)
+![image](https://img.shields.io/badge/muse--ui-2.1.0-blue.svg)
 ![image](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## 前言
@@ -11,11 +13,11 @@
 
 ## 技术栈
 
-> Vue2、Vuex、Vue-router、vue-awesome-swiper、vue-progressbar
+> vue2、vuex3、vue-router3、vue-awesome-swiper、vue-progressbar
 
-> axios、muse-ui、Mockjs、flexible.js、Material Icons
+> axios、muse-ui、mockjs、flexible.js、Material Icons
 
-> ES6/7、Stylus、ESlint、webpack、
+> ES6/7、stylus、eslint、webpack3、
 
 ## 说明
 > 如果对您有帮助，您可以点右上角 "Star"一下， 您的支持是我最大的动力！非常感谢！^_^ 🌹

@@ -1,11 +1,13 @@
 <template>
     <div id="app" :class="{'musicBar-on': audio_data}">
         <!-- 内容层 -->
+        
         <!-- <transition name="fade"> -->
             <keep-alive>
                 <router-view/></router-view>
             </keep-alive>
         <!-- </transition> -->
+
         <!-- 音乐控制条 -->
         <music-bar></music-bar>
 
