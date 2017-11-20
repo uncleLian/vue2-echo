@@ -1,7 +1,7 @@
 #  vue2-echo
 
 ![image](https://img.shields.io/badge/vue-2.5.2-blue.svg)
-![image](https://img.shields.io/badge/vue--routet-3.0.1-blue.svg)
+![image](https://img.shields.io/badge/vue--router-3.0.1-blue.svg)
 ![image](https://img.shields.io/badge/vuex-3.0.1-blue.svg)
 ![image](https://img.shields.io/badge/muse--ui-2.1.0-blue.svg)
 ![image](https://img.shields.io/badge/license-MIT-blue.svg)
