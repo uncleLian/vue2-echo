@@ -78,24 +78,35 @@
 ## 目录结构
 
 ``` bash
-├── build                      // 构建相关  
-├── config                     // 配置相关
-├── src                        // 源代码
-│   ├── assets                 // 样式、图标等静态资源
-│   ├── components             // 全局公用组件
-│   ├── config                 // 全局公用方法
-│   ├── mock                   // mock数据
-│   ├── page                   // 应用页面
-│   ├── router                 // 路由
-│   ├── store                  // 全局store管理
-│   ├── App.vue                // 入口页面
-│   └── main.js                // 入口 加载组件 初始化等
-├── static                     // 空文件夹，只作为github保留
-├── .babelrc                   // babel-loader 配置
-├── eslintrc.js                // eslint 配置项
-├── .gitignore                 // git 忽略项
-├── index.html                 // html模板
-└── package.json               // package.json
+├── build                        // 构建相关  
+├── config                       // 配置相关
+├── src                          // 源代码
+│   ├── assets                   // 样式、图标等静态资源
+│   ├── components               // 全局公用组件
+│   |   ├── banner.vue           // banner组件
+│   |   ├── error.vue            // 错误组件
+│   |   ├── list.vue             // 列表组件
+│   |   ├── loading.vue          // 加载组件
+│   |   ├── musicBar.vue         // 音乐条组件
+│   |   ├── sheet.vue            // 模态框组件
+│   ├── config                   // 全局公用方法
+│   |   ├── cache.js             // 缓存方法
+│   |   ├── fetch.js             // 请求方法
+│   |   ├── util.js              //  工具方法
+│   ├── mock                     // mock数据
+│   ├── page                   
+│   |   ├── detail               //  详情页
+│   |   ├── index                //  首页
+│   ├── router                   // 路由
+│   ├── store                    // 状态管理
+│   ├── App.vue                  // 入口页面
+│   └── main.js                  // 入口 加载组件 初始化等
+├── static                       // 空文件夹，只作为github保留
+├── .babelrc                     // babel-loader 配置
+├── eslintrc.js                  // eslint 配置项
+├── .gitignore                   // git 忽略项
+├── index.html                   // html模板
+└── package.json                 // package.json
 ```
 
 ## 安装运行
@@ -118,7 +129,7 @@ npm run build
 欢迎热爱学习、忠于分享的朋友一起来交流
 - QQ：771674109
 - WX：L771674109
-
+- vue交流群：338241465
 
 ## License
 
