@@ -179,6 +179,7 @@ export default {
             flex: 1;
             overflow: hidden;
             padding: 0 0.2rem;
+            font-size: 12px;
             p{
                 text-overflow: ellipsis;
                 overflow: hidden;

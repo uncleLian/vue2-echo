@@ -208,6 +208,7 @@ controls_height = 1.5rem
         }
         .user_fans{
             float: right;
+            font-size: 12px;
             em{
                 color: #00ae05;
             }

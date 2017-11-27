@@ -1,6 +1,9 @@
 *{
 	box-sizing:border-box;
 }
+html{
+  font-size: 37.5px; /* 解决UC浏览，rem适配问题 https://www.cnblogs.com/chenrong/articles/4686601.html */
+}
 html,body{
     width: 100%;
     min-height: 100%;
@@ -32,3 +35,6 @@ a{color: #333; outline: none; text-decoration: none;}
 a:focus{outline: none;}
 .clearfix:after {visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
 .clearfix {zoom:1; }
+em{
+    font-style: normal;
+}
