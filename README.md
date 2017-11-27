@@ -12,19 +12,18 @@
 此开源系列全部都是线上实践，并不像一些视频教程里面能实现差不多样子且没有考虑细节、兼容和使用体验的问题。一般作为上线项目，都会遇到一些极其不可理喻的需求且存在着许多麻烦的细节。往往这些才是我们最烦的，网上很多也搜索不到，又要自己去分析、实践，才能运用到自己项目上，这里会浪费大量大量的时间，所以在项目里我会尽可能注释大量的提示去帮助大家解决这些问题：都是我在线上项目实践过的一些经验，供大家参考。
 
 ## 技术栈
+> [vue](https://cn.vuejs.org/v2/guide/)、[vue-router](https://router.vuejs.org/zh-cn/essentials/getting-started.html)、[vuex](https://vuex.vuejs.org/zh-cn/getting-started.html)、[axios（请求库）](https://github.com/axios/axios)、[muse-ui（移动端UI库）](http://www.muse-ui.org/#/install)
 
-> vue2、vuex3、vue-router3、vue-awesome-swiper、vue-progressbar
+> [vue-awesome-swiper（轮播图）](https://github.com/surmon-china/vue-awesome-swiper)、[vue-progressbar（加载进度条）](https://github.com/hilongjw/vue-progressbar)、[lib-flexible（淘宝适配库）](https://github.com/amfe/lib-flexible)、[mockjs（数据模拟）](http://mockjs.com/)、[Material Icons（google图标）](http://google.github.io/material-design-icons/)
 
-> axios、muse-ui、mockjs、flexible.js、Material Icons
-
-> ES6/7、stylus、eslint、webpack3、
+> [ES6/7（JS语法）](https://github.com/lukehoban/es6features)、[Stylus（css预处理器）](https://github.com/stylus/stylus)、[ESlint（JS风格规范）](https://github.com/standard/standard/blob/master/docs/RULES-zhcn.md)、[webpack3（资源处理）](https://github.com/webpack/webpack)
 
 ## 说明
+> 开发环境 macOS 10.12.6、Chrome 61、 nodejs 8.4.0
+
 > 如果对您有帮助，您可以点右上角 "Star"一下， 您的支持是我最大的动力！非常感谢！^_^ 🌹
 
 > 或者您可以 "follow" 一下，我会不断开源更多的有趣实用的项目
-
-> 开发环境 macOS 10.12.6、Chrome 61、 nodejs 8.4.0
 
 > 如有问题请直接在 Issues 中提，或者您发现问题并有非常好的解决方案，欢迎 PR 👍
 
@@ -42,7 +41,7 @@
 
 ## 注意
 
-> 1、因为vue-router使用 hitstory 模式并且该项目没有后端支持，所以线上项目刷新之后是会出现404的，这里是需要后端配置一下的。在开发环境下不会出现这种问题，建议下载项目运行查看最佳效果。具体解释在router里面或者查看 [vue-router官网的解释](https://router.vuejs.org/zh-cn/essentials/history-mode.html)
+> 1、因为vue-router使用 history 模式并且该项目没有后端支持，所以线上项目刷新之后是会出现404的，这里是需要后端配置一下的。在开发环境下不会出现这种问题，建议下载项目运行查看最佳效果。具体解释在router里面或者查看 [vue-router官网的解释](https://router.vuejs.org/zh-cn/essentials/history-mode.html)
 
 > 2、该项目是纯前端项目，数据是使用mock模拟的，数据结构跟官方保持一致，只是没有了一些其他功能的数据，类似评论等。
 
@@ -129,7 +128,7 @@ npm run build
 欢迎热爱学习、忠于分享的朋友一起来交流
 - QQ：771674109
 - WX：L771674109
-- vue交流群：338241465
+- Vue交流群：338241465 —— 广州-小鑫
 
 ## License
 
