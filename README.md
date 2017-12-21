@@ -36,11 +36,12 @@
 
 ## 最终目标
 
-- 第一阶段：echo回声（移动端，难度：简单 ~ 中等） —— [仓库地址](https://github.com/uncleLian/vue2-echo) —— [项目演示地址](http://echo.liansixin.win)
+- 第一阶段：echo回声（移动端，难度：简单 ~ 中等） —— [仓库地址](https://github.com/uncleLian/vue2-echo) —— [演示地址](http://echo.liansixin.win)
 
-- 第二阶段：今日头条（移动端 & native，难度：困难） —— [仓库地址](https://github.com/uncleLian/vue2-news) —— [移动端演示地址](http://toutiao.liansixin.win)， [native端演示地址](http://native.liansixin.win)
+- 第二阶段：今日头条（移动端 & native，难度：困难） —— [仓库地址](https://github.com/uncleLian/vue2-news) —— [web演示地址](http://toutiao.liansixin.win)， [native端演示地址](http://native.liansixin.win)
 
 - 第三阶段：头条号（pc端，难度：中等 ~ 困难） —— [仓库地址](https://github.com/uncleLian/vue2-health) —— 还在开发，敬请期待！（已实现核心功能）
+- 第三阶段：头条号（pc端，难度：中等 ~ 困难） —— [仓库地址](https://github.com/uncleLian/vue2-health) —— [演示地址](http://health.liansixin.win)还在开发，敬请期待！（已实现核心功能）
 
 ##### 注：此系列只关注前端项目的实现，后端等知识不是此系列的范围，但会告知一二。
 
@@ -113,6 +114,9 @@ npm run dev
 # build for production with minification
 npm run build
 ```
+
+## 更新日志
+[发行说明](https://github.com/uncleLian/vue2-echo/releases)中记录了每个版本的详细更改。
 
 ## 交流
 

@@ -5,10 +5,6 @@ import Router from 'vue-router'
 const index = () => import('@/page/index/index')
 const detail = () => import('@/page/detail/detail')
 
-// 全部加载
-// import index from '@/page/index/index'
-// import detail from '@/page/detail/detail'
-
 Vue.use(Router)
 
 export default new Router({
