@@ -19,7 +19,9 @@ export default {
         return {
             swiperOption: {
                 notNextTick: true,
-                pagination: '.swiper-pagination',
+                pagination: {
+                    el: '.swiper-pagination'
+                },
                 paginationClickable: true,
                 autoplay: 3000,
                 autoplayDisableOnInteraction: false

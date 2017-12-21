@@ -9,7 +9,6 @@
             <a class="user_name">{{audio_data.sound.user.name}}</a>
             <a class='user_fans'>粉丝 <em>{{audio_data.sound.user.followed_count}}</em></a>
         </div>
-
         <!-- 封面 -->
         <div class="sound_cover">
             <!-- 弹幕 -->
@@ -27,17 +26,14 @@
                 <div class="info">
                     <p class="sound_name">{{audio_data.sound.name}}</p>
                     <p>
-                        <a class="sound_author"><em>{{audio_data.sound.user.name}}</em></a>
-                        发布在 
-                        <a class='sound_channel'><em>{{audio_data.sound.channel.name}}</em></a>
-                        频道
+                        <a class="sound_author"><em>{{audio_data.sound.user.name}}</em></a> 发布在
+                        <a class='sound_channel'><em>{{audio_data.sound.channel.name}}</em></a> 频道
                     </p>
                 </div>
                 <!-- 弹幕按钮 -->
                 <div class="danmu_btn" :class="danmu? 'on': 'off'" @click.stop="danmu = !danmu"></div>
             </div>
         </div>
-
         <!-- 信息 -->
         <div class="sound_info">
             <!-- 基本信息 -->
@@ -55,9 +51,9 @@
                     <p v-if='audio_data.sound.song_info.name'>{{audio_data.sound.song_info.name.type}} : {{audio_data.sound.song_info.name.name}}</p>
                 </template>
                 <div v-if="audio_data.sound.lyrics" v-html="audio_data.sound.lyrics"></div>
+                <div v-if="!audio_data.sound.song_info && !audio_data.sound.lyric" class="noLyric">没有相关的歌词T T~ </div>
             </div>
         </div>
-
         <!-- 更多推荐 -->
         <div class="sound_more">
             <h3>相关推荐</h3>
@@ -65,36 +61,31 @@
                 <my-list :json='recommentJson'></my-list>
             </div>
         </div>
-
-        <my-loading :visible='loading'></my-loading>
-        <my-error :visible='error' :reload="get_sound" ></my-error>
     </div>
 </template>
 <script>
-import Util from '@/config/util.js'
+import Tool from '@/utils/tool.js'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
     name: 'detail',
     data() {
         return {
             recommentJson: [],
-            danmu: false,
-            loading: false,
-            error: false
+            danmu: false
         }
     },
     computed: {
         ...mapGetters([
-            'audio_ele', // auido元素
-            'audio_data', // 当前播放的音乐数据
-            'audio_play', // audio播放状态
-            'audio_duration', // audio 时长
-            'audio_currentTime', // audio当前秒数s的播放进度
-            'audio_progress' // audio当前百分比%的播放进度
+            'audio_ele',                // auido元素
+            'audio_data',               // 当前播放的音乐数据
+            'audio_play',               // audio播放状态
+            'audio_duration',           // audio 时长
+            'audio_currentTime',        // audio当前秒数s的播放进度
+            'audio_progress'            // audio当前百分比%的播放进度
         ])
     },
     filters: {
-        sec2his: Util.sec2his   // 让currentTime 秒数转换成 03:30 这样的格式的方法
+        sec2his: Tool.sec2his           // 让currentTime 秒数转换成 03:30 这样的格式的方法
     },
     watch: {
         $route(to, from) {
@@ -105,30 +96,27 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'set_audio_data',   // 设置audio数据
-            'set_audio_ele',    // 设置audio元素
-            'set_audio_play'    // 设置audio播放状态
+            'set_audio_data',           // 设置audio数据
+            'set_audio_ele',            // 设置audio元素
+            'set_audio_play'            // 设置audio播放状态
         ]),
         ...mapActions([
-            'get_music_data',   // 获取音乐数据
-            'get_recommend_data'    // 获取推荐数据
+            'get_music_data',           // 获取音乐数据
+            'get_recommend_data'        // 获取推荐数据
         ]),
+        // 获取音乐数据
         get_sound() {
-            this.error = false
-            this.loading = true
             this.get_music_data(this.$route.params.id)
             .then(res => {
                 if (res) {
                     this.set_audio_data(res)
                 }
-                this.loading = false
             })
             .catch(err => {
                 console.log(err)
-                this.error = true
-                this.loading = false
             })
         },
+        // 获取推荐数据
         get_recommend() {
             this.get_recommend_data()
             .then(res => {
@@ -154,42 +142,41 @@ export default {
 }
 </script>
 <style lang='stylus'>
-img_height = 10rem
-controls_height = 1.5rem
-#detail{
+img_height=10rem controls_height=1.5rem 
+#detail {
     width: 100%;
     position: relative;
     -webkit-overflow-scrolling: touch;
     background: #f6f6f6;
     a {
         text-decoration: none;
-        em{
+        em {
             color: #6ed56c;
             font-size: 0.32rem;
         }
     }
-    .sound_user{
+    .sound_user {
         position: relative;
         width: 100%;
         height: 1.4rem;
         line-height: 1.4rem;
         background: #fbfbfb;
         padding: 0 0.42rem;
-        a{
+        a {
             color: #666;
             display: inline-block;
         }
-        .user_img{
+        .user_img {
             position: relative;
             width: 0.9rem;
             height: 0.9rem;
             margin: 0.25rem 0;
             overflow: hidden;
-            img{
+            img {
                 width: 100%;
                 border-radius: 50%;
             }
-            .v-icon{
+            .v-icon {
                 width: 0.4rem;
                 height: 0.4rem;
                 border-radius: 50%;
@@ -198,7 +185,7 @@ controls_height = 1.5rem
                 right: 0;
             }
         }
-        .user_name{
+        .user_name {
             padding-left: 0.266rem;
             font-size: 14px;
             text-align: left;
@@ -206,19 +193,19 @@ controls_height = 1.5rem
             overflow: hidden;
             white-space: nowrap;
         }
-        .user_fans{
+        .user_fans {
             float: right;
             font-size: 12px;
-            em{
+            em {
                 color: #00ae05;
             }
         }
     }
-    .sound_cover{
+    .sound_cover {
         width: 100%;
         height: img_height;
         position: relative;
-        img{
+        img {
             width: 100%;
             height: img_height;
             object-fit: cover;
@@ -230,7 +217,7 @@ controls_height = 1.5rem
             width: 100%;
             height: 8.1rem;
         }
-        .progress_bar{
+        .progress_bar {
             position: absolute;
             bottom: controls_height;
             width: 100%;
@@ -239,28 +226,28 @@ controls_height = 1.5rem
             background: rgba(0, 0, 0, 0.2);
             color: #fff;
             font-size: 0.3rem;
-            span{
+            span {
                 position: absolute;
                 left: 0;
                 top: 0;
                 height: 100%;
                 background: rgba(110, 213, 108, 0.2);
-                &:after{
-                  content: "";
-                  display: inline-block;
-                  width: 0.16rem;
-                  height: 100%;
-                  background: #6ed56c;
-                  position: absolute;
-                  top: 0;
-                  right: -0.16rem;
+                &:after {
+                    content: "";
+                    display: inline-block;
+                    width: 0.16rem;
+                    height: 100%;
+                    background: #6ed56c;
+                    position: absolute;
+                    top: 0;
+                    right: -0.16rem;
                 }
             }
             em {
                 padding-left: 0.25rem;
             }
         }
-        .controls{
+        .controls {
             width: 100%;
             height: controls_height;
             line-height: controls_height;
@@ -269,20 +256,20 @@ controls_height = 1.5rem
             background: rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
-            .play_btn{
+            .play_btn {
                 width: 1rem;
                 height: 1rem;
                 margin: 0.25rem;
                 background-size: cover;
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
             }
-            .info{
+            .info {
                 color: #fff;
                 height: 1rem;
                 vertical-align: top;
                 flex: 1;
                 overflow: hidden;
-                p{
+                p {
                     width: 100%;
                     line-height: 1.432;
                     text-overflow: ellipsis;
@@ -290,11 +277,11 @@ controls_height = 1.5rem
                     white-space: nowrap;
                     font-size: 0.293rem;
                 }
-                .sound_name{
+                .sound_name {
                     font-size: 0.373rem;
                 }
             }
-            .danmu_btn{
+            .danmu_btn {
                 width: 1.45rem;
                 height: 0.67rem;
                 margin: 0 0.3rem;
@@ -303,24 +290,24 @@ controls_height = 1.5rem
             }
         }
     }
-    .sound_info{
+    .sound_info {
         width: 100%;
         background: #fff;
         margin-bottom: 0.25rem;
-        .info_bar{
+        .info_bar {
             width: 100%;
             height: 1.4rem;
             border-bottom: 1px solid #e8e8e8;
             font-size: 0;
             padding: 0 0.42rem;
-            .play_num{
+            .play_num {
                 display: inline-block;
                 height: 1.4rem;
                 line-height: 1.4rem;
                 font-size: 0.32rem;
                 color: #a9a9a9;
                 margin-right: 0.53rem;
-                &:before{
+                &:before {
                     width: 0.226rem;
                     height: 0.253rem;
                     margin-right: 0.18rem;
@@ -329,14 +316,14 @@ controls_height = 1.5rem
                     background-size: cover;
                 }
             }
-            .like_num{
+            .like_num {
                 display: inline-block;
                 height: 1.4rem;
                 line-height: 1.4rem;
                 font-size: 0.32rem;
                 color: #a9a9a9;
                 margin-right: 0.53rem;
-                &:before{
+                &:before {
                     width: 0.293rem;
                     height: 0.25rem;
                     margin-right: 0.18rem;
@@ -345,13 +332,13 @@ controls_height = 1.5rem
                     background-size: cover;
                 }
             }
-            .to_bell_btn{
+            .to_bell_btn {
                 float: right;
                 height: 1.4rem;
                 line-height: 1.4rem;
                 font-size: 0.346rem;
                 color: #6ed56c;
-                &:before{
+                &:before {
                     display: inline-block;
                     width: 0.525rem;
                     height: 0.56rem;
@@ -363,55 +350,65 @@ controls_height = 1.5rem
                 }
             }
         }
-        .info_lyric{
+        .info_lyric {
             padding: 0.373rem 0.4rem 0.8rem;
             white-space: pre-wrap;
             text-align: left;
             font-size: 14px;
             line-height: 1.5em;
-            p{
+            .noLyric{
+                text-align: center;
+                color: #999;
+            }
+            p {
                 line-height: 1;
             }
         }
     }
-    .sound_more{
+    .sound_more {
         width: 100%;
         background: #fff;
-        h3{
+        h3 {
             height: 1.28rem;
             line-height: 1.28rem;
             color: #6ed56c;
             font-size: 14px;
             text-align: center;
         }
-       .recommend{
+        .recommend {
             width: 100%;
             position: relative;
             padding-top: 0.4rem;
-        } 
+        }
     }
 }
 </style>
 <style scoped>
-.play_btn.pause{
+.play_btn.pause {
     background: url(~@/assets/img/play.png) no-repeat;
 }
-.play_btn.play{
+
+.play_btn.play {
     background: url(~@/assets/img/pause.png) no-repeat;
 }
-.danmu_btn.on{
+
+.danmu_btn.on {
     background: url(~@/assets/img/danmu_on.png) no-repeat;
 }
-.danmu_btn.off{
+
+.danmu_btn.off {
     background: url(~@/assets/img/danmu_off.png) no-repeat;
 }
-.play_num:before{
+
+.play_num:before {
     background: url(~@/assets/img/play_num.png) no-repeat;
 }
-.like_num:before{
+
+.like_num:before {
     background: url(~@/assets/img/like_num.png) no-repeat;
 }
-.to_bell_btn:before{
+
+.to_bell_btn:before {
     background: url(~@/assets/img/bell.png) no-repeat;
 }
 </style>

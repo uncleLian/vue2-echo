@@ -2,12 +2,15 @@
     <ul class='list'>
         <li class="list-item" v-for='(item,index) in json' :key="index">
             <router-link :to="url(item)">
+                <!-- 图片 -->
                 <div class="pic_wrap">
                     <img :src="item.sound.pic_500">
                     <span class="fire" v-if='item.sound.is_hot' :class='hotClass(item.sound.is_hot)'></span>
                 </div>
+                <!-- 名字 -->
                 <h4>{{item.sound.name}}</h4>
             </router-link>
+            <!-- 频道 -->
             <p class="channel">
                 <a>{{item.sound.channel.name}}</a>
                 频道
@@ -24,6 +27,7 @@ export default {
         url(item) {
             return `/detail/${item.sound.id}`
         },
+        // 热度
         hotClass(hot) {
             switch (hot) {
                 case 1: return 'fire-red'

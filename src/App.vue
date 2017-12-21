@@ -1,22 +1,16 @@
 <template>
     <div id="app" :class="{'musicBar-on': audio_data}">
-        <!-- 内容层 -->
-        
-        <!-- <transition name="fade"> -->
-            <keep-alive>
-                <router-view/></router-view>
-            </keep-alive>
-        <!-- </transition> -->
-
+        <!-- 视图层 -->
+        <keep-alive>
+            <router-view/></router-view>
+        </keep-alive>
         <!-- 音乐控制条 -->
         <music-bar></music-bar>
-
         <!-- 页面加载进度条 -->
         <vue-progress-bar></vue-progress-bar>
     </div>
 </template>
 <script>
-import '@/assets/css/reset.css'
 import { mapGetters, mapMutations } from 'vuex'
 export default {
     computed: {
@@ -26,7 +20,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'set_app_cache' // 获取app缓存，刷新依然有数据
+            'set_app_cache'  // 获取app缓存，刷新依然有数据
         ])
     },
     created() {
@@ -34,11 +28,11 @@ export default {
         // 加载进度条 开始
         this.$Progress.start()
         this.$router.beforeEach((to, from, next) => {
-          this.$Progress.start()
-          next()
+            this.$Progress.start()
+            next()
         })
         this.$router.afterEach((to, from) => {
-          this.$Progress.finish()
+            this.$Progress.finish()
         })
     },
     mounted() {
@@ -52,14 +46,8 @@ export default {
     position: relative;
     min-height: inherit;
     background: #eee;
-    &.musicBar-on{
+    &.musicBar-on {
         padding-bottom: 1.3rem;
     }
-}
-.fade-enter,.fade-leave-active{
-    opacity: 0;
-}
-.fade-enter-active,.fade-leave-active{
-    transition: all 0.2s ease
 }
 </style>

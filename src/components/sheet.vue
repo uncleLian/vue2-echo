@@ -1,17 +1,14 @@
 <template>
     <div class="sheet">
-
         <!-- 播放列表 -->
         <mu-bottom-sheet sheetClass='playListSheet' :open="playList_visible" @close="playList_visible = false" overlayColor='#fff' :overlayOpacity="0">
-            <!-- header -->
             <div class="playList-header">
                 播放列表<span>（{{playList.length}}首）</span>
                 <!-- 播放模式按钮 -->
                 <mu-icon-button class="playMode_btn" :icon="playMode_icon" @click.stop="playMode_visible = true" />
             </div>
-            <!-- list -->
+            <!-- 列表 -->
             <mu-list class='list'>
-                <!-- list-item -->
                 <mu-list-item class="list-item" v-for="(item, index) in playList" :key="index" :class="{'playing': audio_data.sound.id === item.sound.id}" @click.stop="set_audio_data(item)">
                     <!-- 播放小图标 -->
                     <mu-icon class="playing_icon" slot="left" v-show="audio_data.sound.id === item.sound.id"  value="play_circle_filled" /> {{item.sound.name}}
@@ -45,18 +42,18 @@ export default {
                 { title: '单曲循环', val: 'singleRepeat', icon: 'repeat_one' },
                 { title: '列表循环', val: 'listRepeat', icon: 'repeat' }
             ],
-            playList_visible: false, // 播放列表
-            playMode_visible: false // 播放模式
+            playList_visible: false,    // 播放列表
+            playMode_visible: false     // 播放模式
         }
     },
     computed: {
         ...mapGetters([
-            'audio_data', // 当前播放的音乐数据
-            'playMode', // 播放模式
-            'playList' // 播放列表
+            'audio_data',       // 当前播放的音乐数据
+            'playMode',         // 播放模式
+            'playList'          // 播放列表
         ]),
+        // 播放模式icon
         playMode_icon() {
-            // 根据参数返回对应的icon
             switch (this.playMode) {
                 case 'random': return 'all_inclusive'
                 case 'listRepeat': return 'repeat'
@@ -74,17 +71,20 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'set_audio_data', // 设置audio数据
-            'set_playMode', // 设置播放模式
-            'set_playList' // 设置播放列表数据
+            'set_audio_data',   // 设置audio数据
+            'set_playMode',     // 设置播放模式
+            'set_playList'      // 设置播放列表数据
         ]),
+        // 切换显示
         toggleVisible() {
             this.playList_visible = !this.playList_visible
         },
+        // 播放模式change
         playModeChange(val) {
             this.set_playMode(val)
             this.playMode_visible = false
         },
+        // 删除选项
         deleteItem(item) {
             let index = this.playList.findIndex(n => n.sound.id === item.sound.id)
             this.playList.splice(index, 1)

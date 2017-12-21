@@ -2,15 +2,13 @@
     <div id='index'>
         <!-- header -->
         <div class="headerTheme"><img src="~@/assets/img/header_theme.jpg"></div>
-
         <!-- banner -->
         <my-banner :json='bannerJson'></my-banner>
-
         <!-- recommend -->
         <div class="recommend">
             <h3 class="recommen_title">echo每日推荐</h3>
             <!-- 一键播放 -->
-            <mu-raised-button label="一键播放" class="recommend_tip" backgroundColor='#6ed56c' @click.stop="playAll"/>
+            <mu-raised-button label="一键播放" class="recommend_tip" backgroundColor='#6ed56c' @click.stop="playAll" />
             <!-- 列表 -->
             <my-list :json='recommentJson'></my-list>
         </div>
@@ -28,19 +26,20 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'audio_data', // audio数据
-            'audio_ele' // audio元素
+            'audio_data',
+            'audio_ele'
         ])
     },
     methods: {
         ...mapMutations([
-            'set_audio_data',   // 设置audio数据
-            'set_playList'  // 设置播放列表数据
+            'set_audio_data',
+            'set_playList'
         ]),
         ...mapActions([
             'get_banner_data',
             'get_recommend_data'
         ]),
+        // 获取banner数据
         get_banner() {
             this.get_banner_data()
             .then(res => {
@@ -52,6 +51,7 @@ export default {
                 console.log('get_banner', err)
             })
         },
+        // 获取推荐数据
         get_recommend() {
             this.get_recommend_data()
             .then(res => {
@@ -63,6 +63,7 @@ export default {
                 console.log('get_recommend', err)
             })
         },
+        // 一键播放
         playAll() {
             this.set_playList(this.recommentJson)
             // 当前音乐是否等于即将要播放的音乐？重新加载播放 ： 播放即将的音乐
@@ -84,20 +85,20 @@ export default {
 }
 </script>
 <style lang='stylus'>
-#index{
+#index {
     position: relative;
     width: 100%;
     background: #fff;
     -webkit-overflow-scrolling: touch;
     .headerTheme {
-        img{
+        img {
             width: 100%;
         }
     }
-    .recommend{
+    .recommend {
         width: 100%;
         position: relative;
-        .recommen_title{
+        .recommen_title {
             width: 120px;
             height: 26px;
             line-height: 26px;
@@ -108,7 +109,7 @@ export default {
             border-radius: 13px;
             margin: 20px auto;
         }
-        .recommend_tip{
+        .recommend_tip {
             position: absolute;
             left: 0;
             top: 60px;
@@ -124,7 +125,7 @@ export default {
             background-position: 10px 4px;
             border-radius: 14px;
             padding-left: 10px;
-            text-indent: 10px;        
+            text-indent: 10px;
         }
     }
 }

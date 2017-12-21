@@ -4,28 +4,33 @@
 ![image](https://img.shields.io/badge/vue--router-3.0.1-blue.svg)
 ![image](https://img.shields.io/badge/vuex-3.0.1-blue.svg)
 ![image](https://img.shields.io/badge/muse--ui-2.1.0-blue.svg)
-![image](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## 前言
 这半年多一直用Vue写项目，感觉用的挺得心应手，所以准备分享一些经验和记录成果。我上网搜了Vue的练手项目和视频教程，目前大多数都是音乐、购物车，后台管理那方面，可能因为这方面需求比较多吧。考虑之后打算从容易 -> 中等 -> 困难， 3个复杂度和不同类型的项目，一步步地带领大家深入Vue。这3个阶段的项目将会涉及Vue的大部分知识，如果你都能掌握，那么你就可以随心所欲地使用Vue去写单页面应用了。
 
-此开源系列全部都是线上实践，并不像一些视频教程里面能实现差不多样子且没有考虑细节、兼容和使用体验的问题。一般作为上线项目，都会遇到一些极其不可理喻的需求且存在着许多麻烦的细节。往往这些才是我们最烦的，网上很多也搜索不到，又要自己去分析、实践，才能运用到自己项目上，这里会浪费大量大量的时间，所以在项目里我会尽可能注释大量的提示去帮助大家解决这些问题：都是我在线上项目实践过的一些经验，供大家参考。
+此开源系列的知识点全部都是线上实践过的，会考虑到细节、兼容和使用体验的问题，所以在项目里我会尽可能地写上注释去帮助大家快速了解项目和解决所需。
 
 ## 技术栈
-> [vue](https://cn.vuejs.org/v2/guide/)、[vue-router](https://router.vuejs.org/zh-cn/essentials/getting-started.html)、[vuex](https://vuex.vuejs.org/zh-cn/getting-started.html)、[axios（请求库）](https://github.com/axios/axios)、[muse-ui（移动端UI库）](http://www.muse-ui.org/#/install)
-
-> [vue-awesome-swiper（轮播图）](https://github.com/surmon-china/vue-awesome-swiper)、[vue-progressbar（加载进度条）](https://github.com/hilongjw/vue-progressbar)、[lib-flexible（淘宝适配库）](https://github.com/amfe/lib-flexible)、[mockjs（数据模拟）](http://mockjs.com/)、[Material Icons（google图标）](http://google.github.io/material-design-icons/)
-
-> [ES6/7（JS语法）](https://github.com/lukehoban/es6features)、[Stylus（css预处理器）](https://github.com/stylus/stylus)、[ESlint（JS风格规范）](https://github.com/standard/standard/blob/master/docs/RULES-zhcn.md)、[webpack3（资源处理）](https://github.com/webpack/webpack)
+1. [vue](https://cn.vuejs.org/v2/guide/)
+2. [vue-router](https://router.vuejs.org/zh-cn/essentials/getting-started.html)
+3. [vuex](https://vuex.vuejs.org/zh-cn/getting-started.html)
+4. [axios（请求库）](https://github.com/axios/axios)
+5. [muse-ui（移动端UI库）](http://www.muse-ui.org/#/install)
+6. [vue-awesome-swiper（轮播图）](https://github.com/surmon-china/vue-awesome-swiper)
+7. [vue-progressbar（加载进度条）](https://github.com/hilongjw/vue-progressbar)
+8. [amfe-flexible（淘宝适配库）](https://github.com/amfe/lib-flexible)
+9. [mockjs（数据模拟）](http://mockjs.com/)
+10. [Material Icons（google图标库）](http://google.github.io/material-design-icons/)
+11. [Stylus（css预处理器）](https://github.com/stylus/stylus)
+12. [ES6/7（JS语法）](https://github.com/lukehoban/es6features)
+13. [ESlint（JS语法规范）](https://github.com/standard/standard/blob/master/docs/RULES-zhcn.md)
 
 ## 说明
-> 开发环境 macOS 10.12.6、Chrome 61、 nodejs 8.4.0
+> 如果对您有帮助，您可以点右上角 "star"一下， 您的支持是我最大的动力！非常感谢！^_^ 🌹
 
-> 如果对您有帮助，您可以点右上角 "Star"一下， 您的支持是我最大的动力！非常感谢！^_^ 🌹
+> 或者您可以 "follow（关注）" 一下，我会不断开源更多实用的项目。
 
-> 或者您可以 "follow" 一下，我会不断开源更多的有趣实用的项目
-
-> 如有问题请直接在 Issues 中提，或者您发现问题并有非常好的解决方案，欢迎 PR 👍
+> 如有问题可以直接在 Issues 中提，或者加入我们vue群更进一步地交流。
 
 > 该项目是此开源系列的其中一个阶段，更多内容查看下方的最终目标
 
@@ -39,14 +44,6 @@
 
 ##### 注：此系列只关注前端项目的实现，后端等知识不是此系列的范围，但会告知一二。
 
-## 注意
-
-> 1、因为vue-router使用 history 模式并且该项目没有后端支持，所以线上项目刷新之后是会出现404的，这里是需要后端配置一下的。在开发环境下不会出现这种问题，建议下载项目运行查看最佳效果。具体解释在router里面或者查看 [vue-router官网的解释](https://router.vuejs.org/zh-cn/essentials/history-mode.html)
-
-> 2、该项目是纯前端项目，数据是使用mock模拟的，数据结构跟官方保持一致，只是没有了一些其他功能的数据，类似评论等。
-
-> 3、手机查看项目有些浏览器不支持自动播放音乐的，需要手动触发。
-
 ## 效果演示 
 
 [查看deme请戳这里](http://echo.liansixin.win)（请使用chrome手机模式预览）
@@ -58,13 +55,11 @@
 ## 功能
 
 - [x] 全站内播放（单页面优点）
-- [x] 播放 & 暂停 & 下一首
-- [x] 播放模式： 默认、随机播放、单曲循环、列表循环
-- [x] 播放进度条 & 可调节播放进度
-- [x] 播放列表 & 可删除播放列表 & 可点击切换音乐
-- [x] 一键播放
-- [ ] 弹幕 （太耗移动web性能和个人时间，暂不实现啦）
-- [ ] 手机铃声（好像只有app获取用户手机权限才能实现，web暂不可能实现，如果可以实现请告知我）
+- [x] 播放行为：播放、暂停、下一首、一键播放
+- [x] 播放模式：默认、随机播放、单曲循环、列表循环
+- [x] 播放视图：播放进度条（可调节）、播放列表（可增删、切换）
+- [ ] 弹幕 （没有评论数据，暂不实现啦T T~）
+- [ ] 手机铃声（网页没有不能调用手机底层，不能实现）
 
 ## 项目截图
 
@@ -79,19 +74,17 @@
 ``` bash
 ├── build                        // 构建相关  
 ├── config                       // 配置相关
-├── src                          // 源代码
-│   ├── assets                   // 样式、图标等静态资源
+├── src                          
+│   ├── assets                   // 静态资源 样式、图标等静态资源
 │   ├── components               // 全局公用组件
 │   |   ├── banner.vue           // banner组件
-│   |   ├── error.vue            // 错误组件
 │   |   ├── list.vue             // 列表组件
-│   |   ├── loading.vue          // 加载组件
 │   |   ├── musicBar.vue         // 音乐条组件
 │   |   ├── sheet.vue            // 模态框组件
-│   ├── config                   // 全局公用方法
+│   ├── util                   
 │   |   ├── cache.js             // 缓存方法
 │   |   ├── fetch.js             // 请求方法
-│   |   ├── util.js              //  工具方法
+│   |   ├── tool.js              // 工具方法
 │   ├── mock                     // mock数据
 │   ├── page                   
 │   |   ├── detail               //  详情页
@@ -99,13 +92,13 @@
 │   ├── router                   // 路由
 │   ├── store                    // 状态管理
 │   ├── App.vue                  // 入口页面
-│   └── main.js                  // 入口 加载组件 初始化等
-├── static                       // 空文件夹，只作为github保留
+│   └── main.js                  // 入口配置
+├── static                       //空文件夹，只作为github保留                   
 ├── .babelrc                     // babel-loader 配置
 ├── eslintrc.js                  // eslint 配置项
 ├── .gitignore                   // git 忽略项
 ├── index.html                   // html模板
-└── package.json                 // package.json
+└── package.json                 // 项目依赖
 ```
 
 ## 安装运行
@@ -119,8 +112,6 @@ npm run dev
 
 # build for production with minification
 npm run build
-
-本项目没有依赖JQuery，如需要使用JQuery，打开build目录的webpack.dev.conf.js 和 webpack.prod.conf.js 里面的JQuery代码，并npm install jquery -save
 ```
 
 ## 交流

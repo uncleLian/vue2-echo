@@ -1,5 +1,5 @@
-// 自定义的全局方法
 export default {
+    // 时间处理
     sec2his: t => {
         if (~~t || t < 1) {
             var tt = Math.round(t)

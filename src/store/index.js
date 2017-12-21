@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { fetch } from '@/config/fetch.js'
-import { getCache, setCache } from '@/config/cache.js'
+import { fetch } from '@/utils/fetch.js'
+import { getCache, setCache } from '@/utils/cache.js'
 
 Vue.use(Vuex)
 
@@ -15,7 +15,7 @@ const state = {
             currentTime: 0
         }
     },
-    playMode: 'listRepeat',
+    playMode: 'default',
     playList: [],
     listJson: {}
 }
@@ -102,8 +102,7 @@ const actions = {
     // 获取banner数据
     async get_banner_data({ state, commit }) {
         let res = await fetch('GET', 'banner')
-
-        // 数组转换成以id为属性的对象，方便Vuex 查看对应数据，实际项目可以省略
+        // 数组转换成以id为属性的对象，方便根据id取对应数据
         if (res.data) {
             let list = {}
             for (var i = 0; i < res.data.length; i++) {
@@ -118,8 +117,7 @@ const actions = {
     // 获取recommend数据
     async get_recommend_data({ state, commit }) {
         let res = await fetch('GET', 'recommend')
-
-        // 数组转换成以id为属性的对象，方便Vuex 查看对应数据，实际项目可以省略
+        // 数组转换成以id为属性的对象，方便根据id取对应数据
         if (res.data) {
             let list = {}
             for (var i = 0; i < res.data.length; i++) {
@@ -133,8 +131,12 @@ const actions = {
 
     // 获取音乐数据
     // 此处从数据列表里获取对应id的sound数据，真实获取数据是需要发送ajax请求的
-    get_music_data({ state, commit }, id) {
+    async get_music_data({ state, commit, dispatch }, id) {
         // 获得sound数据
+        if (!state.listJson[id]) {
+            await dispatch('get_recommend_data')
+            await dispatch('get_banner_data')
+        }
         let res = state.listJson[id]
         // 判断播放列表是否存在sound数据，有则跳过，无则添加
         let ishas = false

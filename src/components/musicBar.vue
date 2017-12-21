@@ -1,6 +1,5 @@
 <template>
     <div id="musicBar" v-if='audio_data'>
-
         <div class='sound'>
             <!-- audio -->
             <audio id='audio' autoplay="autoplay" :src="audio_data.sound.source"></audio>
@@ -40,14 +39,14 @@ import { mapGetters, mapMutations } from 'vuex'
 export default {
     computed: {
         ...mapGetters([
-            'audio_ele', // auido元素
-            'audio_data', // 当前播放的音乐数据
-            'audio_play', // audio播放状态
-            'audio_duration', // audio 时长
-            'audio_currentTime', // audio当前秒数s的播放进度
-            'audio_progress', // audio当前百分比%的播放进度
-            'playMode', // 播放模式
-            'playList'  // 播放列表
+            'audio_ele',                    // auido元素
+            'audio_data',                   // 当前播放的音乐数据
+            'audio_play',                   // audio播放状态
+            'audio_duration',               // audio 时长
+            'audio_currentTime',            // audio当前秒数s的播放进度
+            'audio_progress',               // audio当前百分比%的播放进度
+            'playMode',                     // 播放模式
+            'playList'                      // 播放列表
         ])
     },
     watch: {
@@ -65,26 +64,26 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'set_audio_data',   // 设置audio数据
-            'set_audio_ele',    // 设置audio元素
-            'set_audio_play',   // 设置audio播放状态
-            'set_audio_duration',   // 设置audio时长
-            'set_audio_currentTime',    // 设置audio当前进度
-            'set_audio_playMode',   // 设置播放模式
-            'set_playList'  // 设置播放列表数据
+            'set_audio_data',                // 设置audio数据
+            'set_audio_ele',                 // 设置audio元素
+            'set_audio_play',                // 设置audio播放状态
+            'set_audio_duration',            // 设置audio时长
+            'set_audio_currentTime',         // 设置audio当前进度
+            'set_audio_playMode',            // 设置播放模式
+            'set_playList'                   // 设置播放列表数据
         ]),
         // audio元素初始化
         audio_init() {
-            let _audio = this.$el.querySelector('#audio') // 获取audio元素
-            this.set_audio_ele(_audio) // 设置audio元素
+            let _audio = this.$el.querySelector('#audio')   // 获取audio元素
+            this.set_audio_ele(_audio)                      // 设置audio元素
             // 可以播放
             _audio.oncanplay = () => {
                 _audio.play()
-                this.set_audio_duration(_audio.duration)
+                this.set_audio_duration(_audio.duration)    // 设置时长
             }
             // 播放位置改变
             _audio.ontimeupdate = () => {
-                this.set_audio_currentTime(~~_audio.currentTime)
+                this.set_audio_currentTime(~~_audio.currentTime)    // 设置当前时间
             }
             // 播放
             _audio.onplay = () => {
@@ -97,7 +96,7 @@ export default {
             // 结束
             _audio.onended = () => {
                 this.set_audio_play(false)
-                this.playMode_init() // 加载播放模式
+                this.playMode_init()            // 加载播放模式
             }
         },
         playMode_init() {
