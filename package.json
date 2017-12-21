@@ -1,8 +1,8 @@
 {
   "name": "vue2-echo",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A Vue.js project",
-  "author": "uncleLian <771674109@qq.com>",
+  "author": "uncleLian <771674109@qq.com> https://github.com/uncleLian",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
