@@ -58,19 +58,18 @@
         <div class="sound_more">
             <h3>相关推荐</h3>
             <div class="recommend">
-                <my-list :json='recommentJson'></my-list>
+                <my-list :json='otherJson'></my-list>
             </div>
         </div>
     </div>
 </template>
 <script>
-import Tool from '@/utils/tool.js'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
     name: 'detail',
     data() {
         return {
-            recommentJson: [],
+            otherJson: [],
             danmu: false
         }
     },
@@ -83,9 +82,6 @@ export default {
             'audio_currentTime',        // audio当前秒数s的播放进度
             'audio_progress'            // audio当前百分比%的播放进度
         ])
-    },
-    filters: {
-        sec2his: Tool.sec2his           // 让currentTime 秒数转换成 03:30 这样的格式的方法
     },
     watch: {
         $route(to, from) {
@@ -102,7 +98,7 @@ export default {
         ]),
         ...mapActions([
             'get_music_data',           // 获取音乐数据
-            'get_recommend_data'        // 获取推荐数据
+            'get_other_data'        // 获取推荐数据
         ]),
         // 获取音乐数据
         get_sound() {
@@ -118,10 +114,10 @@ export default {
         },
         // 获取推荐数据
         get_recommend() {
-            this.get_recommend_data()
+            this.get_other_data()
             .then(res => {
                 if (res.data) {
-                    this.recommentJson = res.data
+                    this.otherJson = res.data
                 }
             })
         },
@@ -142,7 +138,8 @@ export default {
 }
 </script>
 <style lang='stylus'>
-img_height=10rem controls_height=1.5rem 
+img_height=10rem 
+controls_height=1.5rem 
 #detail {
     width: 100%;
     position: relative;
@@ -152,33 +149,33 @@ img_height=10rem controls_height=1.5rem
         text-decoration: none;
         em {
             color: #6ed56c;
-            font-size: 0.32rem;
+            font-size: toRem(12);
         }
     }
     .sound_user {
         position: relative;
         width: 100%;
-        height: 1.4rem;
-        line-height: 1.4rem;
+        height: toRem(55);
+        line-height: toRem(55);
         background: #fbfbfb;
-        padding: 0 0.42rem;
+        padding: 0 toRem(15);
         a {
             color: #666;
             display: inline-block;
         }
         .user_img {
             position: relative;
-            width: 0.9rem;
-            height: 0.9rem;
-            margin: 0.25rem 0;
+            width: toRem(35);
+            height: toRem(35);
+            margin: toRem(5) 0;
             overflow: hidden;
             img {
                 width: 100%;
                 border-radius: 50%;
             }
             .v-icon {
-                width: 0.4rem;
-                height: 0.4rem;
+                width: toRem(15);
+                height: toRem(15);
                 border-radius: 50%;
                 position: absolute;
                 bottom: 0;
@@ -186,7 +183,7 @@ img_height=10rem controls_height=1.5rem
             }
         }
         .user_name {
-            padding-left: 0.266rem;
+            padding-left: toRem(10);
             font-size: 14px;
             text-align: left;
             text-overflow: ellipsis;
@@ -215,17 +212,17 @@ img_height=10rem controls_height=1.5rem
             top: 0;
             left: 0;
             width: 100%;
-            height: 8.1rem;
+            height: toRem(300);
         }
         .progress_bar {
             position: absolute;
             bottom: controls_height;
             width: 100%;
-            height: 0.4rem;
-            line-height: 0.4rem;
+            height: toRem(15);
+            line-height: toRem(15);
             background: rgba(0, 0, 0, 0.2);
             color: #fff;
-            font-size: 0.3rem;
+            font-size: toRem(12);
             span {
                 position: absolute;
                 left: 0;
@@ -235,16 +232,16 @@ img_height=10rem controls_height=1.5rem
                 &:after {
                     content: "";
                     display: inline-block;
-                    width: 0.16rem;
+                    width: toRem(6);
                     height: 100%;
                     background: #6ed56c;
                     position: absolute;
                     top: 0;
-                    right: -0.16rem;
+                    right: -toRem(6);
                 }
             }
             em {
-                padding-left: 0.25rem;
+                padding-left: toRem(10);
             }
         }
         .controls {
@@ -257,15 +254,15 @@ img_height=10rem controls_height=1.5rem
             display: flex;
             align-items: center;
             .play_btn {
-                width: 1rem;
-                height: 1rem;
-                margin: 0.25rem;
+                width: toRem(37.5);
+                height: toRem(37.5);
+                margin: toRem(10);
                 background-size: cover;
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
             }
             .info {
                 color: #fff;
-                height: 1rem;
+                height: toRem(37.5);
                 vertical-align: top;
                 flex: 1;
                 overflow: hidden;
@@ -275,42 +272,42 @@ img_height=10rem controls_height=1.5rem
                     text-overflow: ellipsis;
                     overflow: hidden;
                     white-space: nowrap;
-                    font-size: 0.293rem;
+                    font-size: toRem(11);
                 }
                 .sound_name {
-                    font-size: 0.373rem;
+                    font-size: toRem(14);
                 }
             }
             .danmu_btn {
-                width: 1.45rem;
-                height: 0.67rem;
-                margin: 0 0.3rem;
+                width: toRem(55);
+                height: toRem(25);
+                margin: 0 toRem(12);
                 background-size: cover;
-                border-radius: 0.373rem;
+                border-radius: toRem(14);
             }
         }
     }
     .sound_info {
         width: 100%;
         background: #fff;
-        margin-bottom: 0.25rem;
+        margin-bottom: toRem(10);
         .info_bar {
             width: 100%;
-            height: 1.4rem;
+            height: toRem(55);
             border-bottom: 1px solid #e8e8e8;
             font-size: 0;
-            padding: 0 0.42rem;
+            padding: 0 toRem(16);
             .play_num {
                 display: inline-block;
-                height: 1.4rem;
-                line-height: 1.4rem;
-                font-size: 0.32rem;
+                height: toRem(55);
+                line-height: toRem(55);
+                font-size: toRem(12);
                 color: #a9a9a9;
-                margin-right: 0.53rem;
+                margin-right: toRem(20);
                 &:before {
-                    width: 0.226rem;
-                    height: 0.253rem;
-                    margin-right: 0.18rem;
+                    width: toRem(8);
+                    height: toRem(9);
+                    margin-right: toRem(6);
                     display: inline-block;
                     content: "";
                     background-size: cover;
@@ -318,15 +315,15 @@ img_height=10rem controls_height=1.5rem
             }
             .like_num {
                 display: inline-block;
-                height: 1.4rem;
-                line-height: 1.4rem;
-                font-size: 0.32rem;
+                height: toRem(55);
+                line-height: toRem(55);
+                font-size: toRem(12);
                 color: #a9a9a9;
-                margin-right: 0.53rem;
+                margin-right: toRem(20);
                 &:before {
-                    width: 0.293rem;
-                    height: 0.25rem;
-                    margin-right: 0.18rem;
+                    width: toRem(10);
+                    height: toRem(9);
+                    margin-right: toRem(6);
                     display: inline-block;
                     content: "";
                     background-size: cover;
@@ -334,24 +331,24 @@ img_height=10rem controls_height=1.5rem
             }
             .to_bell_btn {
                 float: right;
-                height: 1.4rem;
-                line-height: 1.4rem;
-                font-size: 0.346rem;
+                height: toRem(55);
+                line-height: toRem(55);
+                font-size: toRem(13);
                 color: #6ed56c;
                 &:before {
                     display: inline-block;
-                    width: 0.525rem;
-                    height: 0.56rem;
-                    margin-right: 0.18rem;
+                    width: toRem(20);
+                    height: toRem(20);
+                    margin-right: toRem(6);
                     content: "";
                     background-size: cover;
                     position: relative;
-                    top: 0.16rem;
+                    top: toRem(6);
                 }
             }
         }
         .info_lyric {
-            padding: 0.373rem 0.4rem 0.8rem;
+            padding: toRem(14) toRem(15) 0.8rem;
             white-space: pre-wrap;
             text-align: left;
             font-size: 14px;
@@ -369,8 +366,8 @@ img_height=10rem controls_height=1.5rem
         width: 100%;
         background: #fff;
         h3 {
-            height: 1.28rem;
-            line-height: 1.28rem;
+            height: toRem(48);
+            line-height: toRem(48);
             color: #6ed56c;
             font-size: 14px;
             text-align: center;
@@ -378,7 +375,7 @@ img_height=10rem controls_height=1.5rem
         .recommend {
             width: 100%;
             position: relative;
-            padding-top: 0.4rem;
+            padding-top: toRem(15);
         }
     }
 }

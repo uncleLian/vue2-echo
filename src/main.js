@@ -27,6 +27,9 @@ import sheet from '@/components/sheet'
 import banner from '@/components/banner'
 import list from '@/components/list'
 
+// 自定义过滤
+import filters from '@/filters'
+
 Vue.config.productionTip = false
 
 Vue.use(MuseUI)
@@ -41,6 +44,11 @@ Vue.component('music-bar', musicBar)
 Vue.component('my-sheet', sheet)
 Vue.component('my-banner', banner)
 Vue.component('my-list', list)
+
+// 自定义过滤
+Object.keys(filters).forEach(key => {
+    Vue.filter(key, filters[key])
+})
 
 /* eslint-disable no-new */
 new Vue({

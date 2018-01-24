@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { fetch } from '@/utils/fetch.js'
-import { getCache, setCache } from '@/utils/cache.js'
+import { request } from '@/utils/request.js'
+import cache from '@/utils/cache.js'
 
 Vue.use(Vuex)
 
@@ -68,23 +68,23 @@ const mutations = {
     },
     set_playMode(state, val) {
         state.playMode = val
-        setCache('playMode', val)
+        cache.setSession('playMode', val)
     },
     set_playList(state, val) {
         // 不直接等于是解决数组赋值引用的问题
-        state.playList = val.slice(0)
-        setCache('playList', val)
+        state.playList = val.slice()
+        cache.setSession('playList', val)
     },
     set_listJson(state, val) {
         state.listJson = val
-        setCache('listJson', val)
+        cache.setSession('listJson', val)
     },
 
     // 获取应用缓存
     set_app_cache(state, val) {
-        let listJson = JSON.parse(getCache('listJson'))
-        let playList = JSON.parse(getCache('playList'))
-        let playMode = getCache('playMode')
+        let listJson = JSON.parse(cache.getSession('listJson'))
+        let playList = JSON.parse(cache.getSession('playList'))
+        let playMode = cache.getSession('playMode')
         if (listJson) {
             state.listJson = listJson
         }
@@ -100,32 +100,19 @@ const mutations = {
 const actions = {
 
     // 获取banner数据
-    async get_banner_data({ state, commit }) {
-        let res = await fetch('GET', 'banner')
-        // 数组转换成以id为属性的对象，方便根据id取对应数据
-        if (res.data) {
-            let list = {}
-            for (var i = 0; i < res.data.length; i++) {
-                list[res.data[i].sound.id] = res.data[i]
-            }
-            list = { ...state.listJson, ...list }
-            commit('set_listJson', list)
-        }
+    async get_banner_data({ dispatch }) {
+        let res = await request('GET', 'banner')
+        dispatch('pushToList', res)
         return res
     },
 
     // 获取recommend数据
-    async get_recommend_data({ state, commit }) {
-        let res = await fetch('GET', 'recommend')
-        // 数组转换成以id为属性的对象，方便根据id取对应数据
-        if (res.data) {
-            let list = {}
-            for (var i = 0; i < res.data.length; i++) {
-                list[res.data[i].sound.id] = res.data[i]
-            }
-            list = { ...state.listJson, ...list }
-            commit('set_listJson', list)
+    async get_recommend_data({ dispatch }, page = 1) {
+        let params = {
+            page
         }
+        let res = await request('GET', 'recommend', params)
+        dispatch('pushToList', res)
         return res
     },
 
@@ -136,6 +123,7 @@ const actions = {
         if (!state.listJson[id]) {
             await dispatch('get_recommend_data')
             await dispatch('get_banner_data')
+            await dispatch('get_other_data')
         }
         let res = state.listJson[id]
         // 判断播放列表是否存在sound数据，有则跳过，无则添加
@@ -148,6 +136,25 @@ const actions = {
             commit('set_playList', state.playList)
         }
         return res
+    },
+
+    // 获取其他推荐数据
+    async get_other_data({ dispatch }) {
+        let res = await request('GET', 'other')
+        dispatch('pushToList', res)
+        return res
+    },
+
+    // 数组转换成以id为属性的对象，方便根据id取对应数据
+    pushToList({ state, commit }, res) {
+        if (res.data) {
+            let list = {}
+            res.data.forEach(item => {
+                list[item.sound.id] = item
+            })
+            list = { ...state.listJson, ...list }
+            commit('set_listJson', list)
+        }
     }
 }
 

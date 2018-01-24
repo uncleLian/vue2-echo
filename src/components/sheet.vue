@@ -95,17 +95,17 @@ export default {
 </script>
 <style lang='stylus'>
 .playListSheet{
-    max-height: 5rem;
-    bottom: 1.3rem;
+    max-height: toRem(188);
+    bottom: toRem(48);
     border-top: 1px solid #eee;
     .playList-header{
         position: relative;
-        height: 1rem;
-        line-height: 1rem;
+        height: toRem(37.5);
+        line-height: toRem(37.5);
         font-size: 14px;
         color: #6ed56c;
         text-align: center;
-        margin-top: 0.2rem;
+        margin-top: toRem(7.5);
         span{
             font-size: 12px;
         }
@@ -113,8 +113,8 @@ export default {
             position: absolute;
             right: 5px;
             top: 0;
-            width: 1rem;
-            height: 1rem;
+            width: toRem(37.5);
+            height: toRem(37.5);
             padding: 0;
             .mu-icon{
                 font-size: 20px;
@@ -132,7 +132,7 @@ export default {
                 position: absolute;
                 width: 5px;
                 height: 5px;
-                left: 0.5rem;
+                left: toRem(18);
                 top: 20px;
                 border-radius: 50%;
                 background-color: #e8e8e8;
@@ -146,7 +146,7 @@ export default {
             .mu-item{
                 font-size: 14px;
                 color: #999;
-                padding: 0.3rem 45px 0.3rem 1rem;
+                padding: toRem(12) toRem(45) toRem(12) toRem(37.5);
                 border-bottom: 1px solid #f4f4f4;
                 min-height: 0;
                 .mu-item-content{
@@ -155,7 +155,7 @@ export default {
                     white-space: nowrap;
                 }
                 .mu-item-left{
-                    left: 0.5rem;
+                    left: toRem(18);
                     margin-left: -5px;
                 }
                 .mu-item-right{

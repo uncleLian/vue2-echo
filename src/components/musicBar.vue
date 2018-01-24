@@ -159,14 +159,14 @@ export default {
     .sound{
         position: relative;
         width: 100%;
-        height: 1.3rem;
-        padding: 0 0.14rem;
+        height: toRem(48);
+        padding: 0 toRem(5);
         display: flex;
         align-items: center;
         .cover{
             display: inline-block;
-            width: 1rem;
-            height: 1rem;
+            width: toRem(37.5);
+            height: toRem(37.5);
             border: 1px solid #fff;
             box-shadow: 0 0 2px rgba(0,0,0,.2);
             overflow: hidden;
@@ -177,7 +177,7 @@ export default {
         .info{
             flex: 1;
             overflow: hidden;
-            padding: 0 0.2rem;
+            padding: 0 toRem(7.5);
             font-size: 12px;
             p{
                 text-overflow: ellipsis;

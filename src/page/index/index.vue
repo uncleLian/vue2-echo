@@ -1,7 +1,5 @@
 <template>
     <div id='index'>
-        <!-- header -->
-        <div class="headerTheme"><img src="~@/assets/img/header_theme.jpg"></div>
         <!-- banner -->
         <my-banner :json='bannerJson'></my-banner>
         <!-- recommend -->
@@ -10,7 +8,13 @@
             <!-- 一键播放 -->
             <mu-raised-button label="一键播放" class="recommend_tip" backgroundColor='#6ed56c' @click.stop="playAll" />
             <!-- 列表 -->
-            <my-list :json='recommentJson'></my-list>
+            <my-list id="scroller-container" :json='recommentJson'></my-list>
+            
+        </div>
+        <div class="loadingText">
+            <div class="loading" v-if="loading === 'loading'"><mu-circular-progress class="loading-icon" :size="26" /> 加载中...</div>
+            <div class="nothing" v-else-if="loading === 'nothing'">没有数据啦</div>
+            <div class="nothing" v-else-if="loading === 'error'">出错啦T T~</div>
         </div>
     </div>
 </template>
@@ -21,7 +25,10 @@ export default {
     data() {
         return {
             bannerJson: [],
-            recommentJson: []
+            recommentJson: [],
+            page: 1,
+            lock: false,
+            loading: 'loading'
         }
     },
     computed: {
@@ -53,13 +60,32 @@ export default {
         },
         // 获取推荐数据
         get_recommend() {
-            this.get_recommend_data()
+            this.get_recommend_data(this.page)
             .then(res => {
                 if (res.data) {
-                    this.recommentJson.push(...res.data)
+                    this.recommentJson = res.data
                 }
             })
             .catch(err => {
+                console.log('get_recommend', err)
+            })
+        },
+        get_recommend_more() {
+            this.lock = true
+            this.loading = 'loading'
+            this.get_recommend_data(this.page)
+            .then(res => {
+                if (res.data) {
+                    this.recommentJson.push(...res.data)
+                    this.page++
+                } else {
+                    this.loading = 'nothing'
+                }
+                this.lock = false
+            })
+            .catch(err => {
+                this.loading = 'error'
+                this.lock = false
                 console.log('get_recommend', err)
             })
         },
@@ -74,13 +100,40 @@ export default {
                 this.set_audio_data(this.recommentJson[0])
             }
         },
+        onScroll() {
+            let timeoutRef
+            if (timeoutRef) {
+                clearTimeout(timeoutRef)
+            }
+            timeoutRef = setTimeout(() => {
+                let scrollTop = $(window).scrollTop()
+                let windowHeight = $(window).height()
+                let documentHeight = $("#index").height()
+                let distance = 5
+                let isBottom = scrollTop + windowHeight + distance >= documentHeight
+                let isLock = this.lock
+                if (isBottom && !isLock && this.loading !== 'nothing' && this.recommentJson.length > 0) {
+                    this.get_recommend_more()
+                }
+            }, 150)
+        },
         init() {
             this.get_banner()
             this.get_recommend()
+            this.$nextTick(() => {
+                $(window).on('scroll', this.onScroll)
+            })
         }
     },
     mounted() {
         this.init()
+    },
+    activated() {
+        $(window).on('scroll', this.onScroll)
+    },
+    beforeRouteLeave (to, from, next) {
+        $(window).off('scroll', this.onScroll)
+        next()
     }
 }
 </script>
@@ -99,14 +152,15 @@ export default {
         width: 100%;
         position: relative;
         .recommen_title {
-            width: 120px;
-            height: 26px;
-            line-height: 26px;
+            width: toRem(120);
+            height: toRem(26);
+            line-height: toRem(26);
             font-size: 12px;
+            font-weight: 400;
             color: #639E5E;
             background-color: #d6ffd6;
             text-align: center;
-            border-radius: 13px;
+            border-radius: toRem(13);
             margin: 20px auto;
         }
         .recommend_tip {
@@ -126,6 +180,27 @@ export default {
             border-radius: 14px;
             padding-left: 10px;
             text-indent: 10px;
+        }
+    }
+    .loadingText{
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        .loading
+        ,.nothing {
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            font-size: 14px;
+            color: #999;
+            text-align: center
+        }
+        .error{
+            color: red;
+        }
+        .loading-icon{
+            margin-right: 5px;
+            overflow: initial;
         }
     }
 }

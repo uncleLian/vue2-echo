@@ -11,7 +11,7 @@ html,body{
     -ms-touch-action: manipulation /* IE10+ 禁止双击缩放 */
 }
 body{
-    font-family: Microsoft YaHei,STHeiti,Helvetica,Arial,sans-serif;
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
     overflow-y: initial !important; /* music-ui的自带样式会导致body出现滚动条，然后导致scrollBehavior无法获取window的滚动位置 */
 }
 img{vertical-align: top;border: 0;}

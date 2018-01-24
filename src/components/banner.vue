@@ -31,7 +31,7 @@ export default {
 }
 </script>
 <style lang='stylus'>
-banner_height = 4.26rem
+banner_height = toRem(160)
 #banner{
     width: 100%;
     padding: 10px;
@@ -49,7 +49,7 @@ banner_height = 4.26rem
         .swiper-pagination{
             width: 100%;
             left: 0;
-            bottom: 0.2666rem;
+            bottom: toRem(10);
             .swiper-pagination-bullet{
                 background: #fff;
             }

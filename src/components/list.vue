@@ -39,7 +39,7 @@ export default {
 }
 </script>
 <style scoped lang='stylus'>
-img_height = 4.6666rem
+img_height = toRem(175)
 .list{
     font-size: 0;
     .list-item{
