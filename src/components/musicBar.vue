@@ -27,7 +27,9 @@
         </div>
 
         <!-- 进度条 -->
-        <div class="progress_bar" :style="`width:${audio_progress}`"></div>
+        <div class="progress_bar">
+            <div class="progress_bar_inner" :style="`width:${audio_progress}`"></div>
+        </div>
         
         <!-- 播放列表/播放模式 -->
         <my-sheet ref="sheet"></my-sheet>
@@ -205,9 +207,13 @@ export default {
         }
     }
     .progress_bar{
-        width: 0%;
         height: 1.5px;
-        background: #6ed56c
+        background: rgba(255,255,255,0.9)
+        .progress_bar_inner{
+            width: 0%;
+            height: 100%;
+            background-color: #6ed56c;
+        }
     }
 }
 </style>

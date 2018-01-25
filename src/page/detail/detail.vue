@@ -38,7 +38,7 @@
         <div class="sound_info">
             <!-- 基本信息 -->
             <div class="info_bar">
-                <div class="play_num">100000+ 播放</div>
+                <div class="play_num">{{audio_data.sound.view_count}} 播放</div>
                 <div class="like_num">{{audio_data.sound.like_count}} 喜欢</div>
                 <!-- 手机铃声按钮 -->
                 <div class="to_bell_btn">设为手机铃声</div>
@@ -98,7 +98,7 @@ export default {
         ]),
         ...mapActions([
             'get_music_data',           // 获取音乐数据
-            'get_other_data'        // 获取推荐数据
+            'get_other_data'            // 获取其他推荐数据
         ]),
         // 获取音乐数据
         get_sound() {

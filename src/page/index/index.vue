@@ -13,7 +13,7 @@
         </div>
         <div class="loadingText">
             <div class="loading" v-if="loading === 'loading'"><mu-circular-progress class="loading-icon" :size="26" /> 加载中...</div>
-            <div class="nothing" v-else-if="loading === 'nothing'">没有数据啦</div>
+            <div class="nothing" v-else-if="loading === 'nothing'">没有数据啦 ~</div>
             <div class="nothing" v-else-if="loading === 'error'">出错啦T T~</div>
         </div>
     </div>
@@ -64,6 +64,7 @@ export default {
             .then(res => {
                 if (res.data) {
                     this.recommentJson = res.data
+                    this.page = 2
                 }
             })
             .catch(err => {
@@ -100,7 +101,9 @@ export default {
                 this.set_audio_data(this.recommentJson[0])
             }
         },
+        // 自行实现滚到页面底部加载
         onScroll() {
+            // 利用setTimeout节流（保证效果实现的同时减少代码运行次数）
             let timeoutRef
             if (timeoutRef) {
                 clearTimeout(timeoutRef)
@@ -128,9 +131,11 @@ export default {
     mounted() {
         this.init()
     },
+    // 开启keep-alive的时候进入页面钩子
     activated() {
         $(window).on('scroll', this.onScroll)
     },
+    // 离开页面钩子
     beforeRouteLeave (to, from, next) {
         $(window).off('scroll', this.onScroll)
         next()

@@ -15,9 +15,9 @@ const state = {
             currentTime: 0
         }
     },
-    playMode: 'default',
-    playList: [],
-    listJson: {}
+    playMode: 'default',        // 播放模式
+    playList: [],               // 播放列表
+    listJson: {}                // 假数据存放
 }
 
 const getters = {
@@ -117,7 +117,7 @@ const actions = {
     },
 
     // 获取音乐数据
-    // 此处从数据列表里获取对应id的sound数据，真实获取数据是需要发送ajax请求的
+    // 此处数据是从listJson里获取对应id的sound数据，真实获取数据是直接发送ajax请求就可以了
     async get_music_data({ state, commit, dispatch }, id) {
         // 获得sound数据
         if (!state.listJson[id]) {

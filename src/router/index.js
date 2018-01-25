@@ -11,7 +11,8 @@ export default new Router({
     // mode: 'history', // 后端支持可开
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
-            to.meta.position = savedPosition
+            // 使用场景：数据是请求的，并且不使用keep-alive。
+            // to.meta.position = savedPosition
             return savedPosition
         } else {
             return { x: 0, y: 0 }
@@ -28,6 +29,7 @@ export default new Router({
         },
         // 注意：开启history模式，后端就无法返回404页面了，
         // 所以前端需要对所有情况做一个统一处理，这里可以写一个404页面或者像我一样返回主页
+        // 优先级放在最下面
         {
             path: '*',
             redirect: '/index'
