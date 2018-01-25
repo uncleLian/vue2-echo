@@ -19,7 +19,7 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
     name: 'index',
     data() {
@@ -32,9 +32,8 @@ export default {
         }
     },
     computed: {
-        ...mapGetters([
-            'audio_data',
-            'audio_ele'
+        ...mapState([
+            'audio'
         ])
     },
     methods: {
@@ -94,9 +93,9 @@ export default {
         playAll() {
             this.set_playList(this.recommentJson)
             // 当前音乐是否等于即将要播放的音乐？重新加载播放 ： 播放即将的音乐
-            if (this.audio_data && this.recommentJson[0].sound.id === this.audio_data.sound.id) {
-                this.audio_ele.load()
-                this.audio_ele.play()
+            if (this.audio.data && this.recommentJson[0].sound.id === this.audio.data.sound.id) {
+                this.audio.ele.load()
+                this.audio.ele.play()
             } else {
                 this.set_audio_data(this.recommentJson[0])
             }

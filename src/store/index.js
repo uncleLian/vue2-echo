@@ -7,13 +7,11 @@ Vue.use(Vuex)
 
 const state = {
     audio: {
-        ele: null,
-        data: null,
-        state: {
-            play: false,
-            duration: 0,
-            currentTime: 0
-        }
+        ele: null,              // auido元素
+        data: null,             // audio音乐数据
+        play: false,            // audio播放状态
+        duration: 0,            // audio总时长
+        currentTime: 0          // audio当前秒数
     },
     playMode: 'default',        // 播放模式
     playList: [],               // 播放列表
@@ -21,32 +19,9 @@ const state = {
 }
 
 const getters = {
-    audio_ele: state => {
-        return state.audio.ele
-    },
-    audio_data: state => {
-        return state.audio.data
-    },
-    audio_play: state => {
-        return state.audio.state.play
-    },
-    audio_duration: state => {
-        return state.audio.state.duration
-    },
-    audio_currentTime: state => {
-        return state.audio.state.currentTime
-    },
+    // audio当前百分比%的播放进度
     audio_progress: state => {
-        return (state.audio.state.currentTime / state.audio.state.duration * 100).toFixed(2) + '%'
-    },
-    playMode: state => {
-        return state.playMode
-    },
-    playList: state => {
-        return state.playList
-    },
-    listJson: state => {
-        return state.listJson
+        return (state.audio.currentTime / state.audio.duration * 100).toFixed(2) + '%'
     }
 }
 
@@ -58,13 +33,13 @@ const mutations = {
         state.audio.data = val
     },
     set_audio_play(state, val) {
-        state.audio.state.play = val
+        state.audio.play = val
     },
     set_audio_duration(state, val) {
-        state.audio.state.duration = val
+        state.audio.duration = val
     },
     set_audio_currentTime(state, val) {
-        state.audio.state.currentTime = val
+        state.audio.currentTime = val
     },
     set_playMode(state, val) {
         state.playMode = val
@@ -119,14 +94,12 @@ const actions = {
     // 获取音乐数据
     // 此处数据是从listJson里获取对应id的sound数据，真实获取数据是直接发送ajax请求就可以了
     async get_music_data({ state, commit, dispatch }, id) {
-        // 获得sound数据
         if (!state.listJson[id]) {
             await dispatch('get_recommend_data')
             await dispatch('get_banner_data')
             await dispatch('get_other_data')
         }
         let res = state.listJson[id]
-        // 判断播放列表是否存在sound数据，有则跳过，无则添加
         let ishas = false
         if (state.playList.find((n) => n.sound.id === id)) {
             ishas = true
@@ -145,7 +118,7 @@ const actions = {
         return res
     },
 
-    // 数组转换成以id为属性的对象，方便根据id取对应数据
+    // 数组转换成以id为属性的对象
     pushToList({ state, commit }, res) {
         if (res.data) {
             let list = {}

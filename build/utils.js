@@ -55,6 +55,7 @@ exports.cssLoaders = function (options) {
   }
 
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
+  // css目录
   var cssDir = path.resolve(__dirname, '../src/assets/css')
   return {
     css: generateLoaders(),

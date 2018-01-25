@@ -28,7 +28,7 @@
 
         <!-- 进度条 -->
         <div class="progress_bar">
-            <div class="progress_bar_inner" :style="`width:${audio_progress}`"></div>
+            <div class="progress_bar_inner" :style="`width:${$store.getters.audio_progress}`"></div>
         </div>
         
         <!-- 播放列表/播放模式 -->
@@ -37,19 +37,18 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
     computed: {
-        ...mapGetters([
-            'audio_ele',                    // auido元素
-            'audio_data',                   // 当前播放的音乐数据
-            'audio_play',                   // audio播放状态
-            'audio_duration',               // audio 时长
-            'audio_currentTime',            // audio当前秒数s的播放进度
-            'audio_progress',               // audio当前百分比%的播放进度
-            'playMode',                     // 播放模式
-            'playList'                      // 播放列表
-        ])
+        ...mapState([
+            'audio',
+            'playMode',
+            'playList'
+        ]),
+        ...mapState({
+            audio_data: state => state.audio.data,
+            audio_play: state => state.audio.play
+        })
     },
     watch: {
         audio_data(val) {
@@ -61,18 +60,18 @@ export default {
             }
         },
         audio_play(val) {
-            val ? this.audio_ele.play() : this.audio_ele.pause()
+            val ? this.audio.ele.play() : this.audio.ele.pause()
         }
     },
     methods: {
         ...mapMutations([
-            'set_audio_data',                // 设置audio数据
-            'set_audio_ele',                 // 设置audio元素
-            'set_audio_play',                // 设置audio播放状态
-            'set_audio_duration',            // 设置audio时长
-            'set_audio_currentTime',         // 设置audio当前进度
-            'set_audio_playMode',            // 设置播放模式
-            'set_playList'                   // 设置播放列表数据
+            'set_audio_data',
+            'set_audio_ele',
+            'set_audio_play',
+            'set_audio_duration',
+            'set_audio_currentTime',
+            'set_audio_playMode',
+            'set_playList'
         ]),
         // audio元素初始化
         audio_init() {
@@ -116,7 +115,7 @@ export default {
             // 0 ~ 播放列表的长度，随机得到一个数
             // 如果随机数对应的音乐和当前播放的音乐相同的话，采取listRepeat方法的逻辑，否则播放
             let index = Math.floor(Math.random() * this.playList.length)
-            if (this.playList[index].sound.id === this.audio_data.sound.id) {
+            if (this.playList[index].sound.id === this.audio.data.sound.id) {
                this.listRepeat()
             } else {
                 this.set_audio_data(this.playList[index])
@@ -124,21 +123,21 @@ export default {
         },
         // 单曲循环
         singleRepeat() {
-            this.audio_ele.load()
-            this.audio_ele.play()
+            this.audio.ele.load()
+            this.audio.ele.play()
         },
         // 列表循环
         listRepeat() {
             // 获取当前音乐位置currentIndex
             // currentIndex是结尾的话，nextIndex就等于0，否则 +1
             // 只有一首音乐，播放模式是列表循环或者用户点击下一首歌的情况，重新加载并播放当前的音乐
-            let currentIndex = this.playList.findIndex(n => n.sound.id === this.audio_data.sound.id)
+            let currentIndex = this.playList.findIndex(n => n.sound.id === this.audio.data.sound.id)
             if (currentIndex > -1) {
                 let nextIndex
                 currentIndex === this.playList.length - 1 ? nextIndex = 0 : nextIndex = currentIndex + 1
-                if (this.playList[nextIndex].sound.id === this.audio_data.sound.id) {
-                    this.audio_ele.load()
-                    this.audio_ele.play()
+                if (this.playList[nextIndex].sound.id === this.audio.data.sound.id) {
+                    this.audio.ele.load()
+                    this.audio.ele.play()
                 } else {
                     this.set_audio_data(this.playList[nextIndex])
                 }

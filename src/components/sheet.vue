@@ -9,9 +9,9 @@
             </div>
             <!-- 列表 -->
             <mu-list class='list'>
-                <mu-list-item class="list-item" v-for="(item, index) in playList" :key="index" :class="{'playing': audio_data.sound.id === item.sound.id}" @click.stop="set_audio_data(item)">
+                <mu-list-item class="list-item" v-for="(item, index) in playList" :key="index" :class="{'playing': audio.data.sound.id === item.sound.id}" @click.stop="set_audio_data(item)">
                     <!-- 播放小图标 -->
-                    <mu-icon class="playing_icon" slot="left" v-show="audio_data.sound.id === item.sound.id"  value="play_circle_filled" /> {{item.sound.name}}
+                    <mu-icon class="playing_icon" slot="left" v-show="audio.data.sound.id === item.sound.id"  value="play_circle_filled" /> {{item.sound.name}}
                     <!-- 删除列表按钮 -->
                     <mu-icon class="close_btn" slot="right" value="close" @click.stop="deleteItem(item)" />
                 </mu-list-item>
@@ -32,7 +32,7 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
     data() {
         return {
@@ -42,15 +42,15 @@ export default {
                 { title: '单曲循环', val: 'singleRepeat', icon: 'repeat_one' },
                 { title: '列表循环', val: 'listRepeat', icon: 'repeat' }
             ],
-            playList_visible: false,    // 播放列表
-            playMode_visible: false     // 播放模式
+            playList_visible: false,
+            playMode_visible: false
         }
     },
     computed: {
-        ...mapGetters([
-            'audio_data',       // 当前播放的音乐数据
-            'playMode',         // 播放模式
-            'playList'          // 播放列表
+        ...mapState([
+            'audio',
+            'playMode',
+            'playList'
         ]),
         // 播放模式icon
         playMode_icon() {
@@ -71,9 +71,9 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'set_audio_data',   // 设置audio数据
-            'set_playMode',     // 设置播放模式
-            'set_playList'      // 设置播放列表数据
+            'set_audio_data',
+            'set_playMode',
+            'set_playList'
         ]),
         // 切换显示
         toggleVisible() {
@@ -177,6 +177,10 @@ export default {
             text-align: center;
             font-size: 14px;
             color: #9B9B9B;
+            &:before{
+                width:0;
+                height: 0;
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div id="app" :class="{'musicBar-on': audio_data}">
+    <div id="app" :class="{'musicBar-on': audio.data}">
         <!-- 视图层 -->
         <keep-alive>
             <router-view/></router-view>
@@ -11,16 +11,16 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
     computed: {
-        ...mapGetters([
-            'audio_data'
+        ...mapState([
+            'audio'
         ])
     },
     methods: {
         ...mapMutations([
-            'set_app_cache'  // 获取app缓存，刷新依然有数据
+            'set_app_cache'     // 获取app缓存，刷新依然有数据
         ])
     },
     created() {

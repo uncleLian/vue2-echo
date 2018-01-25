@@ -1,33 +1,33 @@
 <template>
-    <div id='detail' v-if='audio_data'>
+    <div id='detail' v-if='audio.data'>
         <!-- 用户 -->
         <div class="sound_user">
             <a class="user_img">
-                <img :src="audio_data.sound.user.avatar_50">
+                <img :src="audio.data.sound.user.avatar_50">
                 <img class='v-icon' src="https://ws-qn-echo-image-cdn.app-echo.com/Foz1CX1MdKHnTiDV26btgAmDJ3Y-?imageMogr2/auto-orient/quality/100%7CimageMogr2/thumbnail/!100x100r/gravity/Center/crop/100x100/dx/0/dy/0">
             </a>
-            <a class="user_name">{{audio_data.sound.user.name}}</a>
-            <a class='user_fans'>粉丝 <em>{{audio_data.sound.user.followed_count}}</em></a>
+            <a class="user_name">{{audio.data.sound.user.name}}</a>
+            <a class='user_fans'>粉丝 <em>{{audio.data.sound.user.followed_count}}</em></a>
         </div>
         <!-- 封面 -->
         <div class="sound_cover">
             <!-- 弹幕 -->
-            <div class="danmu_box" @click.stop="set_audio_play(!audio_play)"></div>
-            <img :src="audio_data.sound.pic_500">
+            <div class="danmu_box" @click.stop="set_audio_play(!audio.play)"></div>
+            <img :src="audio.data.sound.pic_500">
             <!-- 进度条 -->
             <div class="progress_bar" @click.stop='seek'>
-                <span :style="`width:${audio_progress}`"></span>
-                <em>{{audio_currentTime | sec2his}}/{{audio_duration | sec2his}}</em>
+                <span :style="`width:${$store.getters.audio_progress}`"></span>
+                <em>{{audio.currentTime | sec2his}}/{{audio.duration | sec2his}}</em>
             </div>
             <!-- 控制 -->
             <div class="controls">
                 <!-- 播放按钮 -->
-                <div class="play_btn" :class="audio_play?'pause':'play'" @click.stop="set_audio_play(!audio_play)"></div>
+                <div class="play_btn" :class="audio.play?'pause':'play'" @click.stop="set_audio_play(!audio.play)"></div>
                 <div class="info">
-                    <p class="sound_name">{{audio_data.sound.name}}</p>
+                    <p class="sound_name">{{audio.data.sound.name}}</p>
                     <p>
-                        <a class="sound_author"><em>{{audio_data.sound.user.name}}</em></a> 发布在
-                        <a class='sound_channel'><em>{{audio_data.sound.channel.name}}</em></a> 频道
+                        <a class="sound_author"><em>{{audio.data.sound.user.name}}</em></a> 发布在
+                        <a class='sound_channel'><em>{{audio.data.sound.channel.name}}</em></a> 频道
                     </p>
                 </div>
                 <!-- 弹幕按钮 -->
@@ -38,20 +38,20 @@
         <div class="sound_info">
             <!-- 基本信息 -->
             <div class="info_bar">
-                <div class="play_num">{{audio_data.sound.view_count}} 播放</div>
-                <div class="like_num">{{audio_data.sound.like_count}} 喜欢</div>
+                <div class="play_num">{{audio.data.sound.view_count}} 播放</div>
+                <div class="like_num">{{audio.data.sound.like_count}} 喜欢</div>
                 <!-- 手机铃声按钮 -->
                 <div class="to_bell_btn">设为手机铃声</div>
             </div>
             <!-- 歌词 -->
             <div class="info_lyric">
-                <template v-if='audio_data.sound.song_info'>
-                    <p v-if='audio_data.sound.song_info.album_name'>{{audio_data.sound.song_info.album_name.type}} : {{audio_data.sound.song_info.album_name.name}}</p>
-                    <p v-if='audio_data.sound.song_info.author'>{{audio_data.sound.song_info.author.type}} : {{audio_data.sound.song_info.author.name}}</p>
-                    <p v-if='audio_data.sound.song_info.name'>{{audio_data.sound.song_info.name.type}} : {{audio_data.sound.song_info.name.name}}</p>
+                <template v-if='audio.data.sound.song_info'>
+                    <p v-if='audio.data.sound.song_info.album_name'>{{audio.data.sound.song_info.album_name.type}} : {{audio.data.sound.song_info.album_name.name}}</p>
+                    <p v-if='audio.data.sound.song_info.author'>{{audio.data.sound.song_info.author.type}} : {{audio.data.sound.song_info.author.name}}</p>
+                    <p v-if='audio.data.sound.song_info.name'>{{audio.data.sound.song_info.name.type}} : {{audio.data.sound.song_info.name.name}}</p>
                 </template>
-                <div v-if="audio_data.sound.lyrics" v-html="audio_data.sound.lyrics"></div>
-                <div v-if="!audio_data.sound.song_info && !audio_data.sound.lyric" class="noLyric">没有相关的歌词T T~ </div>
+                <div v-if="audio.data.sound.lyrics" v-html="audio.data.sound.lyrics"></div>
+                <div v-if="!audio.data.sound.song_info && !audio.data.sound.lyric" class="noLyric">没有相关的歌词T T~ </div>
             </div>
         </div>
         <!-- 更多推荐 -->
@@ -64,7 +64,7 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
     name: 'detail',
     data() {
@@ -74,13 +74,8 @@ export default {
         }
     },
     computed: {
-        ...mapGetters([
-            'audio_ele',                // auido元素
-            'audio_data',               // 当前播放的音乐数据
-            'audio_play',               // audio播放状态
-            'audio_duration',           // audio 时长
-            'audio_currentTime',        // audio当前秒数s的播放进度
-            'audio_progress'            // audio当前百分比%的播放进度
+        ...mapState([
+            'audio'
         ])
     },
     watch: {
@@ -92,13 +87,13 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'set_audio_data',           // 设置audio数据
-            'set_audio_ele',            // 设置audio元素
-            'set_audio_play'            // 设置audio播放状态
+            'set_audio_data',
+            'set_audio_ele',
+            'set_audio_play'
         ]),
         ...mapActions([
-            'get_music_data',           // 获取音乐数据
-            'get_other_data'            // 获取其他推荐数据
+            'get_music_data',
+            'get_other_data'
         ]),
         // 获取音乐数据
         get_sound() {
@@ -125,7 +120,7 @@ export default {
         seek(e) {
             e = e || window.event
             var percent = (e.pageX / window.innerWidth).toFixed(2)  // 取小数点后2位数
-            this.audio_ele.currentTime = this.audio_ele.duration * percent
+            this.audio.ele.currentTime = this.audio.ele.duration * percent
         },
         init() {
             this.get_sound()
