@@ -19,7 +19,7 @@ import 'swiper/dist/css/swiper.css'
 import VueProgressBar from 'vue-progressbar'
 
 // mock数据
-import './mock/mock.js'
+import '@/mock'
 
 // 自定义组件
 import musicBar from '@/components/musicBar'
