@@ -5,7 +5,8 @@ var Mock = require('mockjs')
 Mock.mock('http://localhost:8088/recommend?page=1', {
     'code': 0,
     'msg': '',
-    'data': [{
+    'data': [
+        {
             'sound': {
                 "name": "甜腻腻的韩国小清新 우리만나요",
                 "lan_cn": "1",
