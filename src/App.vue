@@ -2,7 +2,7 @@
     <div id="app" :class="{'musicBar-on': audio.data}">
         <!-- 视图层 -->
         <keep-alive>
-            <router-view/></router-view>
+            <router-view></router-view>
         </keep-alive>
         <!-- 音乐控制条 -->
         <music-bar></music-bar>
