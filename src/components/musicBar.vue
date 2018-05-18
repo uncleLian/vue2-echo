@@ -18,11 +18,11 @@
             <!-- 控制 -->
             <div class="control">
                 <!-- 列表按钮 -->
-                <mu-icon-button class='control-icon-btn small' icon="queue_music"  @click.stop="$refs.sheet.toggleVisible()" />
+                <mu-icon-button class='control-icon-btn small' icon="queue_music" @click.stop="$refs.sheet.toggleVisible()" />
                 <!-- 播放/暂停 -->
-                <mu-icon-button class='control-icon-btn' :icon="audio_play? 'pause' : 'play_arrow'"  @click.stop="set_audio_play(!audio_play)" />
+                <mu-icon-button class='control-icon-btn' :icon="audio_play? 'pause' : 'play_arrow'" @click.stop="set_audio_play(!audio_play)" />
                 <!-- 下一首按钮 -->
-                <mu-icon-button class='control-icon-btn small' icon="skip_next"  @click.stop="listRepeat" />
+                <mu-icon-button class='control-icon-btn small' icon="skip_next" @click.stop="listRepeat" />
             </div>
         </div>
 
@@ -30,7 +30,7 @@
         <div class="progress_bar">
             <div class="progress_bar_inner" :style="`width:${$store.getters.audio_progress}`"></div>
         </div>
-        
+
         <!-- 播放列表/播放模式 -->
         <my-sheet ref="sheet"></my-sheet>
 
@@ -103,11 +103,11 @@ export default {
         playMode_init() {
             switch (this.playMode) {
                 case 'random': this.randomPlay()
-                break
+                    break
                 case 'singleRepeat': this.singleRepeat()
-                break
+                    break
                 case 'listRepeat': this.listRepeat()
-                break
+                    break
             }
         },
         // 随机播放
@@ -116,7 +116,7 @@ export default {
             // 如果随机数对应的音乐和当前播放的音乐相同的话，采取listRepeat方法的逻辑，否则播放
             let index = Math.floor(Math.random() * this.playList.length)
             if (this.playList[index].sound.id === this.audio.data.sound.id) {
-               this.listRepeat()
+                this.listRepeat()
             } else {
                 this.set_audio_data(this.playList[index])
             }
@@ -149,46 +149,46 @@ export default {
 }
 </script>
 <style lang='stylus'>
-#musicBar{
+#musicBar {
     position: fixed;
     left: 0;
     bottom: 0;
     z-index: 20170821;
     width: 100%;
-    background-color: rgba(255,255,255,0.9);
+    background-color: rgba(255, 255, 255, 0.9);
     border-top: 1px solid #e8e8e8;
-    .sound{
+    .sound {
         position: relative;
         width: 100%;
         height: toRem(48);
         padding: 0 toRem(5);
         display: flex;
         align-items: center;
-        .cover{
+        .cover {
             display: inline-block;
             width: toRem(37.5);
             height: toRem(37.5);
             border: 1px solid #fff;
-            box-shadow: 0 0 2px rgba(0,0,0,.2);
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
             overflow: hidden;
-            img{
+            img {
                 width: 100%;
             }
         }
-        .info{
+        .info {
             flex: 1;
             overflow: hidden;
             padding: 0 toRem(7.5);
             font-size: 12px;
-            p{
+            p {
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
             }
         }
-        .control{
+        .control {
             color: #666;
-            .control-icon-btn{
+            .control-icon-btn {
                 width: 38px;
                 height: 38px;
                 color: #5e5e5e;
@@ -197,7 +197,7 @@ export default {
                 border-radius: 50%;
                 background: #fff;
                 margin-right: 8px;
-                &.small{
+                &.small {
                     width: 34px;
                     height: 34px;
                     padding: 5px;
@@ -205,10 +205,10 @@ export default {
             }
         }
     }
-    .progress_bar{
+    .progress_bar {
         height: 1.5px;
-        background: rgba(255,255,255,0.9)
-        .progress_bar_inner{
+        background: rgba(255, 255, 255, 0.9);
+        .progress_bar_inner {
             width: 0%;
             height: 100%;
             background-color: #6ed56c;

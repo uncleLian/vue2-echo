@@ -9,10 +9,11 @@
             <mu-raised-button label="一键播放" class="recommend_tip" backgroundColor='#6ed56c' @click.stop="playAll" />
             <!-- 列表 -->
             <my-list id="scroller-container" :json='recommentJson'></my-list>
-            
+
         </div>
         <div class="loadingText">
-            <div class="loading" v-if="loading === 'loading'"><mu-circular-progress class="loading-icon" :size="26" /> 加载中...</div>
+            <div class="loading" v-if="loading === 'loading'">
+                <mu-circular-progress class="loading-icon" :size="26" /> 加载中...</div>
             <div class="nothing" v-else-if="loading === 'nothing'">没有数据啦 ~</div>
             <div class="nothing" v-else-if="loading === 'error'">出错啦T T~</div>
         </div>
@@ -48,46 +49,46 @@ export default {
         // 获取banner数据
         get_banner() {
             this.get_banner_data()
-            .then(res => {
-                if (res.data) {
-                    this.bannerJson = res.data
-                }
-            })
-            .catch(err => {
-                console.log('get_banner', err)
-            })
+                .then(res => {
+                    if (res.data) {
+                        this.bannerJson = res.data
+                    }
+                })
+                .catch(err => {
+                    console.log('get_banner', err)
+                })
         },
         // 获取推荐数据
         get_recommend() {
             this.get_recommend_data(this.page)
-            .then(res => {
-                if (res.data) {
-                    this.recommentJson = res.data
-                    this.page = 2
-                }
-            })
-            .catch(err => {
-                console.log('get_recommend', err)
-            })
+                .then(res => {
+                    if (res.data) {
+                        this.recommentJson = res.data
+                        this.page = 2
+                    }
+                })
+                .catch(err => {
+                    console.log('get_recommend', err)
+                })
         },
         get_recommend_more() {
             this.lock = true
             this.loading = 'loading'
             this.get_recommend_data(this.page)
-            .then(res => {
-                if (res.data) {
-                    this.recommentJson.push(...res.data)
-                    this.page++
-                } else {
-                    this.loading = 'nothing'
-                }
-                this.lock = false
-            })
-            .catch(err => {
-                this.loading = 'error'
-                this.lock = false
-                console.log('get_recommend', err)
-            })
+                .then(res => {
+                    if (res.data) {
+                        this.recommentJson.push(...res.data)
+                        this.page++
+                    } else {
+                        this.loading = 'nothing'
+                    }
+                    this.lock = false
+                })
+                .catch(err => {
+                    this.loading = 'error'
+                    this.lock = false
+                    console.log('get_recommend', err)
+                })
         },
         // 一键播放
         playAll() {
@@ -135,7 +136,7 @@ export default {
         $(window).on('scroll', this.onScroll)
     },
     // 离开页面钩子
-    beforeRouteLeave (to, from, next) {
+    beforeRouteLeave(to, from, next) {
         $(window).off('scroll', this.onScroll)
         next()
     }
@@ -178,7 +179,7 @@ export default {
             color: #fff;
             font-style: normal;
             background-color: #6ed56c;
-            background-image: url(../../assets/img/play-all.png);
+            background-image: url('../../assets/img/play-all.png');
             background-repeat: no-repeat;
             background-position: 10px 4px;
             border-radius: 14px;
@@ -186,23 +187,22 @@ export default {
             text-indent: 10px;
         }
     }
-    .loadingText{
+    .loadingText {
         width: 100%;
         height: 50px;
         line-height: 50px;
-        .loading
-        ,.nothing {
+        .loading, .nothing {
             width: 100%;
             height: 50px;
             line-height: 50px;
             font-size: 14px;
             color: #999;
-            text-align: center
+            text-align: center;
         }
-        .error{
+        .error {
             color: red;
         }
-        .loading-icon{
+        .loading-icon {
             margin-right: 5px;
             overflow: initial;
         }

@@ -54,7 +54,6 @@ const mutations = {
         state.listJson = val
         cache.setSession('listJson', val)
     },
-
     // 获取应用缓存
     set_app_cache(state, val) {
         let listJson = JSON.parse(cache.getSession('listJson'))
@@ -84,9 +83,16 @@ const actions = {
     // 获取recommend数据
     async get_recommend_data({ dispatch }, page = 1) {
         let params = {
-            page
+            page // es6简写赋值的方法
         }
         let res = await request('GET', 'recommend', params)
+        dispatch('pushToList', res)
+        return res
+    },
+
+    // 获取其他推荐数据
+    async get_other_data({ dispatch }) {
+        let res = await request('GET', 'other')
         dispatch('pushToList', res)
         return res
     },
@@ -111,14 +117,7 @@ const actions = {
         return res
     },
 
-    // 获取其他推荐数据
-    async get_other_data({ dispatch }) {
-        let res = await request('GET', 'other')
-        dispatch('pushToList', res)
-        return res
-    },
-
-    // 数组转换成以id为属性的对象
+    // 数组转换成以id为属性的对象，方便调试 vue-devtools: https://github.com/vuejs/vue-devtools
     pushToList({ state, commit }, res) {
         if (res.data) {
             let list = {}

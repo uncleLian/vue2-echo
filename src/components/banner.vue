@@ -7,7 +7,7 @@
                 </router-link>
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
-      </swiper>
+        </swiper>
     </div>
 </template>
 <script>
@@ -31,26 +31,26 @@ export default {
 }
 </script>
 <style lang='stylus'>
-banner_height = toRem(160)
-#banner{
+banner_height = toRem(160);
+#banner {
     width: 100%;
     padding: 10px;
     height: banner_height;
     background-color: #e8e8e8;
-    .swiper{
+    .swiper {
         width: 100%;
         height: 100%;
-        .swiper-slide{
-            img{
+        .swiper-slide {
+            img {
                 width: 100%;
-                height: auto
+                height: auto;
             }
         }
-        .swiper-pagination{
+        .swiper-pagination {
             width: 100%;
             left: 0;
             bottom: toRem(10);
-            .swiper-pagination-bullet{
+            .swiper-pagination-bullet {
                 background: #fff;
             }
         }

@@ -39,46 +39,46 @@ export default {
 }
 </script>
 <style scoped lang='stylus'>
-img_height = toRem(175)
-.list{
+img_height = toRem(175);
+.list {
     font-size: 0;
-    .list-item{
+    .list-item {
         display: inline-block;
         width: 50%;
         padding: 0 10px 6px;
-        a{
+        a {
             text-decoration: none;
         }
-        .pic_wrap{
+        .pic_wrap {
             width: 100%;
             height: img_height;
             position: relative;
             overflow-y: hidden;
-            img{
+            img {
                 width: 100%;
                 min-height: img_height;
             }
-            .fire{
+            .fire {
                 position: absolute;
                 top: 15px;
                 right: 15px;
                 width: 22px;
                 height: 22px;
-                &.fire-red{
+                &.fire-red {
                     display: block;
                     background-position: -162px -215px;
                 }
-                &.fire-yellow{
+                &.fire-yellow {
                     display: block;
-                    background-position: -0px -215px;
+                    background-position: 0px -215px;
                 }
-                &.fire-blue{
+                &.fire-blue {
                     display: block;
                     background-position: -299px -215px;
                 }
             }
         }
-        h4{
+        h4 {
             width: 100%;
             font-size: 14px;
             color: #666666;
@@ -87,10 +87,10 @@ img_height = toRem(175)
             overflow: hidden;
             padding-top: 5px;
         }
-        .channel{
+        .channel {
             font-size: 12px;
             color: #999999;
-            a{
+            a {
                 display: inline-block;
                 width: 75%;
                 text-overflow: ellipsis;
@@ -104,8 +104,8 @@ img_height = toRem(175)
 }
 </style>
 <style scoped>
-.fire{
-    background: url(~@/assets/icon/echo_mobile_sprites@3_8.png)no-repeat;
-    background-size: 320px;
+.fire {
+  background: url(~@/assets/icon/echo_mobile_sprites@3_8.png) no-repeat;
+  background-size: 320px;
 }
 </style>
