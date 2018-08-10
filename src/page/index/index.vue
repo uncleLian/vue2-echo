@@ -1,35 +1,42 @@
 <template>
-    <div id='index'>
+    <div id='index' v-infinite-scroll="getRecommentMore" infinite-scroll-disabled="lock" infinite-scroll-immediate-check="false" infinite-scroll-distance="5">
         <!-- banner -->
         <my-banner :json='bannerJson'></my-banner>
-        <!-- recommend -->
+        <!-- 推荐 -->
         <div class="recommend">
-            <h3 class="recommen_title">echo每日推荐</h3>
+            <div class="recommen-title">echo每日推荐</div>
             <!-- 一键播放 -->
-            <mu-raised-button label="一键播放" class="recommend_tip" backgroundColor='#6ed56c' @click.stop="playAll" />
+            <div class="playAll" @click="playAll">
+                <div class="my-icon-arrow playAll-icon"></div>
+                <div class="playAll-label" type="default">一键播放</div>
+            </div>
             <!-- 列表 -->
-            <my-list id="scroller-container" :json='recommentJson'></my-list>
-
+            <my-list :json='recommentJson'></my-list>
         </div>
-        <div class="loadingText">
-            <div class="loading" v-if="loading === 'loading'">
-                <mu-circular-progress class="loading-icon" :size="26" /> 加载中...</div>
-            <div class="nothing" v-else-if="loading === 'nothing'">没有数据啦 ~</div>
-            <div class="nothing" v-else-if="loading === 'error'">出错啦T T~</div>
+        <!-- 底部加载提示 -->
+        <div class="loading-container">
+            <span class="loading" v-if="loading === 'loading'">
+                <mt-spinner type="triple-bounce" color="#6ed56c"></mt-spinner>
+            </span>
+            <span class="nothing" v-else-if="loading === 'nothing'">没有更多了T T~</span>
+            <span class="error" v-else-if="loading === 'error'">出错啦T T~</span>
         </div>
     </div>
 </template>
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
+import { getBanner, getList } from '@/api'
+import myBanner from '@/components/banner'
 export default {
     name: 'index',
+    components: { myBanner },
     data() {
         return {
             bannerJson: [],
             recommentJson: [],
             page: 1,
             lock: false,
-            loading: 'loading'
+            loading: false
         }
     },
     computed: {
@@ -37,58 +44,60 @@ export default {
             'audio'
         ])
     },
+    mounted() {
+        this.getBannerData()
+        this.getRecommentData()
+    },
+    activated() {
+        this.lock = false
+    },
+    beforeRouteLeave(to, from, next) {
+        this.lock = true
+        next()
+    },
     methods: {
         ...mapMutations([
             'set_audio_data',
             'set_playList'
         ]),
-        ...mapActions([
-            'get_banner_data',
-            'get_recommend_data'
-        ]),
-        // 获取banner数据
-        get_banner() {
-            this.get_banner_data()
-                .then(res => {
-                    if (res.data) {
-                        this.bannerJson = res.data
-                    }
-                })
-                .catch(err => {
-                    console.log('get_banner', err)
-                })
+        getBannerData() {
+            getBanner().then(res => {
+                if (res.data) {
+                    this.bannerJson = res.data
+                }
+            })
         },
-        // 获取推荐数据
-        get_recommend() {
-            this.get_recommend_data(this.page)
-                .then(res => {
-                    if (res.data) {
-                        this.recommentJson = res.data
-                        this.page = 2
-                    }
-                })
-                .catch(err => {
-                    console.log('get_recommend', err)
-                })
+        getRecommentData() {
+            this.$indicator.open()
+            getList(this.page).then(res => {
+                if (res.data) {
+                    this.recommentJson = res.data
+                    this.page = 2
+                }
+                this.$indicator.close()
+            }).catch(() => {
+                this.$indicator.close()
+            })
         },
-        get_recommend_more() {
-            this.lock = true
-            this.loading = 'loading'
-            this.get_recommend_data(this.page)
-                .then(res => {
-                    if (res.data) {
+        getRecommentMore() {
+            if (!this.lock) {
+                this.lock = true
+                this.loading = 'loading'
+                getList(this.page).then(res => {
+                    if (res.data && res.data.length > 0) {
                         this.recommentJson.push(...res.data)
                         this.page++
+                        this.loading = false
+                        this.lock = false
                     } else {
                         this.loading = 'nothing'
+                        this.lock = true
                     }
-                    this.lock = false
-                })
-                .catch(err => {
+                }).catch(() => {
                     this.loading = 'error'
-                    this.lock = false
-                    console.log('get_recommend', err)
+                    this.lock = true
                 })
+            }
         },
         // 一键播放
         playAll() {
@@ -100,45 +109,7 @@ export default {
             } else {
                 this.set_audio_data(this.recommentJson[0])
             }
-        },
-        // 自行实现滚到页面底部加载
-        onScroll() {
-            // 利用setTimeout节流（保证效果实现的同时减少代码运行次数）
-            let timeoutRef
-            if (timeoutRef) {
-                clearTimeout(timeoutRef)
-            }
-            timeoutRef = setTimeout(() => {
-                let scrollTop = $(window).scrollTop()
-                let windowHeight = $(window).height()
-                let documentHeight = $("#index").height()
-                let distance = 5
-                let isBottom = scrollTop + windowHeight + distance >= documentHeight
-                let isLock = this.lock
-                if (isBottom && !isLock && this.loading !== 'nothing' && this.recommentJson.length > 0) {
-                    this.get_recommend_more()
-                }
-            }, 150)
-        },
-        init() {
-            this.get_banner()
-            this.get_recommend()
-            this.$nextTick(() => {
-                $(window).on('scroll', this.onScroll)
-            })
         }
-    },
-    mounted() {
-        this.init()
-    },
-    // 开启keep-alive的时候进入页面钩子
-    activated() {
-        $(window).on('scroll', this.onScroll)
-    },
-    // 离开页面钩子
-    beforeRouteLeave(to, from, next) {
-        $(window).off('scroll', this.onScroll)
-        next()
     }
 }
 </script>
@@ -147,64 +118,63 @@ export default {
     position: relative;
     width: 100%;
     background: #fff;
-    -webkit-overflow-scrolling: touch;
-    .headerTheme {
-        img {
-            width: 100%;
-        }
-    }
     .recommend {
         width: 100%;
         position: relative;
-        .recommen_title {
+        .recommen-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: toRem(120);
             height: toRem(26);
-            line-height: toRem(26);
-            font-size: 12px;
-            font-weight: 400;
-            color: #639E5E;
-            background-color: #d6ffd6;
-            text-align: center;
+            color: $darkColor;
+            font-size: toRem(12);
+            margin: toRem(20) auto;
             border-radius: toRem(13);
-            margin: 20px auto;
+            background-color: $shallowColor;
         }
-        .recommend_tip {
+        .playAll {
             position: absolute;
             left: 0;
-            top: 60px;
+            top: toRem(60);
             z-index: 22;
-            height: 28px;
-            line-height: 28px;
-            font-size: 14px;
-            color: #fff;
-            font-style: normal;
-            background-color: #6ed56c;
-            background-image: url('../../assets/img/play-all.png');
-            background-repeat: no-repeat;
-            background-position: 10px 4px;
-            border-radius: 14px;
-            padding-left: 10px;
-            text-indent: 10px;
+            display: flex;
+            align-items: center;
+            font-size: toRem(14);
+            height: toRem(28);
+            padding-left: toRem(10);
+            padding-right: toRem(16);
+            border-radius: toRem(16);
+            background-color: $appColor;
+            .playAll-icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: toRem(18);
+                height: toRem(18);
+                color: $appColor;
+                margin-right: toRem(5);
+                background: #fff;
+                border-radius: 100%;
+            }
+            .playAll-label {
+                color: #fff;
+            }
         }
     }
-    .loadingText {
+    .loading-container {
         width: 100%;
-        height: 50px;
-        line-height: 50px;
-        .loading, .nothing {
-            width: 100%;
-            height: 50px;
-            line-height: 50px;
-            font-size: 14px;
+        height: toRem(50);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .loading, .nothing, .error {
+            font-size: toRem(14);
             color: #999;
             text-align: center;
         }
         .error {
-            color: red;
-        }
-        .loading-icon {
-            margin-right: 5px;
-            overflow: initial;
+            color: $redColor;
         }
     }
 }

@@ -1,20 +1,20 @@
 <template>
-    <ul class='list'>
-        <li class="list-item" v-for='(item,index) in json' :key="index">
-            <router-link :to="url(item)">
+    <ul class="list">
+        <li class="list-item" v-for="(item,index) in json" :key="index">
+            <router-link class="item-link" :to="{ path: 'detail', query: { 'id': item.sound.id } }">
                 <!-- 图片 -->
-                <div class="pic_wrap">
-                    <img :src="item.sound.pic_500">
-                    <span class="fire" v-if='item.sound.is_hot' :class='hotClass(item.sound.is_hot)'></span>
+                <div class="item-image-container">
+                    <img class="item-image" :src="item.sound.pic_500">
+                    <div class="my-icon-hot item-fire" v-if='item.sound.is_hot' :class='item.sound.is_hot | hotClass'></div>
                 </div>
                 <!-- 名字 -->
-                <h4>{{item.sound.name}}</h4>
+                <div class="item-name">{{item.sound.name}}</div>
             </router-link>
             <!-- 频道 -->
-            <p class="channel">
-                <a>{{item.sound.channel.name}}</a>
-                频道
-            </p>
+            <div class="item-channel">
+                <a class="item-channel-value">{{item.sound.channel.name}}</a>
+                <div class="item-channel-label">频道</div>
+            </div>
         </li>
     </ul>
 </template>
@@ -22,90 +22,78 @@
 export default {
     props: {
         json: Array
-    },
-    methods: {
-        url(item) {
-            return `/detail/${item.sound.id}`
-        },
-        // 热度
-        hotClass(hot) {
-            switch (hot) {
-                case 1: return 'fire-red'
-                case 3: return 'fire-yellow'
-                case 4: return 'fire-blue'
-            }
-        }
     }
 }
 </script>
 <style scoped lang='stylus'>
-img_height = toRem(175);
+$imageHeight = toRem(175);
 .list {
-    font-size: 0;
+    display: flex;
+    flex-wrap: wrap;
     .list-item {
-        display: inline-block;
         width: 50%;
-        padding: 0 10px 6px;
-        a {
-            text-decoration: none;
-        }
-        .pic_wrap {
-            width: 100%;
-            height: img_height;
-            position: relative;
-            overflow-y: hidden;
-            img {
+        padding: 0 toRem(10);
+        margin-bottom: toRem(8);
+        .item-link {
+            display: block;
+            .item-image-container {
                 width: 100%;
-                min-height: img_height;
+                height: $imageHeight;
+                position: relative;
+                overflow: hidden;
+                .item-image {
+                    width: 100%;
+                    min-height: $imageHeight;
+                }
+                .item-fire {
+                    position: absolute;
+                    top: toRem(15);
+                    right: toRem(15);
+                    z-index: 10;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: toRem(22);
+                    height: toRem(22);
+                    font-size: toRem(16);
+                    border-radius: 100%;
+                    background: #fff;
+                    &.fire-red {
+                        color: $redColor;
+                    }
+                    &.fire-blue {
+                        color: $blueColor;
+                    }
+                    &.fire-yellow {
+                        color: $yellowColor;
+                    }
+                }
             }
-            .fire {
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                width: 22px;
-                height: 22px;
-                &.fire-red {
-                    display: block;
-                    background-position: -162px -215px;
-                }
-                &.fire-yellow {
-                    display: block;
-                    background-position: 0px -215px;
-                }
-                &.fire-blue {
-                    display: block;
-                    background-position: -299px -215px;
-                }
-            }
-        }
-        h4 {
-            width: 100%;
-            font-size: 14px;
-            color: #666666;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            padding-top: 5px;
-        }
-        .channel {
-            font-size: 12px;
-            color: #999999;
-            a {
-                display: inline-block;
-                width: 75%;
+            .item-name {
+                width: 100%;
+                color: $normalColor;
+                font-size: toRem(14);
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
-                vertical-align: middle;
-                color: #7DD97F;
+                margin-top: toRem(8);
+            }
+        }
+        .item-channel {
+            display: flex;
+            align-items: center;
+            color: $infoColor;
+            font-size: toRem(12);
+            margin-top: toRem(6);
+            .item-channel-value {
+                max-width: 80%;
+                width: 80%;
+                color: $linkColor;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
             }
         }
     }
-}
-</style>
-<style scoped>
-.fire {
-  background: url(~@/assets/icon/echo_mobile_sprites@3_8.png) no-repeat;
-  background-size: 320px;
 }
 </style>

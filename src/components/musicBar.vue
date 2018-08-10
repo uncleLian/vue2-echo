@@ -1,44 +1,47 @@
 <template>
-    <div id="musicBar" v-if='audio_data'>
-        <div class='sound'>
-            <!-- audio -->
-            <audio id='audio' autoplay="autoplay" :src="audio_data.sound.source"></audio>
-
-            <!-- 封面 -->
-            <router-link class="cover" tag='a' :to="`/detail/${audio_data.sound.id}`">
-                <img :src="audio_data.sound.pic_500">
-            </router-link>
-
-            <!-- 信息 -->
-            <div class="info">
-                <p class="name">{{audio_data.sound.name}}</p>
-                <p class="author">{{audio_data.sound.user.name}}</p>
+    <div id="musicBarContainer">
+        <div id="musicBar" v-if='audio_data'>
+            <div class='music'>
+                <!-- audio -->
+                <audio id='audio' autoplay="autoplay" :src="audio_data.sound.source"></audio>
+                <!-- 封面 -->
+                <router-link class="music-cover" :to="{ path: 'detail', query: { id: audio_data.sound.id } }">
+                    <img :src="audio_data.sound.pic_500">
+                </router-link>
+                <!-- 信息 -->
+                <div class="music-info">
+                    <div class="info-name">{{audio_data.sound.name}}</div>
+                    <div class="info-author">{{audio_data.sound.user.name}}</div>
+                </div>
+                <!-- 按钮 -->
+                <div class="music-control">
+                    <!-- 播放列表 -->
+                    <div class="my-icon-menu control-icon" @click="$refs.popup.toggleVisible()"></div>
+                    <!-- 播放/暂停 -->
+                    <div class="control-icon control-icon-mid" :class="audio_play ? 'my-icon-pause' : 'my-icon-arrow'" @click="set_audio_play(!audio_play)"></div>
+                    <!-- 下一首 -->
+                    <div class="my-icon-next control-icon" @click="listRepeat"></div>
+                </div>
             </div>
-
-            <!-- 控制 -->
-            <div class="control">
-                <!-- 列表按钮 -->
-                <mu-icon-button class='control-icon-btn small' icon="queue_music" @click.stop="$refs.sheet.toggleVisible()" />
-                <!-- 播放/暂停 -->
-                <mu-icon-button class='control-icon-btn' :icon="audio_play? 'pause' : 'play_arrow'" @click.stop="set_audio_play(!audio_play)" />
-                <!-- 下一首按钮 -->
-                <mu-icon-button class='control-icon-btn small' icon="skip_next" @click.stop="listRepeat" />
+            <!-- 进度条 -->
+            <div class="progress_bar">
+                <div class="progress_bar_inner" :style="`width:${audio_progress}`"></div>
             </div>
         </div>
-
-        <!-- 进度条 -->
-        <div class="progress_bar">
-            <div class="progress_bar_inner" :style="`width:${$store.getters.audio_progress}`"></div>
-        </div>
-
-        <!-- 播放列表/播放模式 -->
-        <my-sheet ref="sheet"></my-sheet>
-
+        <!-- 播放列表 & 播放模式 -->
+        <my-popup ref="popup" v-if='audio_data'></my-popup>
     </div>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
+import myPopup from '@/components/popup'
 export default {
+    components: { myPopup },
+    data() {
+        return {
+            popupVisible: false
+        }
+    },
     computed: {
         ...mapState([
             'audio',
@@ -48,14 +51,18 @@ export default {
         ...mapState({
             audio_data: state => state.audio.data,
             audio_play: state => state.audio.play
-        })
+        }),
+        ...mapGetters([
+            'audio_progress'
+        ])
     },
     watch: {
         audio_data(val) {
             // 当前audio数据改变了，等dom更新完，初始化audio
             if (val) {
                 this.$nextTick(() => {
-                    this.audio_init()
+                    this.AddToPlayList(val)
+                    this.audioInit()
                 })
             }
         },
@@ -74,19 +81,23 @@ export default {
             'set_playList'
         ]),
         // audio元素初始化
-        audio_init() {
-            let _audio = this.$el.querySelector('#audio')   // 获取audio元素
-            this.set_audio_ele(_audio)                      // 设置audio元素
+        audioInit() {
+            // 获取并设置audio元素
+            let _audio = this.$el.querySelector('#audio')
+            this.set_audio_ele(_audio)
             // 可以播放
             _audio.oncanplay = () => {
                 _audio.play()
-                this.set_audio_duration(_audio.duration)    // 设置时长
+                // 设置时长
+                this.set_audio_duration(_audio.duration)
             }
             // 播放位置改变
             _audio.ontimeupdate = () => {
-                this.set_audio_currentTime(~~_audio.currentTime)    // 设置当前时间
+                // 设置当前时间
+                // ~~ 相当于 Math.floor()
+                this.set_audio_currentTime(~~_audio.currentTime)
             }
-            // 播放
+            // 正在播放
             _audio.onplay = () => {
                 this.set_audio_play(true)
             }
@@ -97,25 +108,34 @@ export default {
             // 结束
             _audio.onended = () => {
                 this.set_audio_play(false)
-                this.playMode_init()            // 加载播放模式
+                // 加载播放模式逻辑
+                switch (this.playMode) {
+                    case 'random': this.randomPlay()
+                        break
+                    case 'singleRepeat': this.singleRepeat()
+                        break
+                    case 'listRepeat': this.listRepeat()
+                        break
+                }
             }
         },
-        playMode_init() {
-            switch (this.playMode) {
-                case 'random': this.randomPlay()
-                    break
-                case 'singleRepeat': this.singleRepeat()
-                    break
-                case 'listRepeat': this.listRepeat()
-                    break
+        // 添加播放列表
+        AddToPlayList(item) {
+            let ishas = false
+            if (this.playList.find((n) => n.sound.id === item.sound.id)) {
+                ishas = true
+            }
+            if (!ishas) {
+                this.playList.unshift(item)
+                this.set_playList(this.playList)
             }
         },
         // 随机播放
         randomPlay() {
             // 0 ~ 播放列表的长度，随机得到一个数
             // 如果随机数对应的音乐和当前播放的音乐相同的话，采取listRepeat方法的逻辑，否则播放
-            let index = Math.floor(Math.random() * this.playList.length)
-            if (this.playList[index].sound.id === this.audio.data.sound.id) {
+            let index = ~~(Math.random() * this.playList.length)
+            if (this.playList[index].sound.id === this.audio_data.sound.id) {
                 this.listRepeat()
             } else {
                 this.set_audio_data(this.playList[index])
@@ -130,14 +150,13 @@ export default {
         listRepeat() {
             // 获取当前音乐位置currentIndex
             // currentIndex是结尾的话，nextIndex就等于0，否则 +1
-            // 只有一首音乐，播放模式是列表循环或者用户点击下一首歌的情况，重新加载并播放当前的音乐
-            let currentIndex = this.playList.findIndex(n => n.sound.id === this.audio.data.sound.id)
+            // 只有一首音乐，播放模式是列表循环或者用户点击下一首的情况：重新加载并播放当前的音乐
+            let currentIndex = this.playList.findIndex(n => n.sound.id === this.audio_data.sound.id)
             if (currentIndex > -1) {
                 let nextIndex
                 currentIndex === this.playList.length - 1 ? nextIndex = 0 : nextIndex = currentIndex + 1
-                if (this.playList[nextIndex].sound.id === this.audio.data.sound.id) {
-                    this.audio.ele.load()
-                    this.audio.ele.play()
+                if (this.playList[nextIndex].sound.id === this.audio_data.sound.id) {
+                    this.singleRepeat()
                 } else {
                     this.set_audio_data(this.playList[nextIndex])
                 }
@@ -149,69 +168,83 @@ export default {
 }
 </script>
 <style lang='stylus'>
-#musicBar {
+#musicBarContainer {
     position: fixed;
     left: 0;
+    right: 0;
     bottom: 0;
-    z-index: 20170821;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-top: 1px solid #e8e8e8;
-    .sound {
-        position: relative;
+    z-index: 9999;
+    #musicBar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999;
         width: 100%;
-        height: toRem(48);
-        padding: 0 toRem(5);
-        display: flex;
-        align-items: center;
-        .cover {
-            display: inline-block;
-            width: toRem(37.5);
-            height: toRem(37.5);
-            border: 1px solid #fff;
-            box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            img {
-                width: 100%;
-            }
-        }
-        .info {
-            flex: 1;
-            overflow: hidden;
-            padding: 0 toRem(7.5);
-            font-size: 12px;
-            p {
-                text-overflow: ellipsis;
+        border-top: 1px solid $borderColor;
+        background-color: rgba(255, 255, 255, 0.9);
+        .music {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: $musicBarHeight;
+            padding: 0 toRem(5);
+            .music-cover {
+                display: inline-block;
+                width: toRem(36);
+                height: toRem(36);
                 overflow: hidden;
-                white-space: nowrap;
+                border: 1px solid #fff;
+                box-shadow: 0 0 toRem(2) rgba(0, 0, 0, 0.2);
+                img {
+                    display: block;
+                    width: 100%;
+                }
             }
-        }
-        .control {
-            color: #666;
-            .control-icon-btn {
-                width: 38px;
-                height: 38px;
-                color: #5e5e5e;
-                padding: 6px;
-                border: 1px solid #5e5e5e;
-                border-radius: 50%;
-                background: #fff;
-                margin-right: 8px;
-                &.small {
-                    width: 34px;
-                    height: 34px;
-                    padding: 5px;
+            .music-info {
+                flex: 1;
+                font-size: toRem(12);
+                padding: 0 toRem(8);
+                overflow: hidden;
+                .info-name {
+                    text-ellipsis();
+                }
+                .info-author {
+                    text-ellipsis();
+                    margin-top: toRem(5);
+                }
+            }
+            .music-control {
+                display: flex;
+                align-items: center;
+                .control-icon {
+                    flex-center();
+                    width: toRem(34);
+                    height: toRem(34);
+                    line-height: 1;
+                    color: $normalColor;
+                    font-size: toRem(22);
+                    margin: 0 toRem(8);
+                    border: 1px solid $normalColor;
+                    border-radius: 100%;
+                    background: #fff;
+                    &.control-icon-mid {
+                        width: toRem(38);
+                        height: toRem(38);
+                        font-size: toRem(26);
+                    }
                 }
             }
         }
-    }
-    .progress_bar {
-        height: 1.5px;
-        background: rgba(255, 255, 255, 0.9);
-        .progress_bar_inner {
-            width: 0%;
-            height: 100%;
-            background-color: #6ed56c;
+        .progress_bar {
+            height: toRem(1.5);
+            background: rgba(255, 255, 255, 0.9);
+            .progress_bar_inner {
+                width: 0%;
+                height: 100%;
+                background-color: $appColor;
+            }
         }
     }
 }

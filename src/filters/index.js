@@ -11,5 +11,13 @@ export default {
         } else {
             return t
         }
+    },
+    // 热度处理
+    hotClass: hot => {
+        switch (hot) {
+            case 1: return 'fire-red'
+            case 3: return 'fire-yellow'
+            case 4: return 'fire-blue'
+        }
     }
 }

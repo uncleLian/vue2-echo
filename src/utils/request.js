@@ -1,22 +1,46 @@
 import Vue from 'vue'
 import axios from 'axios'
-import qs from 'qs'
-Vue.prototype.$http = axios     // 这样设置就可以在组件内用 this.$http 使用axios了
-axios.defaults.baseURL = 'http://localhost:8088/'
+import { Toast } from 'mint-ui'
 
-export const request = async (type = 'POST', url = '', data = {}) => {
-    let result
-    type = type.toUpperCase()
-    if (type === 'GET') {
-        await axios.get(url, { params: data })
-            .then(res => {
-                result = res.data
-            })
-    } else if (type === 'POST') {
-        await axios.post(url, qs.stringify(data))
-            .then(res => {
-                result = res.data
-            })
-    }
-    return result
+export const instance = axios.create({
+    baseURL: 'http://localhost:8001/', // 基础链接
+    timeout: 10 * 1000 // 超时时间
+})
+
+// 请求拦截
+instance.interceptors.request.use(config => {
+    return config
+}, error => {
+    return Promise.reject(error)
+})
+
+// 响应拦截
+instance.interceptors.response.use(response => {
+    const res = response.data
+    return Promise.resolve(res)
+}, error => {
+    // 输出错误信息
+    Toast(error.message)
+    return Promise.reject(error)
+})
+
+Plugin.install = function (Vue, options) {
+    Vue.axios = instance
+    window.axios = instance
+    Object.defineProperties(Vue.prototype, {
+        axios: {
+            get() {
+                return instance
+            }
+        },
+        $axios: {
+            get() {
+                return instance
+            }
+        }
+    })
 }
+
+Vue.use(Plugin)
+
+export default Plugin

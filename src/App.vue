@@ -5,27 +5,23 @@
             <router-view></router-view>
         </keep-alive>
         <!-- 音乐控制条 -->
-        <music-bar></music-bar>
+        <my-music-bar></my-music-bar>
         <!-- 页面加载进度条 -->
         <vue-progress-bar></vue-progress-bar>
     </div>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import musicBar from '@/components/musicBar'
 export default {
+    components: { 'my-music-bar': musicBar },
     computed: {
         ...mapState([
             'audio'
         ])
     },
-    methods: {
-        ...mapMutations([
-            'set_app_cache'     // 获取app缓存，刷新依然有数据
-        ])
-    },
     created() {
-        this.set_app_cache()
-        // 加载进度条 开始
+        this.getAppCache()
         this.$Progress.start()
         this.$router.beforeEach((to, from, next) => {
             this.$Progress.start()
@@ -36,18 +32,36 @@ export default {
         })
     },
     mounted() {
-        // 加载进度条 结束
         this.$Progress.finish()
+    },
+    methods: {
+        ...mapActions([
+            'getAppCache'
+        ])
     }
 }
 </script>
 <style lang='stylus'>
 #app {
     position: relative;
-    min-height: inherit;
-    background: #eee;
     &.musicBar-on {
-        padding-bottom: 1.3rem;
+        padding-bottom: $musicBarHeight;
     }
+    a {
+        color: $linkColor;
+    }
+}
+// 重置mint-ui 样式，适配屏幕大小
+.mint-indicator-wrapper {
+    padding: toRem(15) !important;
+    .mint-spinner-snake {
+        width: toRem(32) !important;
+        height: toRem(32) !important;
+    }
+}
+
+[class^=mint-spinner-triple-bounce-] {
+    width: toRem(8) !important;
+    height: toRem(8) !important;
 }
 </style>
