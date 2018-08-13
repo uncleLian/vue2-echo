@@ -4,9 +4,9 @@
 ![image](https://img.shields.io/badge/vue--router-3.0.1-blue.svg)
 ![image](https://img.shields.io/badge/vuex-3.0.1-blue.svg)
 ![image](https://img.shields.io/badge/mint--ui-2.2.13-blue.svg)
-![image](https://img.shields.io/badge/vue--cli-3.0.0.rc--12-green.svg)
+![image](https://img.shields.io/badge/vue--cli-3.0.0-green.svg)
 
-> 此版本已基于vue-cli 3.0升级，2.x版本请查看v2.0分支 
+> v3.0是基于vue-cli 3.0的，vue-cli 2.x版本请查看v2.0分支 
 
 ## 前言
 这是一个Vue学习系列，难度：容易 -> 中等 -> 困难， 3个复杂度和不同类型的项目，一步步地带领大家熟悉和深入Vue。这些系列项目将会涉及Vue的大部分知识，如果都能熟悉和掌握，那么就可以随心所欲地使用Vue去写单页面应用了。

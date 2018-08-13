@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // 懒加载路由页面资源（加快首屏加载）
-const index = () => import('@/page/index/index')
-const detail = () => import('@/page/detail/detail')
+const index = () => import('@/pages/index/index')
+const detail = () => import('@/pages/detail/detail')
 
 Vue.use(Router)
 
