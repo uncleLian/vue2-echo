@@ -1,5 +1,6 @@
 <template>
-    <div id='index' v-infinite-scroll="getRecommentMore" infinite-scroll-disabled="lock" infinite-scroll-immediate-check="false" infinite-scroll-distance="5">
+    <!-- <div id='index' v-infinite-scroll="getRecommentMore" infinite-scroll-disabled="lock" infinite-scroll-immediate-check="false" infinite-scroll-distance="20"> -->
+    <div id='index'>
         <!-- banner -->
         <my-banner :json='bannerJson'></my-banner>
         <!-- 推荐 -->
@@ -50,8 +51,10 @@ export default {
     },
     activated() {
         this.lock = false
+        window.addEventListener('scroll', this.onScroll)
     },
     beforeRouteLeave(to, from, next) {
+        window.removeEventListener('scroll', this.onScroll)
         this.lock = true
         next()
     },
@@ -79,11 +82,13 @@ export default {
                 this.$indicator.close()
             })
         },
+        // 加载更多
         getRecommentMore() {
-            if (!this.lock) {
+            if (!this.loading) {
                 this.lock = true
                 this.loading = 'loading'
                 getList(this.page).then(res => {
+                    console.log(res)
                     if (res.data && res.data.length > 0) {
                         this.recommentJson.push(...res.data)
                         this.page++
@@ -109,6 +114,25 @@ export default {
             } else {
                 this.set_audio_data(this.recommentJson[0])
             }
+        },
+        // 自行实现滚到页面底部加载
+        onScroll() {
+            // 利用requestAnimationFrame保证流畅性和精准度，相对于setTimeout执行次数会增多
+            requestAnimationFrame(() => {
+                // 滚动高度
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+                // 窗口高度
+                let windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+                // 文档高度
+                let documentHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight)
+                // 距离
+                let distance = 10
+                // this.$toast(`滚动高度：${scrollTop}, 窗口高度：${windowHeight}, 文档高度：${documentHeight}, `)
+                let isBottom = scrollTop + windowHeight + distance >= documentHeight
+                if (isBottom && !this.lock) {
+                    this.getRecommentMore()
+                }
+            })
         }
     }
 }

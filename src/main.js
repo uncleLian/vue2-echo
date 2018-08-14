@@ -6,7 +6,7 @@ import router from './router'
 import store from './store'
 
 // 第三方库
-import MintUI, { Indicator } from 'mint-ui'
+import MintUI, { Indicator, Toast } from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import VueProgressBar from 'vue-progressbar'
 // 自定义
@@ -23,6 +23,7 @@ Vue.config.productionTip = false
 // 第三方
 Vue.use(MintUI)
 Vue.prototype.$indicator = Indicator
+Vue.prototype.$toast = Toast
 Vue.use(VueProgressBar, {
     color: 'rgb(143, 255, 199)',
     failedColor: 'red',
@@ -36,6 +37,14 @@ Object.keys(components).forEach(key => {
 Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])
 })
+
+// 全局错误捕捉
+if (process.env.NODE_ENV === 'production') {
+    Vue.config.errorHandler = function (error, vm, info) {
+        console.log(error)
+        Toast(info)
+    }
+}
 
 new Vue({
     router,

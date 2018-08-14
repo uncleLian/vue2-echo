@@ -8,7 +8,7 @@
                 <div class="my-icon-more playList-mode-btn" @click="playModeVisible = true"></div>
             </div>
             <ul class="playList" v-if="playList && playList.length > 0">
-                <li class="playList-item" v-for="(item, index) in playList" :key="index" :class="{'playing': audio.data.sound.id === item.sound.id}" @click="set_audio_data(item)">
+                <li class="playList-item" v-for="(item, index) in playList" :key="item.sound.id" :class="{'playing': audio.data.sound.id === item.sound.id}" @click="set_audio_data(item)">
                     <div class="item-name">
                         <!-- icon -->
                         <div class="name-icon-container">
@@ -66,8 +66,10 @@ export default {
             // 打开弹框禁止页面滚动
             if (val) {
                 document.querySelector('html').style.overflow = 'hidden'
+                document.querySelector('body').style.overflow = 'hidden'
             } else {
                 document.querySelector('html').style.overflow = ''
+                document.querySelector('body').style.overflow = ''
             }
         }
     },
@@ -108,8 +110,8 @@ export default {
 .playListSheet {
     width: 100%;
     max-height: toRem(188);
-    bottom: $musicBarHeight !important;
     border-top: 1px solid $borderColor;
+    margin-bottom: $musicBarHeight;
     .playList-header {
         position: relative;
         flex-center();
@@ -135,25 +137,25 @@ export default {
     }
     .playList {
         position: relative;
-        max-height: toRem(150);
+        max-height: toRem(135);
         overflow-x: hidden;
         overflow-y: auto;
-        padding: toRem(8) 0;
+        -webkit-overflow-scrolling: touch;
         .playList-item {
             position: relative;
             display: flex;
             align-items: center;
             padding: toRem(7) toRem(8);
-            border-bottom: 1px solid #f4f4f4;
+            border-bottom: 1px solid $borderColor;
             line-height: 1;
             .item-name {
                 display: flex;
                 align-items: center;
                 .name-icon-container {
                     flex-center();
-                    width: toRem(20);
-                    height: toRem(20);
-                    margin: 0 toRem(4);
+                    width: toRem(18);
+                    height: toRem(18);
+                    margin: 0 toRem(5);
                     .name-icon {
                         color: $appColor;
                         font-size: toRem(18);
@@ -161,7 +163,7 @@ export default {
                             width: toRem(4);
                             height: toRem(4);
                             border-radius: 100%;
-                            background: $borderColor;
+                            background: $bgColor;
                         }
                     }
                 }
@@ -200,6 +202,7 @@ export default {
         .playMode-item {
             width: 100%;
             min-height: toRem(48);
+            background: none;
             &.active {
                 .mint-cell-text {
                     color: $appColor;

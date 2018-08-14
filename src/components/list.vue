@@ -1,6 +1,6 @@
 <template>
     <ul class="list">
-        <li class="list-item" v-for="(item,index) in json" :key="index">
+        <li class="list-item" v-for="item in json" :key="item.sound.id">
             <router-link class="item-link" :to="{ path: 'detail', query: { 'id': item.sound.id } }">
                 <!-- 图片 -->
                 <div class="item-image-container">
@@ -84,7 +84,7 @@ $imageHeight = toRem(175);
             align-items: center;
             color: $infoColor;
             font-size: toRem(12);
-            margin-top: toRem(6);
+            margin-top: toRem(5);
             .item-channel-value {
                 max-width: 80%;
                 width: 80%;

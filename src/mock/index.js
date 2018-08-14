@@ -6419,7 +6419,6 @@ Mock.mock('http://localhost:8001/list?page=3', function () {
         'msg': '',
         'data': []
     }
-    params.data = listJson.slice(2 * rows, 3 * rows)
     return params
 })
 // 相关推荐
