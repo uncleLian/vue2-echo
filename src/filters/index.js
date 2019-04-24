@@ -1,4 +1,6 @@
-export default {
+import Vue from 'vue'
+
+const filters = {
     // 时间处理
     sec2his: t => {
         if (~~t || t < 1) {
@@ -21,3 +23,7 @@ export default {
         }
     }
 }
+// 注册全局过滤
+Object.keys(filters).forEach(key => {
+    Vue.filter(key, filters[key])
+})

@@ -1,6 +1,11 @@
 const path = require('path')
+function resolve(dir) {
+    return path.join(__dirname, dir)
+}
+const projectName = require('./package.json').name
+
 module.exports = {
-    baseUrl: '/',
+    publicPath: '/',
     outputDir: 'docs',
     lintOnSave: true,
     productionSourceMap: false,
@@ -15,6 +20,15 @@ module.exports = {
         }
     },
     devServer: {
-        port: 8001
+        port: 8001,
+        open: true
+    },
+    configureWebpack: {
+        name: projectName,
+        resolve: {
+            alias: {
+                '@': resolve('src')
+            }
+        }
     }
 }

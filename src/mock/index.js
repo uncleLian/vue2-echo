@@ -1,6 +1,7 @@
 /* eslint-disable */
 var Mock = require('mockjs/dist/mock-min.js')
 
+const baseURL = process.env.VUE_APP_BASE_API
 const rows = 15
 const bannerJson = [
     {
@@ -6388,41 +6389,34 @@ const otherJson = [
         }
     }
 ]
+
 // banner
-Mock.mock('http://localhost:8001/banner', {
+Mock.mock(`${baseURL}/banner`, {
     'code': 0,
     'msg': '',
     'data': bannerJson
 })
+
 // 推荐
-Mock.mock('http://localhost:8001/list?page=1', function () {
+for (let index = 1; index <= 4; index++) {
     let params = {
         'code': 0,
         'msg': '',
         'data': []
     }
-    params.data = listJson.slice(0 * rows, 1 * rows)
-    return params
-})
-Mock.mock('http://localhost:8001/list?page=2', function () {
-    let params = {
-        'code': 0,
-        'msg': '',
-        'data': []
+    if (index < 4) {
+        Mock.mock(`${baseURL}/list?page=${index}`, function () {
+            params.data = listJson.slice((index - 1) * rows, index * rows)
+            return params
+        })
+    } else {
+        Mock.mock(`${baseURL}/list?page=${index}`, function () {
+            return params
+        })
     }
-    params.data = listJson.slice(1 * rows, 2 * rows)
-    return params
-})
-Mock.mock('http://localhost:8001/list?page=3', function () {
-    let params = {
-        'code': 0,
-        'msg': '',
-        'data': []
-    }
-    return params
-})
+}
 // 相关推荐
-Mock.mock('http://localhost:8001/other', {
+Mock.mock(`${baseURL}/other`, {
     "code": 0,
     "msg": "",
     "data": otherJson
@@ -6430,7 +6424,7 @@ Mock.mock('http://localhost:8001/other', {
 
 let arr = [...bannerJson, ...listJson, ...otherJson]
 arr.forEach(item => {
-    Mock.mock(`http://localhost:8001/detail?id=${item.sound.id}`, function () {
+    Mock.mock(`${baseURL}/detail?id=${item.sound.id}`, function () {
         let params = {
             'code': 0,
             'msg': '',

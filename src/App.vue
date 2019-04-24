@@ -1,43 +1,39 @@
 <template>
-    <div id="app" :class="{'musicBar-on': audio.data}">
+    <div id="app">
         <!-- 视图层 -->
         <keep-alive>
             <router-view></router-view>
         </keep-alive>
         <!-- 音乐控制条 -->
-        <my-music-bar></my-music-bar>
+        <music-bar />
         <!-- 页面加载进度条 -->
-        <vue-progress-bar></vue-progress-bar>
+        <vue-progress-bar />
     </div>
 </template>
-<script>
-import { mapState, mapActions } from 'vuex'
-import musicBar from '@/components/musicBar'
-export default {
-    components: { 'my-music-bar': musicBar },
-    computed: {
-        ...mapState([
-            'audio'
-        ])
-    },
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import { State, Getter, Mutation, Action } from 'vuex-class'
+import MusicBar from '@/components/MusicBar/index.vue'
+
+@Component({
+    components: { MusicBar }
+})
+export default class index extends Vue {
+    @Action INIT_APP_CACHE: any
     created() {
-        this.getAppCache()
+        this.INIT_APP_CACHE()
+
         this.$Progress.start()
-        this.$router.beforeEach((to, from, next) => {
+        this.$router.beforeEach((to: any, from: any, next: any) => {
             this.$Progress.start()
             next()
         })
-        this.$router.afterEach((to, from) => {
+        this.$router.afterEach((to: any, from: any) => {
             this.$Progress.finish()
         })
-    },
+    }
     mounted() {
         this.$Progress.finish()
-    },
-    methods: {
-        ...mapActions([
-            'getAppCache'
-        ])
     }
 }
 </script>
@@ -59,7 +55,6 @@ export default {
         height: toRem(32) !important;
     }
 }
-
 [class^=mint-spinner-triple-bounce-] {
     width: toRem(8) !important;
     height: toRem(8) !important;
