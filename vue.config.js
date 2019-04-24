@@ -6,7 +6,7 @@ const projectName = require('./package.json').name
 
 module.exports = {
     publicPath: '/',
-    outputDir: 'docs',
+    outputDir: 'dist',
     lintOnSave: true,
     productionSourceMap: false,
     css: {

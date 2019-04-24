@@ -137,7 +137,6 @@ export default class detail extends Vue {
     handleSeek(e: any) {
         e = e || window.event
         let percent: number = Math.floor(e.pageX / window.innerWidth * 100) / 100
-        console.log('e.percent', percent)
         this.audio.ele.currentTime = this.audio.ele.duration * percent
     }
 }

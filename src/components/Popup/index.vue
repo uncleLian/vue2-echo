@@ -8,7 +8,7 @@
                 <div class="my-icon-more playList-mode-btn" @click="playModeVisible = true"></div>
             </div>
             <ul class="playList" v-if="playList && playList.length > 0">
-                <li class="playList-item" v-for="(item, index) in playList" :key="item.sound.id" :class="{'playing': audio.data.sound.id === item.sound.id}" @click="set_audio_data(item)">
+                <li class="playList-item" v-for="(item, index) in playList" :key="item.sound.id" :class="{'playing': audio.data.sound.id === item.sound.id}" @click="muiscChange(item)">
                     <div class="item-name">
                         <!-- icon -->
                         <div class="name-icon-container">
@@ -58,6 +58,11 @@ export default class Popup extends Vue {
 
     @Watch('$route') closePopup(to: any, from: any) {
         this.playListVisible = this.playModeVisible = false
+    }
+    // 切换音乐
+    muiscChange(val: any) {
+        this.playListVisible = false
+        this.SET_AUDIO_DATA(val)
     }
     // 切换播放模式
     playModeChange(val: boolean) {
