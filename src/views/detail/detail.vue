@@ -1,5 +1,5 @@
 <template>
-    <div id='detail' v-if='audio.data'>
+    <div id='detail' v-if='audio.data && !loading'>
         <div class="detail-container">
             <!-- 用户信息 -->
             <div class="detail-user">
@@ -91,6 +91,7 @@ import MusicList from '@/components/MusicList/index.vue'
 })
 export default class detail extends Vue {
     otherJson: any[] = []
+    loading: boolean = false
     @State audio: any
     @Getter audio_progress: any
     @Mutation SET_AUDIO_DATA: any
@@ -106,19 +107,21 @@ export default class detail extends Vue {
         this.getMusicData()
         this.getOtherData()
     }
-
     getMusicData() {
         this.$indicator.open()
+        this.loading = true
         let id: any = this.$route.query.id
         getDetail(id)
             .then((res: any) => {
                 this.$indicator.close()
+                this.loading = false
                 if (res && res.data) {
                     this.SET_AUDIO_DATA(res.data)
                 }
             })
             .catch(() => {
                 this.$indicator.close()
+                this.loading = false
             })
     }
     getOtherData() {

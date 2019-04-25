@@ -21,6 +21,7 @@ const routes = [
 ]
 export default new Router({
     routes,
+    // 使用<keep-alive>，scrollBehavior才能生效。
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition

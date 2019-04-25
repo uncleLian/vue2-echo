@@ -47,8 +47,8 @@ export const request = async (url: String = '', type: String = 'GET', data: any 
         headers: {
             'Content-type': isForm ? 'multipart/form-data' : 'application/json'
         },
-        params: data,
-        data: data
+        params: type === 'GET' ? data : '',
+        data: type !== 'GET' ? data : ''
     }
     await instance(requestOptions).then(res => {
         result = res

@@ -6397,7 +6397,7 @@ Mock.mock(`${baseURL}/banner`, {
     'data': bannerJson
 })
 
-// 推荐
+// 列表推荐
 for (let index = 1; index <= 4; index++) {
     let params = {
         'code': 0,
@@ -6422,6 +6422,7 @@ Mock.mock(`${baseURL}/other`, {
     "data": otherJson
 })
 
+// 音乐详情
 let arr = [...bannerJson, ...listJson, ...otherJson]
 arr.forEach(item => {
     Mock.mock(`${baseURL}/detail?id=${item.sound.id}`, function () {

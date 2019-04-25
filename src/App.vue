@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" :class="{'musicBar-on': audio_data}">
         <!-- 视图层 -->
         <keep-alive>
             <router-view></router-view>
@@ -19,10 +19,10 @@ import MusicBar from '@/components/MusicBar/index.vue'
     components: { MusicBar }
 })
 export default class index extends Vue {
+    @State(state => state.audio.data) audio_data: any
     @Action INIT_APP_CACHE: any
     created() {
         this.INIT_APP_CACHE()
-
         this.$Progress.start()
         this.$router.beforeEach((to: any, from: any, next: any) => {
             this.$Progress.start()
@@ -46,17 +46,5 @@ export default class index extends Vue {
     a {
         color: $linkColor;
     }
-}
-// 重置mint-ui 样式，适配屏幕大小
-.mint-indicator-wrapper {
-    padding: toRem(15) !important;
-    .mint-spinner-snake {
-        width: toRem(32) !important;
-        height: toRem(32) !important;
-    }
-}
-[class^=mint-spinner-triple-bounce-] {
-    width: toRem(8) !important;
-    height: toRem(8) !important;
 }
 </style>

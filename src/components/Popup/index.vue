@@ -10,14 +10,11 @@
             <ul class="playList" v-if="playList && playList.length > 0">
                 <li class="playList-item" v-for="(item, index) in playList" :key="item.sound.id" :class="{'playing': audio.data.sound.id === item.sound.id}" @click="muiscChange(item)">
                     <div class="item-name">
-                        <!-- icon -->
                         <div class="name-icon-container">
                             <div class="name-icon" :class="audio.data.sound.id === item.sound.id ? 'my-icon-circle-play': 'smallCircle' "></div>
                         </div>
-                        <!-- 名字 -->
                         <div class="name-value" :class="audio.data.sound.id === item.sound.id ? 'onPlay': '' ">{{item.sound.name}}</div>
                     </div>
-                    <!-- 删除按钮 -->
                     <div class="item-close my-icon-close" @click.stop="deletePlayList(item, index)"></div>
                 </li>
             </ul>
@@ -154,6 +151,7 @@ export default class Popup extends Vue {
                 }
                 .name-value {
                     text-ellipsis();
+                    max-width: toRem(295);
                     color: $infoColor;
                     font-size: toRem(14);
                     &.onPlay {
