@@ -1,6 +1,7 @@
 /* eslint-disable */
 var Mock = require('mockjs/dist/mock-min.js')
 
+const baseURL = process.env.VUE_APP_BASE_API
 const rows = 15
 const bannerJson = [
     {
@@ -4327,8 +4328,8 @@ const listJson = [
             },
             'user': {
                 'id': '8096060',
-                'name': '小鑫',
-                'avatar_50': 'http://wx.qlogo.cn/mmopen/8IqTY9nvCLT3w8UibMQCorTs5kc7ZIrMvSTaAgvcNO9dxwNQGy7xjgdJKhYXoOZ5Nib1mlfUg1vicViaKCZYWXe5zfq6vrkmDv2R/0',
+                'name': '夜狠美',
+                'avatar_50': 'https://qn-qn-echo-image-cdn.app-echo.com/b13949c2aab33043abd4d18ad572622e50b7f8cc?imageMogr2/auto-orient/quality/100%7CimageMogr2/thumbnail/!100x100r/gravity/Center/crop/100x100/dx/0/dy/0',
                 'followed_count': '268'
             },
             'lyrics': 'Hello，欢迎参加echo 3D异类星系之旅，我是花花华晨宇，你的专属指挥官。请跟随我，让我们一起游走在这浩瀚的宇宙中，体验这次异类”的声音旅行吧。\n\n你，准备好了吗？\n\nPart1《蜉蝣》3D版本\n\n感受到了吗?我们降落了哦。我们首站登陆在蜉蝣星球，让我唱首歌给你听，好吗？\n\n\n歌词：\n自由天空中 被击落\n灵魂海水中 被浸透\n身陷孤岛上 只剩下生存的需求\nIt”s fa\\nIt”s far away\n睡在夜色中 都惶恐\n躲在喧嚣中 都寂寞\n浩瀚 宇宙中微渺的像一只蜉蝣\nIt”s fa\nIt”s far away\n喔…\n喔…\n喔…\nIt”s far\nIt”s far away\nIt”s far\nIt”s far away\n\nPart2《异类》3D版本\n\n即使每个人都只有一个小宇宙，但也应该尽力燃烧出自己的形状。下一站异类星球，抓稳哦。\n\n我一直都在。\n\n词：赵辰龙\n谱曲：华晨宇\n编曲：郑楠\n\n歌词：\n如果你不喜欢听我的歌\n请闭上耳朵接下来要大开杀戒穿透你的耳膜\n一直到达灵魂的深处让你崇拜着我\n跟着我 跟着我跟着我fight against the world\n我们生来就是叛逆早已拉响了警报\n气氛将被引爆 都给我听好\n我无所畏惧让所有的对手都领教\n跟着我 跟着我跟着我大声地尖叫\n哦哎哦\n我根本不受谁的威胁\n哦哎哦\n随时准备跟强者对决\n哦哎哦\n把对我的质疑和诬陷都毁灭\n这放纵的感觉\n超越一切不再胆怯\n不需要你们的理解\n我不想看别再废话\n趁早都消失在眼前\n哦哎哦\n我不在意流言蜚语\n哦哎哦\n也不屑人们的非议\n哦哎哦\n规则全都被我废弃\n当听到我撕裂的声音\n\nPart3《环游》3D版本\n\n我就是那种不喜欢去做太阳，照耀着大家，主动去帮助很多很多人。\n我就是那种当你需要我的时候我才会站出来，就像微光一样，虽然光很小，始终照耀着你一个人就可以了。\n\n词：长友美知惠、刘源\n谱曲：Dúné\n编曲：Dúné、郑楠\n\n歌词：\n我在拥挤路口\n听人群争吵不休\n吵着无谓借口吵着向左向右\n我环游这颗星球\n看时间摆弄着沙漏\n我不原地停留\n我大步行走\n\necho通讯员：呼叫指挥官，呼叫指挥官，这里是echo宇航中心，你的飞行轨迹非常完美，我们每天都会收到地球上无数对你崇拜乐迷的来信，请在这里对大家说些什么吧！\n\n花花：收到，谢谢echo宇航中心，谢谢陪我一起异类星系旅行的你们，谢谢你们的陪伴让我勇往直前。\n\n其实这张专辑我自己花了很多的心思，有很多的歌曲是我自己写的，然后也有一些歌是我专门送给歌迷的一个小礼物，然后也希望大家可以喜欢。\n\n然后最后也希望我的歌迷能够开开心心的每天，然后吃饱睡好，照顾好自己，我也会照顾好自己，哈哈，拜拜。\n\necho通讯员：收到，谢谢指挥官花花，祝大家星际旅行愉快，echo回声颠覆你的听觉体验，over！\n\n\necho独家制作团队：\n\n脚本创作：道兰&伊凯\n3D收音：道兰\n特效素材：张子健\n3D录音&节目合成：伊凯'
@@ -6388,49 +6389,43 @@ const otherJson = [
         }
     }
 ]
+
 // banner
-Mock.mock('http://localhost:8001/banner', {
+Mock.mock(`${baseURL}/banner`, {
     'code': 0,
     'msg': '',
     'data': bannerJson
 })
-// 推荐
-Mock.mock('http://localhost:8001/list?page=1', function () {
+
+// 列表推荐
+for (let index = 1; index <= 4; index++) {
     let params = {
         'code': 0,
         'msg': '',
         'data': []
     }
-    params.data = listJson.slice(0 * rows, 1 * rows)
-    return params
-})
-Mock.mock('http://localhost:8001/list?page=2', function () {
-    let params = {
-        'code': 0,
-        'msg': '',
-        'data': []
+    if (index < 4) {
+        Mock.mock(`${baseURL}/list?page=${index}`, function () {
+            params.data = listJson.slice((index - 1) * rows, index * rows)
+            return params
+        })
+    } else {
+        Mock.mock(`${baseURL}/list?page=${index}`, function () {
+            return params
+        })
     }
-    params.data = listJson.slice(1 * rows, 2 * rows)
-    return params
-})
-Mock.mock('http://localhost:8001/list?page=3', function () {
-    let params = {
-        'code': 0,
-        'msg': '',
-        'data': []
-    }
-    return params
-})
+}
 // 相关推荐
-Mock.mock('http://localhost:8001/other', {
+Mock.mock(`${baseURL}/other`, {
     "code": 0,
     "msg": "",
     "data": otherJson
 })
 
+// 音乐详情
 let arr = [...bannerJson, ...listJson, ...otherJson]
 arr.forEach(item => {
-    Mock.mock(`http://localhost:8001/detail?id=${item.sound.id}`, function () {
+    Mock.mock(`${baseURL}/detail?id=${item.sound.id}`, function () {
         let params = {
             'code': 0,
             'msg': '',

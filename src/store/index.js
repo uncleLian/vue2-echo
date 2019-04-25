@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import cache from '@/utils/cache'
+import playMode from '@/utils/playMode'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,7 @@ const state = {
         duration: 0, // audio总时长
         currentTime: 0 // audio当前秒数
     },
-    playMode: 'default', // 播放模式
+    playMode: playMode.default.value, // 播放模式
     playList: [] // 播放列表
 }
 
@@ -24,26 +25,26 @@ const getters = {
 }
 
 const mutations = {
-    set_audio_ele(state, val) {
+    SET_AUDIO_ELE(state, val) {
         state.audio.ele = val
     },
-    set_audio_data(state, val) {
+    SET_AUDIO_DATA(state, val) {
         state.audio.data = val
     },
-    set_audio_play(state, val) {
+    SET_AUDIO_PLAY(state, val) {
         state.audio.play = val
     },
-    set_audio_duration(state, val) {
+    SET_AUDIO_DURATION(state, val) {
         state.audio.duration = val
     },
-    set_audio_currentTime(state, val) {
+    SET_AUDIO_CURREN_TIME(state, val) {
         state.audio.currentTime = val
     },
-    set_playMode(state, val) {
+    SET_PLAY_MODE(state, val) {
         state.playMode = val
         cache.setSession('playMode', val)
     },
-    set_playList(state, val) {
+    SET_PLAY_LIST(state, val) {
         // 不直接等于是解决数组引用的问题
         state.playList = val.slice()
         cache.setSession('playList', val)
@@ -52,14 +53,14 @@ const mutations = {
 
 const actions = {
     // 获取应用缓存，如：播放列表，播放模式
-    getAppCache({ commit }) {
+    INIT_APP_CACHE({ commit }) {
         let playMode = cache.getSession('playMode')
         let playList = JSON.parse(cache.getSession('playList'))
         if (playMode) {
-            commit('set_playMode', playMode)
+            commit('SET_PLAY_MODE', playMode)
         }
         if (playList && playList.length > 0) {
-            commit('set_playList', playList)
+            commit('SET_PLAY_LIST', playList)
         }
     }
 }

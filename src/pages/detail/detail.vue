@@ -1,12 +1,12 @@
 <template>
-    <div id='detail' v-if='audio.data'>
+    <div id='detail' v-if="audio.data && !loading">
         <div class="detail-container">
             <!-- 用户信息 -->
             <div class="detail-user">
                 <div class="user-left">
                     <div class="user-img-container">
                         <img class="user-img" :src="audio.data.sound.user.avatar_50">
-                        <img class='user-vip' src="https://ws-qn-echo-image-cdn.app-echo.com/Foz1CX1MdKHnTiDV26btgAmDJ3Y-?imageMogr2/auto-orient/quality/100%7CimageMogr2/thumbnail/!100x100r/gravity/Center/crop/100x100/dx/0/dy/0">
+                        <img v-if="audio.data.sound.user.famous_type" class='user-vip' src="https://ws-qn-echo-image-cdn.app-echo.com/Foz1CX1MdKHnTiDV26btgAmDJ3Y-?imageMogr2/auto-orient/quality/100%7CimageMogr2/thumbnail/!100x100r/gravity/Center/crop/100x100/dx/0/dy/0">
                     </div>
                     <div class="user-name">{{audio.data.sound.user.name}}</div>
                 </div>
@@ -73,7 +73,7 @@
                     <a>相关推荐</a>
                 </div>
                 <div class="other-recommend">
-                    <my-list :json='otherJson'></my-list>
+                    <music-list :json='otherJson' />
                 </div>
             </div>
         </div>
@@ -82,12 +82,14 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
 import { getDetail, getOther } from '@/api'
+import MusicList from '@/components/MusicList/index.vue'
 export default {
     name: 'detail',
+    components: { MusicList },
     data() {
         return {
             otherJson: [],
-            danmu: false
+            loading: false
         }
     },
     computed: {
@@ -112,37 +114,40 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'set_audio_data',
-            'set_audio_play'
+            'SET_AUDIO_DATA',
+            'SET_AUDIO_PLAY'
         ]),
-        // 获取音乐
         getMusicData() {
             this.$indicator.open()
-            getDetail(this.$route.query.id).then(res => {
+            this.loading = true
+            let id = this.$route.query.id
+            getDetail(id).then(res => {
                 this.$indicator.close()
+                this.loading = false
                 if (res && res.data) {
-                    this.set_audio_data(res.data)
+                    this.SET_AUDIO_DATA(res.data)
                 }
             }).catch(() => {
                 this.$indicator.close()
+                this.loading = false
             })
         },
-        // 获取其他推荐
         getOtherData() {
             getOther().then(res => {
-                if (res.data) {
+                if (res.data && res.data.length > 0) {
                     this.otherJson = res.data
                 }
             })
         },
         // 播放/暂停
         handlePlay() {
-            this.set_audio_play(!this.audio.play)
+            let playStatus = !this.audio.play
+            this.SET_AUDIO_PLAY(playStatus)
         },
-        // 点击调节进度条
+        // 调节进度条
         handleSeek(e) {
             e = e || window.event
-            var percent = (e.pageX / window.innerWidth).toFixed(2)
+            let percent = Math.floor(e.pageX / window.innerWidth * 100) / 100
             this.audio.ele.currentTime = this.audio.ele.duration * percent
         }
     }

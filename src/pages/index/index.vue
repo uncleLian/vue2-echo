@@ -1,8 +1,7 @@
 <template>
-    <!-- <div id='index' v-infinite-scroll="getRecommentMore" infinite-scroll-disabled="lock" infinite-scroll-immediate-check="false" infinite-scroll-distance="20"> -->
-    <div id='index'>
+    <div id='index' v-infinite-scroll="getListDataMore" infinite-scroll-disabled="loading" infinite-scroll-immediate-check="false" infinite-scroll-distance="0">
         <!-- banner -->
-        <my-banner :json='bannerJson'></my-banner>
+        <music-banner :json='bannerJson'></music-banner>
         <!-- 推荐 -->
         <div class="recommend">
             <div class="recommen-title">echo每日推荐</div>
@@ -12,32 +11,30 @@
                 <div class="playAll-label" type="default">一键播放</div>
             </div>
             <!-- 列表 -->
-            <my-list :json='recommentJson'></my-list>
+            <music-list :json='listJson' />
         </div>
         <!-- 底部加载提示 -->
-        <div class="loading-container">
-            <span class="loading" v-if="loading === 'loading'">
-                <mt-spinner type="triple-bounce" color="#6ed56c"></mt-spinner>
-            </span>
-            <span class="nothing" v-else-if="loading === 'nothing'">没有更多了T T~</span>
-            <span class="error" v-else-if="loading === 'error'">出错啦T T~</span>
-        </div>
+        <bottom-loading :loading="loading" />
     </div>
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { getBanner, getList } from '@/api'
-import myBanner from '@/components/banner'
+import MusicBanner from '@/components/MusicBanner'
+import MusicList from '@/components/MusicList'
+import BottomLoading from '@/components/BottomLoading'
+import playMode from '@/utils/playMode'
+
 export default {
     name: 'index',
-    components: { myBanner },
+    components: { MusicBanner, MusicList, BottomLoading },
     data() {
         return {
             bannerJson: [],
-            recommentJson: [],
+            listJson: [],
             page: 1,
-            lock: false,
-            loading: false
+            loading: false,
+            lock: false
         }
     },
     computed: {
@@ -47,92 +44,74 @@ export default {
     },
     mounted() {
         this.getBannerData()
-        this.getRecommentData()
+        this.getListData()
     },
     activated() {
         this.lock = false
-        window.addEventListener('scroll', this.onScroll)
     },
     beforeRouteLeave(to, from, next) {
-        window.removeEventListener('scroll', this.onScroll)
         this.lock = true
         next()
     },
     methods: {
         ...mapMutations([
-            'set_audio_data',
-            'set_playList'
+            'SET_AUDIO_DATA',
+            'SET_PLAY_MODE',
+            'SET_PLAY_LIST'
         ]),
         getBannerData() {
             getBanner().then(res => {
-                if (res.data) {
+                if (res.data && res.data.length > 0) {
                     this.bannerJson = res.data
                 }
             })
         },
-        getRecommentData() {
+        getListData() {
             this.$indicator.open()
+            this.page = 1
             getList(this.page).then(res => {
-                if (res.data) {
-                    this.recommentJson = res.data
+                // console.log(res)
+                if (res.data && res.data.length > 0) {
+                    this.listJson = res.data
                     this.page = 2
                 }
                 this.$indicator.close()
-            }).catch(() => {
+            }).catch(_ => {
                 this.$indicator.close()
             })
         },
         // 加载更多
-        getRecommentMore() {
-            if (!this.loading) {
-                this.lock = true
-                this.loading = 'loading'
-                getList(this.page).then(res => {
-                    console.log(res)
-                    if (res.data && res.data.length > 0) {
-                        this.recommentJson.push(...res.data)
-                        this.page++
-                        this.loading = false
-                        this.lock = false
-                    } else {
-                        this.loading = 'nothing'
-                        this.lock = true
-                    }
-                }).catch(() => {
-                    this.loading = 'error'
-                    this.lock = true
-                })
-            }
+        getListDataMore() {
+            this.lock = true
+            this.loading = 'loading'
+            getList(this.page).then(res => {
+                // console.log(res)
+                if (res.data && res.data.length > 0) {
+                    this.listJson.push(...res.data)
+                    this.page++
+                    this.loading = ''
+                    this.lock = false
+                } else {
+                    this.loading = 'nothing'
+                }
+            }).catch(() => {
+                this.loading = 'error'
+                this.lock = false
+            })
         },
         // 一键播放
         playAll() {
-            this.set_playList(this.recommentJson)
+            // 设置播放列表
+            this.SET_PLAY_LIST(this.listJson)
+            // 设置播放模式：列表循环
+            this.SET_PLAY_MODE(playMode.listRepeat.value)
             // 当前音乐是否等于即将要播放的音乐？重新加载播放 ： 播放即将的音乐
-            if (this.audio.data && this.recommentJson[0].sound.id === this.audio.data.sound.id) {
+            if (this.audio.data && this.listJson[0].sound.id === this.audio.data.sound.id) {
                 this.audio.ele.load()
                 this.audio.ele.play()
             } else {
-                this.set_audio_data(this.recommentJson[0])
+                this.SET_AUDIO_DATA(this.listJson[0])
             }
-        },
-        // 自行实现滚到页面底部加载
-        onScroll() {
-            // 利用requestAnimationFrame保证流畅性和精准度，相对于setTimeout执行次数会增多
-            requestAnimationFrame(() => {
-                // 滚动高度
-                let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
-                // 窗口高度
-                let windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-                // 文档高度
-                let documentHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight)
-                // 距离
-                let distance = 10
-                // this.$toast(`滚动高度：${scrollTop}, 窗口高度：${windowHeight}, 文档高度：${documentHeight}, `)
-                let isBottom = scrollTop + windowHeight + distance >= documentHeight
-                if (isBottom && !this.lock) {
-                    this.getRecommentMore()
-                }
-            })
         }
     }
 }

@@ -21,11 +21,15 @@
 <script>
 export default {
     props: {
-        json: Array
+        json: {
+            type: Array,
+            default: () => [],
+            required: true
+        }
     }
 }
 </script>
-<style scoped lang='stylus'>
+<style lang='stylus' scoped>
 $imageHeight = toRem(175);
 .list {
     display: flex;

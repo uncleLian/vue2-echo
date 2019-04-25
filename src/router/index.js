@@ -1,10 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-// 懒加载路由页面资源（加快首屏加载）
-const index = () => import('@/pages/index/index')
-const detail = () => import('@/pages/detail/detail')
-
 Vue.use(Router)
 
 const routes = [
@@ -15,16 +11,17 @@ const routes = [
     {
         name: 'index',
         path: '/index',
-        component: index
+        component: () => import('@/pages/index/index') // 懒加载引入方式
     },
     {
         name: 'detail',
         path: '/detail',
-        component: detail
+        component: () => import('@/pages/detail/detail')
     }
 ]
 export default new Router({
     routes: routes,
+    // 使用<keep-alive>，scrollBehavior才能生效。
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition

@@ -13,12 +13,14 @@
 export default {
     props: {
         json: {
-            type: Array
+            type: Array,
+            default: () => [],
+            required: true
         }
     }
 }
 </script>
-<style lang='stylus'>
+<style lang='stylus' scoped>
 $banner_height = toRem(160);
 #banner {
     width: 100%;

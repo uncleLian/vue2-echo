@@ -1,29 +1,34 @@
 {
     "name": "vue2-echo",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "private": true,
     "scripts": {
-        "serve": "vue-cli-service serve",
+        "dev": "vue-cli-service serve",
         "build": "vue-cli-service build",
+        "build:report": "vue-cli-service build --report",
         "lint": "vue-cli-service lint"
     },
     "dependencies": {
         "axios": "^0.18.0",
+        "core-js": "^2.6.5",
         "mint-ui": "^2.2.13",
         "mockjs": "^1.0.1-beta3",
-        "vue": "^2.5.17",
+        "vue": "^2.6.10",
         "vue-progressbar": "^0.7.5",
-        "vue-router": "^3.0.1",
+        "vue-router": "^3.0.3",
         "vuex": "^3.0.1"
     },
     "devDependencies": {
-        "@vue/cli-plugin-babel": "^3.0.0-rc.11",
-        "@vue/cli-plugin-eslint": "^3.0.0-rc.11",
-        "@vue/cli-service": "^3.0.0-rc.11",
-        "@vue/eslint-config-standard": "^3.0.0-rc.11",
+        "@vue/cli-plugin-babel": "^3.6.0",
+        "@vue/cli-plugin-eslint": "^3.6.0",
+        "@vue/cli-service": "^3.6.0",
+        "@vue/eslint-config-standard": "^4.0.0",
+        "babel-eslint": "^10.0.1",
+        "eslint": "^5.16.0",
+        "eslint-plugin-vue": "^5.0.0",
         "stylus": "^0.54.5",
         "stylus-loader": "^3.0.2",
-        "vue-template-compiler": "^2.5.17"
+        "vue-template-compiler": "^2.5.21"
     },
     "eslintConfig": {
         "root": true,
@@ -37,7 +42,8 @@
         "rules": {
             "no-undef": 0,
             "indent": 0,
-            "space-before-function-paren": 0
+            "space-before-function-paren": 0,
+            "camelcase": 0
         },
         "parserOptions": {
             "parser": "babel-eslint"

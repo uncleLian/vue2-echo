@@ -1,22 +1,22 @@
-import { instance } from '@/utils/request'
+import { request } from '@/utils/request'
 
-// 获取banner
+// banner
 export function getBanner() {
-    let res = instance.get('/banner')
+    let res = request('/banner', 'GET')
     return res
 }
-// 获取推荐列表
+// 推荐列表
 export function getList(page) {
-    let res = instance.get(`/list?page=${page}`)
+    let res = request(`/list?page=${page}`, 'GET')
     return res
 }
-// 获取音乐详情
+// 音乐详情
 export function getDetail(id) {
-    let res = instance.get(`/detail?id=${id}`)
+    let res = request(`/detail?id=${id}`, 'GET')
     return res
 }
-// 获取相关推荐
+// 相关列表
 export function getOther() {
-    let res = instance.get('/other')
+    let res = request('/other', 'GET')
     return res
 }

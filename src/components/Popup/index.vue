@@ -3,12 +3,13 @@
         <!-- 播放列表 -->
         <mt-popup class="playListSheet" v-model="playListVisible" position="bottom">
             <div class="playList-header">
-                播放列表
-                <div class="playList-count">（{{playList.length}}首）</div>
-                <div class="my-icon-more playList-mode-btn" @click="playModeVisible = true"></div>
+                <div class="playList-mode-btn left" @click="clearablePlayList">清空</div>
+                <div class="playList-title">播放列表<span class="playList-count">（{{playList.length}}首）</span>
+                </div>
+                <div class="playList-mode-btn right my-icon-more" @click="playModeVisible = true"></div>
             </div>
             <ul class="playList" v-if="playList && playList.length > 0">
-                <li class="playList-item" v-for="(item, index) in playList" :key="item.sound.id" :class="{'playing': audio.data.sound.id === item.sound.id}" @click="set_audio_data(item)">
+                <li class="playList-item" v-for="(item, index) in playList" :key="item.sound.id" :class="{'playing': audio.data.sound.id === item.sound.id}" @click="muiscChange(item)">
                     <div class="item-name">
                         <!-- icon -->
                         <div class="name-icon-container">
@@ -18,7 +19,7 @@
                         <div class="name-value" :class="audio.data.sound.id === item.sound.id ? 'onPlay': '' ">{{item.sound.name}}</div>
                     </div>
                     <!-- 删除按钮 -->
-                    <div class="item-close my-icon-close" @click.stop="deletePlayList(item, index)"></div>
+                    <div class="item-close my-icon-close" @click.stop="deletePlayListItem(item, index)"></div>
                 </li>
             </ul>
             <div class="playList-nothing" v-else>什么都没有了T T~</div>
@@ -27,7 +28,7 @@
         <!-- 播放模式 -->
         <mt-popup class="playModeSheet" v-model="playModeVisible" position="bottom">
             <div class="playModeList">
-                <mt-cell class="playMode-item" :class="{'active': playMode === item.value}" v-for="(item, index) in playModeOptions" :key="index" :title="item.title" @click.native="playModeChange(item.value)">
+                <mt-cell class="playMode-item" :class="{'active': playMode === item.value}" v-for="(item, index) in playModeOptions" :key="index" :title="item.label" @click.native="playModeChange(item.value)">
                     <div class="item-icon" :class="item.icon"></div>
                 </mt-cell>
             </div>
@@ -36,15 +37,11 @@
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex'
+import { ArrayOptions } from '@/utils/playMode'
 export default {
     data() {
         return {
-            playModeOptions: [
-                { title: '默认', value: 'default', icon: 'my-icon-more' },
-                { title: '随机播放', value: 'random', icon: 'my-icon-random' },
-                { title: '单曲循环', value: 'singleRepeat', icon: 'my-icon-repeatone' },
-                { title: '列表循环', value: 'listRepeat', icon: 'my-icon-repeat' }
-            ],
+            playModeOptions: ArrayOptions,
             playListVisible: false,
             playModeVisible: false
         }
@@ -59,8 +56,7 @@ export default {
     watch: {
         $route(val) {
             // 路由跳转，关闭弹框
-            this.playListVisible = false
-            this.playModeVisible = false
+            this.playListVisible = this.playModeVisible = false
         },
         playListVisible(val) {
             // 打开弹框禁止页面滚动
@@ -75,19 +71,28 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'set_audio_data',
-            'set_playMode',
-            'set_playList'
+            'SET_AUDIO_DATA',
+            'SET_PLAY_MODE',
+            'SET_PLAY_LIST'
         ]),
+        // 切换音乐
+        muiscChange(val) {
+            this.playListVisible = false
+            this.SET_AUDIO_DATA(val)
+        },
         // 更改播放模式
         playModeChange(val) {
             this.playModeVisible = false
-            this.set_playMode(val)
+            this.SET_PLAY_MODE(val)
         },
-        // 删除播放列表
-        deletePlayList(item, index) {
+        // 清空播放列表
+        clearablePlayList() {
+            this.SET_PLAY_LIST([])
+        },
+        // 删除播放列表里的某一首
+        deletePlayListItem(item, index) {
             this.playList.splice(index, 1)
-            this.set_playList(this.playList)
+            this.SET_PLAY_LIST(this.playList)
         },
         // 切换显示
         toggleVisible() {
@@ -119,20 +124,29 @@ export default {
         color: $appColor;
         font-size: toRem(14);
         margin-top: toRem(8);
-        .playList-count {
-            font-size: toRem(12);
+        .playList-title {
+            white-space: nowrap;
+            .playList-count {
+                font-size: toRem(12);
+            }
         }
         .playList-mode-btn {
             position: absolute;
-            right: toRem(5);
             top: 50%;
             transform: translateY(-50%);
             display: flex;
             align-items: center;
             justify-content: center;
-            width: toRem(36);
-            height: toRem(36);
             font-size: toRem(20);
+            &.left {
+                left: toRem(18);
+                font-size: toRem(14);
+            }
+            &.right {
+                right: toRem(5);
+                width: toRem(36);
+                height: toRem(36);
+            }
         }
     }
     .playList {
@@ -169,6 +183,7 @@ export default {
                 }
                 .name-value {
                     text-ellipsis();
+                    max-width: toRem(295);
                     color: $infoColor;
                     font-size: toRem(14);
                     &.onPlay {
