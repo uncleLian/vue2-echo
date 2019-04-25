@@ -5,6 +5,8 @@ function resolve(dir) {
 const projectName = require('./package.json').name
 
 module.exports = {
+    // 如果部署项目时不是根目录，请参照官网修改publicPath值
+    // https://cli.vuejs.org/zh/config/#publicpath
     publicPath: '/',
     outputDir: 'dist',
     lintOnSave: true,

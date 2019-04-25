@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "target": "es5", // vue-cli 3.x 初始化的时候该配置是esnext，修改为es5
         "module": "esnext",
         "strict": true,
         "jsx": "preserve",

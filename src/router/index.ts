@@ -11,12 +11,12 @@ const routes = [
     {
         name: 'index',
         path: '/index',
-        component: () => import('@/views/index/index.vue')
+        component: () => import('@/pages/index/index.vue')
     },
     {
         name: 'detail',
         path: '/detail',
-        component: () => import('@/views/detail/detail.vue')
+        component: () => import('@/pages/detail/detail.vue')
     }
 ]
 export default new Router({
