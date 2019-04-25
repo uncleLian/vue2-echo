@@ -3,9 +3,10 @@
         <!-- 播放列表 -->
         <mt-popup class="playListSheet" v-model="playListVisible" position="bottom">
             <div class="playList-header">
-                播放列表
-                <div class="playList-count">（{{playList.length}}首）</div>
-                <div class="my-icon-more playList-mode-btn" @click="playModeVisible = true"></div>
+                <div class="playList-mode-btn left" @click="clearablePlayList">清空</div>
+                <div class="playList-title">播放列表<span class="playList-count">（{{playList.length}}首）</span>
+                </div>
+                <div class="playList-mode-btn right my-icon-more" @click="playModeVisible = true"></div>
             </div>
             <ul class="playList" v-if="playList && playList.length > 0">
                 <li class="playList-item" v-for="(item, index) in playList" :key="item.sound.id" :class="{'playing': audio.data.sound.id === item.sound.id}" @click="muiscChange(item)">
@@ -15,7 +16,7 @@
                         </div>
                         <div class="name-value" :class="audio.data.sound.id === item.sound.id ? 'onPlay': '' ">{{item.sound.name}}</div>
                     </div>
-                    <div class="item-close my-icon-close" @click.stop="deletePlayList(item, index)"></div>
+                    <div class="item-close my-icon-close" @click.stop="deletePlayListItem(item, index)"></div>
                 </li>
             </ul>
             <div class="playList-nothing" v-else>什么都没有了T T~</div>
@@ -24,7 +25,7 @@
         <!-- 播放模式 -->
         <mt-popup class="playModeSheet" v-model="playModeVisible" position="bottom">
             <div class="playModeList">
-                <mt-cell class="playMode-item" :class="{'active': playMode === item.value}" v-for="(item, index) in playModeOptions" :key="index" :title="item.title" @click.native="playModeChange(item.value)">
+                <mt-cell class="playMode-item" :class="{'active': playMode === item.value}" v-for="(item, index) in playModeOptions" :key="index" :title="item.label" @click.native="playModeChange(item.value)">
                     <div class="item-icon" :class="item.icon"></div>
                 </mt-cell>
             </div>
@@ -34,16 +35,11 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { State, Getter, Mutation, Action } from 'vuex-class'
-import playMode from '@/utils/playMode'
+import { ArrayOptions } from '@/utils/playMode'
 
 @Component
 export default class Popup extends Vue {
-    playModeOptions: any[] = [
-        { title: '默认', value: playMode.default, icon: 'my-icon-more' },
-        { title: '随机播放', value: playMode.random, icon: 'my-icon-random' },
-        { title: '单曲循环', value: playMode.singleRepeat, icon: 'my-icon-repeatone' },
-        { title: '列表循环', value: playMode.listRepeat, icon: 'my-icon-repeat' }
-    ]
+    playModeOptions: any[] = ArrayOptions
     playListVisible: boolean = false
     playModeVisible: boolean = false
     @State audio: any
@@ -56,6 +52,18 @@ export default class Popup extends Vue {
     @Watch('$route') closePopup(to: any, from: any) {
         this.playListVisible = this.playModeVisible = false
     }
+    @Watch('playListVisible') lockPageScroll(val: boolean) {
+        // 打开模式弹框禁止页面滚动
+        let html: any = document.querySelector('html')
+        let body: any = document.querySelector('html')
+        if (val) {
+            html.style.overflow = 'hidden'
+            body.style.overflow = 'hidden'
+        } else {
+            html.style.overflow = ''
+            body.style.overflow = ''
+        }
+    }
     // 切换音乐
     muiscChange(val: any) {
         this.playListVisible = false
@@ -67,8 +75,12 @@ export default class Popup extends Vue {
         this.SET_PLAY_MODE(val)
         this.$toast('设置成功')
     }
-    // 删除播放列表
-    deletePlayList(item: any, index: number) {
+    // 清空播放列表
+    clearablePlayList() {
+        this.SET_PLAY_LIST([])
+    }
+    // 删除播放列表里的某一首
+    deletePlayListItem(item: any, index: number) {
         this.playList.splice(index, 1)
         this.SET_PLAY_LIST(this.playList)
     }
@@ -101,20 +113,29 @@ export default class Popup extends Vue {
         color: $appColor;
         font-size: toRem(14);
         margin-top: toRem(8);
-        .playList-count {
-            font-size: toRem(12);
+        .playList-title {
+            white-space: nowrap;
+            .playList-count {
+                font-size: toRem(12);
+            }
         }
         .playList-mode-btn {
             position: absolute;
-            right: toRem(5);
             top: 50%;
             transform: translateY(-50%);
             display: flex;
             align-items: center;
             justify-content: center;
-            width: toRem(36);
-            height: toRem(36);
             font-size: toRem(20);
+            &.left {
+                left: toRem(18);
+                font-size: toRem(14);
+            }
+            &.right {
+                right: toRem(5);
+                width: toRem(36);
+                height: toRem(36);
+            }
         }
     }
     .playList {

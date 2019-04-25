@@ -47,12 +47,13 @@ export default class index extends Vue {
     }
     getBannerData() {
         getBanner().then((res: any) => {
-            if (res.data) {
+            if (res.data && res.data.length > 0) {
                 this.bannerJson = res.data
             }
         })
     }
     getListData() {
+        this.$indicator.open()
         this.page = 1
         getList(this.page)
             .then((res: any) => {
@@ -61,9 +62,10 @@ export default class index extends Vue {
                     this.listJson = res.data
                     this.page = 2
                 }
+                this.$indicator.close()
             })
-            .catch(err => {
-                console.log(err)
+            .catch(_ => {
+                this.$indicator.close()
             })
     }
     getListDataMore() {
@@ -81,8 +83,7 @@ export default class index extends Vue {
                     this.loading = 'nothing'
                 }
             })
-            .catch(err => {
-                console.log(err)
+            .catch(_ => {
                 this.loading = 'error'
                 this.lock = false
             })
@@ -92,7 +93,7 @@ export default class index extends Vue {
         // 设置播放列表
         this.SET_PLAY_LIST(this.listJson)
         // 设置播放模式：列表循环
-        this.SET_PLAY_MODE(playMode.listRepeat)
+        this.SET_PLAY_MODE(playMode.listRepeat.value)
         // 当前音乐是否等于即将要播放的音乐？重新加载播放 ： 播放即将的音乐
         if (this.audio.data && this.listJson[0].sound.id === this.audio.data.sound.id) {
             this.audio.ele.load()

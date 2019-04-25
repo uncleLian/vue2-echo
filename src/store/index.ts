@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import cache from '@/utils/cache'
+import playMode from '@/utils/playMode'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,7 @@ const state = {
         duration: 0, // audio总时长
         currentTime: 0 // audio当前秒数
     },
-    playMode: 'default', // 播放模式
+    playMode: playMode.default.value, // 播放模式
     playList: [] // 播放列表
 }
 

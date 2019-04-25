@@ -11,7 +11,7 @@ const routes = [
     {
         name: 'index',
         path: '/index',
-        component: () => import('@/pages/index/index.vue')
+        component: () => import('@/pages/index/index.vue') // 懒加载引入方式
     },
     {
         name: 'detail',

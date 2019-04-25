@@ -23,6 +23,14 @@ Vue.use(VueProgressBar, {
     height: '2px'
 })
 
+// 全局错误捕捉，防止单页面卡死
+if (process.env.NODE_ENV === 'production') {
+    Vue.config.errorHandler = function (error, vm, info) {
+        console.log(error)
+        Toast(info)
+    }
+}
+
 Vue.config.productionTip = false
 
 new Vue({

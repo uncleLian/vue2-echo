@@ -59,7 +59,7 @@ export default class MusicBar extends Vue {
     @Watch('audio_data') onMusicChange(val: any) {
         if (val) {
             this.$nextTick(() => {
-                this.AddToPlayList(val)
+                this.isAddToPlayList(val)
                 this.audioInit()
             })
         }
@@ -147,7 +147,7 @@ export default class MusicBar extends Vue {
         }
     }
     // 添加音乐到播放列表
-    AddToPlayList(item: any) {
+    isAddToPlayList(item: any) {
         let ishas: boolean = false
         if (this.playList.find((n: any) => n.sound.id === item.sound.id)) {
             ishas = true
