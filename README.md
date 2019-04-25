@@ -36,20 +36,14 @@
 └── vue.config.js                // vue-cli 3.0配置
 ```
 
-## 开发
+## 开发和发布
 ```bash
-# 克隆项目
-git clone https://github.com/uncleLian/vue-blog.git
-
 # 安装依赖
 npm install
 
 # 启动服务：localhost:8001
 npm run dev
-```
-## 发布
 
-```bash
 # 构建生产环境
 npm run build
 
