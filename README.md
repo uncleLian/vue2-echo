@@ -46,7 +46,7 @@ Vue学习系列
 
 [在线链接](http://echo.liansixin.win)（请使用手机模式预览）
 
-<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/echo_QRcode.png" width="250" height="250"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/gh-pages/screenshots/echo_QRcode.png" width="250" height="250"/>
 
 ## 功能
 
