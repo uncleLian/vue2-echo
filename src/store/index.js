@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { request } from '@/utils/request.js'
-import cache from '@/utils/cache.js'
+import { request } from '@/utils/request'
+import cache from '@/utils/cache'
 
 Vue.use(Vuex)
 

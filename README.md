@@ -45,7 +45,7 @@ Vue学习系列
 
 [项目演示请戳这里](http://echo.liansixin.win)（请使用手机模式预览）
 
-<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/echo_QRcode.png" width="250" height="250"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/gh-pages/screenshots/echo_QRcode.png" width="250" height="250"/>
 
 ## 功能
 
@@ -53,15 +53,12 @@ Vue学习系列
 - [x] 播放行为：播放、暂停、下一首、一键播放
 - [x] 播放模式：默认、随机播放、单曲循环、列表循环
 - [x] 播放视图：播放进度条（可调节）、播放列表（可增删、切换）
-- [x] ...
-- [ ] 弹幕 （没有评论数据，暂不实现啦T T~）
-- [ ] 手机铃声（网页没有不能调用手机底层，不能实现）
 
 ## 项目截图
 
-<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/echo_index.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/echo_detail.png" width="365" height="619"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/gh-pages/screenshots/echo_index.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/gh-pages/screenshots/echo_detail.png" width="365" height="619"/>
 
-<img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/echo_fn.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/master/screenshots/echo_detail.gif" width="365" height="619"/>
+<img src="https://github.com/uncleLian/vue2-echo/raw/gh-pages/screenshots/echo_fn.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/gh-pages/screenshots/echo_detail.gif" width="365" height="619"/>
 
 ## 目录结构
 
@@ -69,24 +66,24 @@ Vue学习系列
 ├── build                        // 构建相关  
 ├── config                       // 配置相关
 ├── src                          
-│   ├── assets                   // 静态资源 样式、图标等静态资源
+│   ├── assets                   // 样式、图标等
 │   ├── components               // 全局公用组件
-│   |   ├── banner.vue           // banner组件
-│   |   ├── list.vue             // 列表组件
-│   |   ├── musicBar.vue         // 音乐条组件
-│   |   ├── sheet.vue            // 模态框组件
-│   ├── utils                   
-│   |   ├── cache.js             // 缓存方法
-│   |   ├── request.js           // 请求方法
-│   ├── mock                     // mock数据
+│   |   ├── banner.vue
+│   |   ├── list.vue 
+│   |   ├── musicBar.vue
+│   |   ├── sheet.vue
+│   ├── utils                    // 全局公用方法
+│   |   ├── cache.js             // 缓存
+│   |   ├── request.js           // 请求
+│   ├── mock                     // 模拟数据
 │   ├── page                   
-│   |   ├── detail               //  详情页
-│   |   ├── index                //  首页
+│   |   ├── detail               // 详情页
+│   |   ├── index                // 首页
 │   ├── router                   // 路由
 │   ├── store                    // 状态管理
-│   ├── App.vue                  // 入口页面
-│   └── main.js                  // 入口配置
-├── static                       //空文件夹，只作为github保留                   
+│   ├── App.vue
+│   └── main.js
+├── static                       // 不打包文件夹                  
 ├── .babelrc                     // babel-loader 配置
 ├── eslintrc.js                  // eslint 配置项
 ├── .gitignore                   // git 忽略项
@@ -97,14 +94,14 @@ Vue学习系列
 ## 安装运行
 
 ``` bash
-# install dependencies
+# 安装依赖
 npm install
 
-# serve with hot reload at localhost:8088
+# 运行项目：localhost:8001
 npm run dev
 
-# build for production with minification
-npm run build（File in the docs folder）
+# 打包项目
+npm run build
 ```
 
 ## 更新日志
@@ -113,8 +110,7 @@ npm run build（File in the docs folder）
 ## 交流
 
 欢迎热爱学习、忠于分享的朋友一起来交流
-- QQ：771674109
-- Vue交流群：338241465 —— 广州-小鑫
+- Vue交流群：338241465
 
 ## License
 
