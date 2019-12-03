@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import cache from '@/utils/cache'
 import playMode from '@/utils/playMode'
+import router from '@/router'
 
 Vue.use(Vuex)
 
@@ -30,6 +31,15 @@ const mutations = {
     },
     SET_AUDIO_DATA(state, val) {
         state.audio.data = val
+        // 判断是否添加到播放列表
+        const isHas = state.playList.find((n) => n.sound.id === val.sound.id)
+        if (!isHas) {
+            state.playList.unshift(val)
+        }
+        // 判断是否跳更新详情页（当前是详情页则进行replace）
+        if (router.history.current.name === 'detail') {
+            router.replace({ name: 'detail', query: { 'id': val.sound.id } })
+        }
     },
     SET_AUDIO_PLAY(state, val) {
         state.audio.play = val

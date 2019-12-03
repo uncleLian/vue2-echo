@@ -2,27 +2,29 @@
     <div class="popup" :class="{'playMode': playModeVisible}">
         <!-- 播放列表 -->
         <mt-popup class="playListSheet" v-model="playListVisible" position="bottom">
-            <div class="playList-header">
-                <div class="playList-mode-btn left" @click="clearablePlayList">清空</div>
-                <div class="playList-title">播放列表<span class="playList-count">（{{playList.length}}首）</span>
-                </div>
-                <div class="playList-mode-btn right my-icon-more" @click="playModeVisible = true"></div>
-            </div>
-            <ul class="playList" v-if="playList && playList.length > 0">
-                <li class="playList-item" v-for="(item, index) in playList" :key="item.sound.id" :class="{'playing': audio.data.sound.id === item.sound.id}" @click="muiscChange(item)">
-                    <div class="item-name">
-                        <!-- icon -->
-                        <div class="name-icon-container">
-                            <div class="name-icon" :class="audio.data.sound.id === item.sound.id ? 'my-icon-circle-play': 'smallCircle' "></div>
-                        </div>
-                        <!-- 名字 -->
-                        <div class="name-value" :class="audio.data.sound.id === item.sound.id ? 'onPlay': '' ">{{item.sound.name}}</div>
+            <div class="playList-container">
+                <div class="playList-header">
+                    <div class="playList-mode-btn left" @click="clearablePlayList">清空</div>
+                    <div class="playList-title">播放列表<span class="playList-count">（{{playList.length}}首）</span>
                     </div>
-                    <!-- 删除按钮 -->
-                    <div class="item-close my-icon-close" @click.stop="deletePlayListItem(item, index)"></div>
-                </li>
-            </ul>
-            <div class="playList-nothing" v-else>什么都没有了T T~</div>
+                    <div class="playList-mode-btn right" :class="handleModeIcon()" @click="playModeVisible = true"></div>
+                </div>
+                <ul class="playList" v-if="playList && playList.length > 0">
+                    <li class="playList-item" v-for="(item, index) in playList" :key="item.sound.id" :class="{'playing': audio.data.sound.id === item.sound.id}" @click="muiscChange(item)">
+                        <div class="item-name">
+                            <!-- icon -->
+                            <div class="name-icon-container">
+                                <div class="name-icon" :class="audio.data.sound.id === item.sound.id ? 'my-icon-circle-play': 'smallCircle' "></div>
+                            </div>
+                            <!-- 名字 -->
+                            <div class="name-value" :class="audio.data.sound.id === item.sound.id ? 'onPlay': '' ">{{item.sound.name}}</div>
+                        </div>
+                        <!-- 删除按钮 -->
+                        <div class="item-close my-icon-close" @click.stop="deletePlayListItem(item, index)"></div>
+                    </li>
+                </ul>
+                <div class="playList-nothing" v-else>什么都没有了T T~</div>
+            </div>
         </mt-popup>
 
         <!-- 播放模式 -->
@@ -37,7 +39,7 @@
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex'
-import { ArrayOptions } from '@/utils/playMode'
+import { ArrayOptions, findActiveMode } from '@/utils/playMode'
 export default {
     data() {
         return {
@@ -94,7 +96,11 @@ export default {
             this.playList.splice(index, 1)
             this.SET_PLAY_LIST(this.playList)
         },
-        // 切换显示
+        handleModeIcon() {
+            const item = findActiveMode(this.playMode)
+            return item.icon
+        },
+        // 切换显示（供父组件调用）
         toggleVisible() {
             this.playListVisible = !this.playListVisible
         }
@@ -114,9 +120,10 @@ export default {
 }
 .playListSheet {
     width: 100%;
-    max-height: toRem(188);
     border-top: 1px solid $borderColor;
-    margin-bottom: $musicBarHeight;
+    .playList-container {
+        margin-bottom: $musicBarHeight;
+    }
     .playList-header {
         position: relative;
         flex-center();

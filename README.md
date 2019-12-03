@@ -6,11 +6,12 @@
 ![image](https://img.shields.io/badge/mint--ui-2.2.13-blue.svg)
 ![image](https://img.shields.io/badge/vue--cli-3.x-green.svg)
 
-> master分支是基于vue-cli-3.x
-
 ##### 其他分支：
-- [vue-cli-2.x](https://github.com/uncleLian/vue2-echo/tree/v2.0)
 - [TypeScript版本](https://github.com/uncleLian/vue2-echo/tree/typescript)
+- [vue-cli-2.x](https://github.com/uncleLian/vue2-echo/tree/v2.0)
+
+##### react版本
+- [react-echo](https://unclelian.github.io/react-echo/)
 
 ## 前言
 这是一个Vue学习系列，难度：容易 -> 中等 -> 困难， 3个复杂度和不同类型的项目，一步步地带领大家熟悉和深入Vue。这些系列项目将会涉及Vue的大部分知识，如果都能熟悉和掌握，那么就可以随心所欲地使用Vue去写单页面应用了。
@@ -46,7 +47,7 @@ Vue学习系列
 
 [在线链接](http://echo.liansixin.win)（请使用手机模式预览）
 
-<img src="https://github.com/uncleLian/vue2-echo/raw/gh-pages/screenshots/echo_QRcode.png" width="250" height="250"/>
+<img src="https://unclelian.github.io/vue2-echo/screenshots/echo_QRcode.png" width="250" height="250"/>
 
 ## 功能
 
@@ -57,9 +58,11 @@ Vue学习系列
 
 ## 项目截图
 
-![image](https://github.com/uncleLian/vue2-echo/raw/gh-pages/screenshots/echo_index.png)
+![image](https://unclelian.github.io/vue2-echo/screenshots/echo_index.png)
 
-![image](https://github.com/uncleLian/vue2-echo/raw/gh-pages/screenshots/echo_detail.png)
+![image](https://unclelian.github.io/vue2-echo/screenshots/echo_detail.png)
+
+![image](https://unclelian.github.io/vue2-echo/screenshots/echo_mode.png)
 
 ## 目录结构
 

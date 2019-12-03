@@ -1,5 +1,5 @@
 <template>
-    <div id='index' v-infinite-scroll="getListDataMore" infinite-scroll-disabled="loading" infinite-scroll-immediate-check="false" infinite-scroll-distance="0">
+    <div id='index' v-infinite-scroll="getListDataMore" infinite-scroll-disabled="lock" infinite-scroll-immediate-check="false" infinite-scroll-distance="0">
         <!-- banner -->
         <music-banner :json='bannerJson'></music-banner>
         <!-- 推荐 -->
@@ -23,8 +23,6 @@ import { getBanner, getList } from '@/api'
 import MusicBanner from '@/components/MusicBanner'
 import MusicList from '@/components/MusicList'
 import BottomLoading from '@/components/BottomLoading'
-import playMode from '@/utils/playMode'
-
 export default {
     name: 'index',
     components: { MusicBanner, MusicList, BottomLoading },
@@ -47,7 +45,9 @@ export default {
         this.getListData()
     },
     activated() {
-        this.lock = false
+        if (!this.loading) {
+            this.lock = false
+        }
     },
     beforeRouteLeave(to, from, next) {
         this.lock = true
@@ -61,9 +61,7 @@ export default {
         ]),
         getBannerData() {
             getBanner().then(res => {
-                if (res.data && res.data.length > 0) {
-                    this.bannerJson = res.data
-                }
+                this.bannerJson = res.data
             })
         },
         getListData() {
@@ -71,12 +69,8 @@ export default {
             this.page = 1
             getList(this.page).then(res => {
                 // console.log(res)
-                if (res.data && res.data.length > 0) {
-                    this.listJson = res.data
-                    this.page = 2
-                }
-                this.$indicator.close()
-            }).catch(_ => {
+                this.listJson = res.data
+                this.page = 2
                 this.$indicator.close()
             })
         },
@@ -89,7 +83,7 @@ export default {
                 if (res.data && res.data.length > 0) {
                     this.listJson.push(...res.data)
                     this.page++
-                    this.loading = ''
+                    this.loading = false
                     this.lock = false
                 } else {
                     this.loading = 'nothing'
@@ -103,8 +97,7 @@ export default {
         playAll() {
             // 设置播放列表
             this.SET_PLAY_LIST(this.listJson)
-            // 设置播放模式：列表循环
-            this.SET_PLAY_MODE(playMode.listRepeat.value)
+            this.$toast('已添加到播放列表')
             // 当前音乐是否等于即将要播放的音乐？重新加载播放 ： 播放即将的音乐
             if (this.audio.data && this.listJson[0].sound.id === this.audio.data.sound.id) {
                 this.audio.ele.load()

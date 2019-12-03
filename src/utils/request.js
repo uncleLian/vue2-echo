@@ -34,21 +34,31 @@ instance.interceptors.response.use(response => {
 export const request = async (url = '', type = 'GET', data = {}, isForm = false) => {
     let result
     type = type.toUpperCase()
+    let requestOptions = {
+        method: type,
+        url: url
+    }
     if (isForm) {
         let form = new FormData()
         Object.keys(data).forEach(key => {
-            form.append(key, data[key])
+            let value = data[key]
+            if (Array.isArray(value)) {
+                value.forEach(item => {
+                    form.append(key, item)
+                })
+            } else {
+                form.append(key, data[key])
+            }
         })
         data = form
     }
-    let requestOptions = {
-        method: type,
-        url: url,
-        headers: {
-            'Content-type': isForm ? 'multipart/form-data' : 'application/json'
-        },
-        params: type === 'GET' ? data : '',
-        data: type !== 'GET' ? data : ''
+    requestOptions['headers'] = {
+        'Content-type': isForm ? 'multipart/form-data' : 'application/json'
+    }
+    if (type === 'GET') {
+        requestOptions['params'] = data
+    } else {
+        requestOptions['data'] = data
     }
     await instance(requestOptions).then(res => {
         result = res

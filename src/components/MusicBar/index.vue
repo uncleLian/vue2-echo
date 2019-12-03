@@ -20,7 +20,7 @@
                     <!-- 播放/暂停 -->
                     <div class="control-icon control-icon-mid" :class="audio_play ? 'my-icon-pause' : 'my-icon-arrow'" @click="SET_AUDIO_PLAY(!audio_play)"></div>
                     <!-- 下一首 -->
-                    <div class="my-icon-next control-icon" @click="listRepeatMode"></div>
+                    <div class="my-icon-next control-icon" @click="handleNextAudio"></div>
                 </div>
             </div>
             <!-- 进度条 -->
@@ -43,14 +43,12 @@ export default {
         }
     },
     computed: {
-        ...mapState([
-            'playMode',
-            'playList'
-        ]),
         ...mapState({
             audio_ele: state => state.audio.ele,
             audio_data: state => state.audio.data,
-            audio_play: state => state.audio.play
+            audio_play: state => state.audio.play,
+            playList: state => state.playList,
+            playMode: state => state.playMode
         }),
         ...mapGetters([
             'audio_progress'
@@ -61,7 +59,6 @@ export default {
             // 当前audio数据改变了，等dom更新完，初始化audio
             if (val) {
                 this.$nextTick(() => {
-                    this.isAddToPlayList(val)
                     this.audioInit()
                 })
             }
@@ -157,16 +154,8 @@ export default {
                 console.warn('正常逻辑不会到这里啊')
             }
         },
-        // 添加播放列表
-        isAddToPlayList(item) {
-            let ishas = false
-            if (this.playList.find((n) => n.sound.id === item.sound.id)) {
-                ishas = true
-            }
-            if (!ishas) {
-                this.playList.unshift(item)
-                this.SET_PLAY_LIST(this.playList)
-            }
+        handleNextAudio() {
+            this.listRepeatMode()
         }
     }
 }

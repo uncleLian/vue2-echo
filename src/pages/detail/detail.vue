@@ -6,7 +6,7 @@
                 <div class="user-left">
                     <div class="user-img-container">
                         <img class="user-img" :src="audio.data.sound.user.avatar_50">
-                        <img v-if="audio.data.sound.user.famous_type" class='user-vip' src="https://ws-qn-echo-image-cdn.app-echo.com/Foz1CX1MdKHnTiDV26btgAmDJ3Y-?imageMogr2/auto-orient/quality/100%7CimageMogr2/thumbnail/!100x100r/gravity/Center/crop/100x100/dx/0/dy/0">
+                        <img v-if="audio.data.sound.user.famous_type" class='user-vip' src="~@/assets/img/vip.png">
                     </div>
                     <div class="user-name">{{audio.data.sound.user.name}}</div>
                 </div>
@@ -242,10 +242,12 @@ $danmuHeight = $coverHeight - $controlHeight - $progressBarHeight;
             bottom: $controlHeight;
             left: 0;
             right: 0;
+            width: 100%;
             height: $progressBarHeight;
             color: #fff;
             font-size: toRem(12);
             background: rgba(0, 0, 0, 0.2);
+            overflow: hidden;
             .progress-time {
                 display: flex;
                 align-items: center;

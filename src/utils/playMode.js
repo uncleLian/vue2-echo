@@ -22,6 +22,13 @@ const Options = {
     }
 }
 
+// 查找当前value的item
+export function findActiveMode(value) {
+    const activeOption = ArrayOptions.find(item => item.value === value)
+    return activeOption
+}
+
+// 数组形式
 export let ArrayOptions = []
 Object.keys(Options).forEach(key => {
     ArrayOptions.push(Options[key])
