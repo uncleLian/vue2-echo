@@ -1,14 +1,11 @@
-#  vue2-echo
+#  vue2-echo（v2.0.0）
 
 ![image](https://img.shields.io/badge/vue-2.5.13-blue.svg)
 ![image](https://img.shields.io/badge/vue--router-3.0.1-blue.svg)
 ![image](https://img.shields.io/badge/vuex-3.0.1-blue.svg)
 ![image](https://img.shields.io/badge/muse--ui-2.1.0-blue.svg)
 
-## 前言
-这一年多一直用Vue写项目，所以准备分享一些经验和记录成果。目前vue学习项目大多数都是音乐、购物车，后台管理那方面，可能因为这方面需求比较多吧。考虑之后打算从容易 -> 中等 -> 困难， 3个复杂度和不同类型的项目，一步步地带领大家熟悉和深入Vue。这些系列项目将会涉及Vue的大部分知识，如果都能掌握，那么就可以随心所欲地使用Vue去写单页面应用了。
-
-此开源系列全部都线上实践过，会考虑到细节、兼容和使用体验等问题，所以在项目里我会尽可能地写上注释去帮助大家快速解决需求。
+> 该分支为vue-cli-2.x构建，部分功能已脱离master分支，建议前往 [master分支](https://github.com/uncleLian/vue2-echo)
 
 ## 技术栈
 1. [vue](https://cn.vuejs.org/v2/guide/)
@@ -25,28 +22,6 @@
 12. [ES6/7（JS语法）](https://github.com/lukehoban/es6features)
 13. [ESlint（JS语法规范）](https://github.com/standard/standard/blob/master/docs/RULES-zhcn.md)
 
-## 说明
-> 如果此开源系列对你有帮助，你可以点右上角 "star"一下，以表支持，非常感谢！^_^ 🌹
-
-> 或者您可以 "follow（关注）" 一下作者，我正在不断开源更多实用的项目
-
-> 如有问题可以直接在 Issues 中提，或者加入我们下方Vue群更进一步地交流
-
-## 最终目标
-Vue学习系列
-- 第一阶段：[vue2-echo](https://github.com/uncleLian/vue2-echo) —— echo回声（ 移动端，难度：★★☆☆☆  入门项目）
-- 第二阶段：[vue2-news](https://github.com/uncleLian/vue2-news) —— 今日头条（ 移动端，难度：★★★☆☆ 过渡项目）
-- 第三阶段：[vue2-health](https://github.com/uncleLian/vue2-health) —— 头条号（ pc端，难度：★★★☆☆ 过渡项目）
-- 第四阶段：[vue2-native](https://github.com/uncleLian/vue2-native) —— 今日头条（ native端，难度：★★★★☆ 进阶项目）
-
-##### 注：此系列只关注前端项目的实现，后端等知识不是此系列的范围，但会告知一二。
-
-## 效果演示 
-
-[项目演示请戳这里](http://echo.liansixin.win)（请使用手机模式预览）
-
-<img src="https://github.com/uncleLian/vue2-echo/raw/gh-pages/screenshots/echo_QRcode.png" width="250" height="250"/>
-
 ## 功能
 
 - [x] 全站内播放（单页面优点）
@@ -56,9 +31,11 @@ Vue学习系列
 
 ## 项目截图
 
-<img src="https://github.com/uncleLian/vue2-echo/raw/gh-pages/screenshots/echo_index.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/gh-pages/screenshots/echo_detail.png" width="365" height="619"/>
+![image](https://unclelian.github.io/vue2-echo/screenshots/echo_index.png)
 
-<img src="https://github.com/uncleLian/vue2-echo/raw/gh-pages/screenshots/echo_fn.png" width="365" height="619"/> <img src="https://github.com/uncleLian/vue2-echo/raw/gh-pages/screenshots/echo_detail.gif" width="365" height="619"/>
+![image](https://unclelian.github.io/vue2-echo/screenshots/echo_detail.png)
+
+![image](https://unclelian.github.io/vue2-echo/screenshots/echo_mode.png)
 
 ## 目录结构
 
