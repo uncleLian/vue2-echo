@@ -5,6 +5,9 @@ import App from '@/App'
 import router from '@/router'
 import store from '@/store'
 
+// 兼容IE8以上
+import 'babel-polyfill'
+
 // 第三方库
 import MintUI, { Indicator, Toast } from 'mint-ui'
 import 'mint-ui/lib/style.css'
