@@ -11,7 +11,7 @@
 - [vue-cli-2.x](https://github.com/uncleLian/vue2-echo/tree/v2.0)
 
 ##### react版本
-- [react-echo](https://unclelian.github.io/react-echo/)
+- [react-echo](https://github.com/uncleLian/react-echo)
 
 ## 前言
 这是一个Vue学习系列，难度：容易 -> 中等 -> 困难， 3个复杂度和不同类型的项目，一步步地带领大家熟悉和深入Vue。这些系列项目将会涉及Vue的大部分知识，如果都能熟悉和掌握，那么就可以随心所欲地使用Vue去写单页面应用了。
