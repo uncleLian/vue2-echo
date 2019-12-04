@@ -41,7 +41,8 @@ Vue学习系列
 - 第一阶段：[vue2-echo](https://github.com/uncleLian/vue2-echo) —— echo回声（ 移动端，难度：★★☆☆☆  入门项目）
 - 第二阶段：[vue2-news](https://github.com/uncleLian/vue2-news) —— 今日头条（ 移动端，难度：★★★☆☆ 过渡项目）
 - 第三阶段：[vue2-health](https://github.com/uncleLian/vue2-health) —— 头条号（ pc端，难度：★★★☆☆ 过渡项目）
-- 第四阶段：[vue2-native](https://github.com/uncleLian/vue2-native) —— 今日头条（ native端，难度：★★★★☆ 进阶项目）
+- 第四阶段：[vue2-native](https://github.com/uncleLian/vue2-native) —— 今日头条（ native端，难度：★★★★☆ 进阶项目，可跳过）
+- 第五阶段：[vue-blog](https://github.com/uncleLian/vue-blog) —— 后台管理集成解决方案（ pc端管理后台，难度：★★★★★ 进阶项目，推荐⭐️⭐️⭐️️⭐️⭐️️️️）
 
 ## 效果演示 
 
